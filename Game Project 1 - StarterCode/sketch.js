@@ -40,6 +40,9 @@ function draw()
 
 	//1. a cloud in the sky
 	//... add your code here
+	fill(255);
+	ellipse(200,100,80,60);
+	ellipse(235,100,65,45);
 
 	noStroke();
 	fill(255);
@@ -47,6 +50,8 @@ function draw()
 
 	//2. a mountain in the distance
 	//... add your code here
+
+	fill(150);
     triangle(450,432, 550,100, 650,432);
     triangle(550,432, 550,150, 750,432);
 
@@ -60,6 +65,11 @@ function draw()
 	noStroke();
 	fill(255);
 	text("tree", 800, 346);
+	fill(155,103,60);
+	rect(820,350, 20,82);
+	fill(0,255,0);
+    triangle(780,360, 830,300, 880,360);
+    triangle(790,330, 830,280, 870,330);
 
 	//4. a canyon
 	//NB. the canyon should go from ground-level to the bottom of the screen
