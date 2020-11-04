@@ -43,6 +43,7 @@ function draw()
 	fill(255);
 	ellipse(200,100,80,60);
 	ellipse(235,100,65,45);
+	ellipse(270,100,40,30);
 
 	noStroke();
 	fill(255);
