@@ -43,6 +43,12 @@ function setup()
         y_pos: 100, 
         size: 50
     }
+    
+    cloud = {
+        x_pos: 200,
+        y_pos: 100,
+        scale: 0.7
+    }
 }
 
 function draw()
@@ -90,6 +96,12 @@ function draw()
     point(386,392);
     point(400,385);
     point(410,390);
+    
+//    clouds
+    fill(255);
+	ellipse(cloud.x_pos, 100, 80 * cloud.scale, 60 * cloud.scale);
+	ellipse(cloud.x_pos + 35 * cloud.scale, 100, 65 * cloud.scale, 45 * cloud.scale);
+	ellipse(cloud.x_pos + 70 * cloud.scale, 100, 40 * cloud.scale, 30 * cloud.scale);
 
 
 }
