@@ -60,9 +60,9 @@ function draw()
 	gameChar_y = 137;
 	//Add your code here ...//middle of rectangle = 35
     //Head
-    fill(255, 227, 48);
-    rect(gameChar_x - 15, gameChar_y - 72, gameChar_x - 15, 26, 5);
-    rect(gameChar_x - 6, gameChar_y - 78, gameChar_x - 33, 10);
+    fill(255, 227, 48); 
+    rect(gameChar_x - 15, gameChar_y - 72, 30, 26, 5);
+    rect(gameChar_x - 6, gameChar_y - 78, 12, 10);
     //Eyes and mouth
     stroke(60);
     strokeWeight(3);
@@ -73,18 +73,19 @@ function draw()
     //Body
     strokeWeight(1);
     fill(0);
-    rect(gameChar_x - 18, gameChar_y - 46, gameChar_x - 8, gameChar_y - 110);
+    rect(gameChar_x - 18, gameChar_y - 46, 37, 27);
     //Arms
     fill(200, 100, 100);
-    rect(gameChar_x - 25, gameChar_y - 46, gameChar_x - 38, gameChar_y - 100);
-    rect(gameChar_x + 18, gameChar_y - 46, gameChar_x - 38, gameChar_y - 100);
+    rect(gameChar_x - 25, gameChar_y - 46, 7 , 37);
+    rect(gameChar_x + 18, gameChar_y - 46, 7 , 37);
     //Belt
     fill(98, 74, 46);
-    rect(gameChar_x - 18, gameChar_y - 19, gameChar_x - 9, gameChar_y - 130);
+    rect(gameChar_x - 18, gameChar_y - 19, 36, 7);
     //Legs
     fill(0, 0, 255);
-    rect(gameChar_x - 18, gameChar_y - 12, gameChar_x - 28, gameChar_y - 122);
-    rect(gameChar_x + 1, gameChar_y - 12, gameChar_x - 28, gameChar_y - 122);
+    rect(gameChar_x - 18, gameChar_y - 12, 17, 15);
+    rect(gameChar_x + 1, gameChar_y - 12, 17, 15);
+
 
 
 	//Jumping facing forwards
@@ -99,9 +100,9 @@ function draw()
 	gameChar_y = 137;
 	//Add your code here ...
     gameChar_y = 143;
-     fill(255, 227, 48);
-    rect(gameChar_x - 15, gameChar_y - 72, gameChar_x - 215, 26, 5);
-    rect(gameChar_x - 6, gameChar_y - 78, gameChar_x - 233, 10);
+    fill(255, 227, 48);
+    rect(gameChar_x - 15, gameChar_y - 72, 30, 26, 5);
+    rect(gameChar_x - 6, gameChar_y - 78, 12, 10);
     //Eyes and mouth
     stroke(60);
     strokeWeight(3);
@@ -112,18 +113,18 @@ function draw()
     //Body
     strokeWeight(1);
     fill(0);
-    rect(gameChar_x - 18, gameChar_y - 46, gameChar_x - 208, gameChar_y - 110);
+    rect(gameChar_x - 18, gameChar_y - 46, 37, 27);
     //Arms
     fill(200, 100, 100);
-    rect(gameChar_x - 25, gameChar_y - 46, gameChar_x - 238, gameChar_y - 100);
-    rect(gameChar_x + 18, gameChar_y - 46, gameChar_x - 238, gameChar_y - 100);
+    rect(gameChar_x - 25, gameChar_y - 46, 7, 37);
+    rect(gameChar_x + 18, gameChar_y - 46, 7, 37);
     //Belt
     fill(98, 74, 46);
-    rect(gameChar_x - 18, gameChar_y - 19, gameChar_x - 209, gameChar_y - 130);
+    rect(gameChar_x - 18, gameChar_y - 19, 36, 7);
     //Legs
     fill(0, 0, 255);
-    rect(gameChar_x - 18, gameChar_y - 12, gameChar_x - 228, gameChar_y - 134);
-    rect(gameChar_x + 1, gameChar_y - 12, gameChar_x - 228, gameChar_y - 134);
+    rect(gameChar_x - 18, gameChar_y - 12, 17, 3);
+    rect(gameChar_x + 1, gameChar_y - 12, 17, 3);
 
 
 	//Walking, turned left
@@ -139,8 +140,8 @@ function draw()
 	//Add your code here ...
     //Head
     fill(255, 227, 48);
-    rect(gameChar_x - 15, gameChar_y - 72, gameChar_x - 15, 26, 5);
-    rect(gameChar_x - 6, gameChar_y - 78, gameChar_x - 33, 10);
+    rect(gameChar_x - 15, gameChar_y - 72, 30, 26, 5);
+    rect(gameChar_x - 6, gameChar_y - 78, 12, 10);
     //Eyes and mouth
     stroke(60);
     strokeWeight(3);
@@ -150,17 +151,17 @@ function draw()
     //body
     strokeWeight(1);
     fill(0);
-    rect(gameChar_x - 15, gameChar_y - 46, gameChar_x - 15, gameChar_y - 310);
+    rect(gameChar_x - 15, gameChar_y - 46, 30, 27);
     //Belt
     fill(98, 74, 46);
-    rect(gameChar_x - 15, gameChar_y - 19, gameChar_x - 15, gameChar_y - 330);
+    rect(gameChar_x - 15, gameChar_y - 19, 30, 7);
     //Legs
     fill(0, 0, 255);
-    rect(gameChar_x - 5, gameChar_y - 12, gameChar_x - 25, gameChar_y - 322);
-    rect(gameChar_x - 25, gameChar_y - 12, gameChar_x - 25, gameChar_y - 328);
+    rect(gameChar_x - 5, gameChar_y - 12, 20, 15);
+    rect(gameChar_x - 25, gameChar_y - 12, 20, 9);
     //Arms
     fill(200, 100, 100);
-    rect(gameChar_x - 7, gameChar_y - 46, gameChar_x - 30, gameChar_y - 300);
+    rect(gameChar_x - 7, gameChar_y - 46, 15, 37);
 
 
 	//Walking, turned right
@@ -176,8 +177,8 @@ function draw()
 	//Add your code here ...
     //Head
     fill(255, 227, 48);
-    rect(gameChar_x - 15, gameChar_y - 72, gameChar_x - 215, 26, 5);
-    rect(gameChar_x - 6, gameChar_y - 78, gameChar_x - 233, 10);
+    rect(gameChar_x - 15, gameChar_y - 72, 30, 26, 5);
+    rect(gameChar_x - 6, gameChar_y - 78, 12, 10);
     //Eyes and mouth
     stroke(60);
     strokeWeight(3);
@@ -187,17 +188,17 @@ function draw()
     //body
     strokeWeight(1);
     fill(0);
-    rect(gameChar_x - 15, gameChar_y - 46, gameChar_x - 215, gameChar_y - 310);
+    rect(gameChar_x - 15, gameChar_y - 46, 30, 27);
     //Belt
     fill(98, 74, 46);
-    rect(gameChar_x - 15, gameChar_y - 19, gameChar_x - 215, gameChar_y - 330);
+    rect(gameChar_x - 15, gameChar_y - 19, 30, 7);
     //Legs
     fill(0, 0, 255);
-    rect(gameChar_x - 15, gameChar_y - 12, gameChar_x - 225, gameChar_y - 322);
-    rect(gameChar_x + 5, gameChar_y - 12, gameChar_x - 225, gameChar_y - 328);
+    rect(gameChar_x - 15, gameChar_y - 12, 20, 15);
+    rect(gameChar_x + 5, gameChar_y - 12, 20, 9);
     //Arms
     fill(200, 100, 100);
-    rect(gameChar_x - 7, gameChar_y - 46, gameChar_x - 230, gameChar_y - 300);
+    rect(gameChar_x - 7, gameChar_y - 46, 15, 37);
 
 
 	//Jumping right
@@ -214,8 +215,8 @@ function draw()
     gameChar_y = 543;
     //Head
     fill(255, 227, 48);
-    rect(gameChar_x - 15, gameChar_y - 72, gameChar_x - 15, 26, 5);
-    rect(gameChar_x - 6, gameChar_y - 78, gameChar_x - 33, 10);
+    rect(gameChar_x - 15, gameChar_y - 72, 30, 26, 5);
+    rect(gameChar_x - 6, gameChar_y - 78, 12, 10);
     //Eyes and mouth
     stroke(60);
     strokeWeight(3);
@@ -225,16 +226,16 @@ function draw()
     //body
     strokeWeight(1);
     fill(0);
-    rect(gameChar_x - 15, gameChar_y - 46, gameChar_x - 15, gameChar_y - 510);
+    rect(gameChar_x - 15, gameChar_y - 46, 30, 27);
     //Belt
     fill(98, 74, 46);
-    rect(gameChar_x - 15, gameChar_y - 19, gameChar_x - 15, gameChar_y - 530);
+    rect(gameChar_x - 15, gameChar_y - 19, 30, 7);
     //Legs
     fill(0, 0, 255);
-    rect(gameChar_x - 15, gameChar_y - 12, gameChar_x - 25, gameChar_y - 535);
+    rect(gameChar_x - 15, gameChar_y - 12, 20, 8);
     //Arms
     fill(200, 100, 100);
-    rect(gameChar_x - 7, gameChar_y - 46, gameChar_x - 30, gameChar_y - 500);
+    rect(gameChar_x - 7, gameChar_y - 46, 15, 43);
     
     
 
@@ -253,8 +254,8 @@ function draw()
     gameChar_y = 543;
     //Head
     fill(255, 227, 48);
-    rect(gameChar_x - 15, gameChar_y - 72, gameChar_x - 215, 26, 5);
-    rect(gameChar_x - 6, gameChar_y - 78, gameChar_x - 233, 10);
+    rect(gameChar_x - 15, gameChar_y - 72, 30, 26, 5);
+    rect(gameChar_x - 6, gameChar_y - 78, 12, 10);
     //Eyes and mouth
     stroke(60);
     strokeWeight(3);
@@ -264,15 +265,15 @@ function draw()
     //body
     strokeWeight(1);
     fill(0);
-    rect(gameChar_x - 15, gameChar_y - 46, gameChar_x - 215, gameChar_y - 510);
+    rect(gameChar_x - 15, gameChar_y - 46, 30, 27);
     //Belt
     fill(98, 74, 46);
-    rect(gameChar_x - 15, gameChar_y - 19, gameChar_x - 215, gameChar_y - 530);
+    rect(gameChar_x - 15, gameChar_y - 19, 30, 7);
     //Legs
     fill(0, 0, 255);
-    rect(gameChar_x - 5, gameChar_y - 12, gameChar_x - 225, gameChar_y - 535);
+    rect(gameChar_x - 5, gameChar_y - 12, 20, 8);
     //Arms
     fill(200, 100, 100);
-    rect(gameChar_x - 7, gameChar_y - 46, gameChar_x - 230, gameChar_y - 500);
+    rect(gameChar_x - 7, gameChar_y - 46, 15, 43);
 
 }
