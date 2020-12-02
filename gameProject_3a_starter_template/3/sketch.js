@@ -223,14 +223,34 @@ function draw()
 
 	///////////INTERACTION CODE//////////
 	//Put conditional statements to move the game character below here
+	
+	// move to the left
 	if(isLeft == true)
 	{
 		gameChar_x -= 3;
 	}
 
+	// move to the right
 	if(isRight == true)
 	{
 		gameChar_x += 3;
+	}
+
+	// jupming 
+	if(isPlummenting == true && gameChar_y >= floorPos_y)
+	{
+		gameChar_y -= 100; 
+	}
+
+	// gravity falling
+	if(gameChar_y < floorPos_y )
+	{
+		gameChar_y += 1;
+		isFalling = true;
+	}
+	else
+	{
+		isFalling = false;
 	}
 
 }
@@ -255,6 +275,12 @@ function keyPressed()
 		isRight = true;
 		console.log("isRight value " + isRight);
 	}
+
+	if (keyCode == 32)
+	{
+		isPlummenting = true;
+		console.log("isPlummenting value " + isPlummenting);
+	}
 }
 
 function keyReleased()
@@ -270,6 +296,12 @@ function keyReleased()
 	{	
 		isRight = false;
 		console.log("isRight value " + isRight);
+	}
+
+	if (keyCode == 32)
+	{
+		isPlummenting = false;
+		console.log("isPlummenting value " + isPlummenting);
 	}
 
 	// console.log("keyReleased: " + key);
