@@ -223,7 +223,15 @@ function draw()
 
 	///////////INTERACTION CODE//////////
 	//Put conditional statements to move the game character below here
+	if(isLeft == true)
+	{
+		gameChar_x -= 3;
+	}
 
+	if(isRight == true)
+	{
+		gameChar_x += 3;
+	}
 
 }
 
