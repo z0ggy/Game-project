@@ -243,9 +243,9 @@ function draw()
 	}
 
 	// gravity falling
-	if(gameChar_y < floorPos_y )
+      	if(gameChar_y < floorPos_y )
 	{
-		gameChar_y += 1;
+		gameChar_y += 2  ;
 		isFalling = true;
 	}
 	else
