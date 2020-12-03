@@ -21,14 +21,12 @@ function setup()
 	isRight = false;
 	isPlummeting = false;
 	isFalling = false;
-
 }
 
 function draw()
 {
 
 	///////////DRAWING CODE//////////
-
 	
 	drawSky();
 
@@ -46,13 +44,11 @@ function draw()
 	noStroke();
 	drawMovements();
 
-	
 	///////////INTERACTION CODE//////////
 	//Put conditional statements to move the game character below here
 	
 	interactionSteatment();
 }
-
 
 function keyPressed()
 {
