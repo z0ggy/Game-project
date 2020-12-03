@@ -34,15 +34,15 @@ function setup()
 	treePos_y = height/2;
     
     canyon = {
-        x_pos: -100, 
+        x_pos: 100, 
         width: 100
     };
     
-    collectable = {
-        x_pos: 100, 
-        y_pos: 100, 
-        size: 50
-    };
+    // collectable = {
+    //     x_pos: 100, 
+    //     y_pos: 100, 
+    //     size: 50
+    // };
     
     cloud = {
         x_pos: 200,
