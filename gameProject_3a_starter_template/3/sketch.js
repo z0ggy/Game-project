@@ -9,10 +9,6 @@ Game interaction
 */
 
 
-var floorPos_y;
-
-
-
 
 function setup()
 {
