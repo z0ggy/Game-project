@@ -30,6 +30,7 @@ function setup()
 	isRight = false;
 	isPlummeting = false;
 	isFalling = false;
+
 }
 
 function draw()
@@ -39,6 +40,9 @@ function draw()
 
 	background(100,155,255); //fill the sky blue
 
+	drawMountain();
+
+	drawCanyon();
 
 	noStroke();
 	fill(0,155,0);
@@ -160,7 +164,7 @@ function draw()
 		 rect(gameChar_x - 7, gameChar_y - 46, 15, 37);
 
 	}
-	else if(isFalling || isPlummeting)
+	else if(isFalling || isPlummenting)
 	{
 		// add your jumping facing forwards code
 		fill(255, 227, 48);
