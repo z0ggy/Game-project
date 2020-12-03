@@ -1,3 +1,8 @@
+var gameChar_x;
+var gameChar_y;
+
+
+
 function jumpingLeft()
 {
     //Head
@@ -166,4 +171,44 @@ function standingFront()
 		fill(0, 0, 255);
 		rect(gameChar_x - 18, gameChar_y - 12, 17, 15);
 		rect(gameChar_x + 1, gameChar_y - 12, 17, 15);
+}
+
+
+function drawMovements()
+{
+    if(isLeft && isFalling)
+	{
+		// add your jumping-left code
+		jumpingLeft();
+	}
+	
+	
+	else if(isRight && isFalling)
+	{
+		// add your jumping-right code
+		jumpingRight();
+
+	}
+	else if(isLeft)
+	{
+		// add your walking left code
+		walkingLeft();
+
+	}
+	else if(isRight)
+	{
+		// add your walking right code
+		 walkingRight();
+
+	}
+	else if(isFalling || isPlummenting)
+	{
+		// add your jumping facing forwards code
+		jumpingFacingForward();
+	}
+	else
+	{
+		// add your standing front facing code
+		standingFront();
+	}
 }
