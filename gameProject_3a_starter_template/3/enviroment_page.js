@@ -32,7 +32,7 @@ floorPos_y = 432; //NB. we are now using a variable for the floor position
         treePos_y = height/2;
         
         canyon = {
-            x_pos: -100, 
+            x_pos: 0, 
             width: 100
         };
         
@@ -77,16 +77,16 @@ floorPos_y = 432; //NB. we are now using a variable for the floor position
     {
 
         fill(139,69,19);
-        triangle(canyon.x_pos + 130, 576,
-                 canyon.x_pos + 180, 432,
-                 canyon.x_pos + 180, 576);
+        triangle(canyon.x_pos + 30, 576,
+                 canyon.x_pos + 80, 432,
+                 canyon.x_pos + 80, 576);
         
-        triangle(canyon.x_pos + 220 + canyon.width, 576,
-                 canyon.x_pos + 220 + canyon.width, 432,
-                 canyon.x_pos + 270 + canyon.width,576);
+        triangle(canyon.x_pos + 120 + canyon.width, 576,
+                 canyon.x_pos + 120 + canyon.width, 432,
+                 canyon.x_pos + 170 + canyon.width, 576);
     
         fill(100, 155, 255);
-        rect(canyon.x_pos + 180, 432, 40 + canyon.width, 144); //blue canyon gap
+        rect(canyon.x_pos + 80, 432, 40 + canyon.width, 144); //blue canyon gap
 
     }
 

@@ -43,6 +43,7 @@ function draw()
 
 	//the game character
 	drawCharacter();
+	
 
 	///////////INTERACTION CODE//////////
 	//Put conditional statements to move the game character below here

@@ -11,10 +11,11 @@ function userInteraction()
 		console.log("key pressed isRight value = " + isRight);
 	}
 
-	if (keyCode == 32)
+    //character jumping is hard-coded instead declare variable ("var jumping;")
+	if (keyCode == 32 && gameChar_y >= floorPos_y) // stop character to jump higher
 	{
-		isPlummenting = true;
-		console.log("isPlummenting value " + isPlummenting);
+        gameChar_y -= 100;
+		console.log("spacebar pressed");
 	}
 }
 
@@ -33,7 +34,6 @@ function stopUserInteraction()
 
 	if (keyCode == 32)
 	{
-		isPlummenting = false;
-		console.log("isPlummenting value " + isPlummenting);
+		console.log("spacebar released");
 	}
 }

@@ -18,12 +18,6 @@ function interactionSteatment()
 		gameChar_x += 3;
 	}
 
-	// jupming 
-	if(isPlummenting == true && gameChar_y >= floorPos_y)
-	{
-		gameChar_y -= 100; 
-	}
-
 	// gravity falling
       	if(gameChar_y < floorPos_y )
 	{
@@ -33,6 +27,23 @@ function interactionSteatment()
 	else
 	{
 		isFalling = false;
-	}
+    }
+    
+    // plummenting 
+    if(isPlummenting == true)
+    {
+        gameChar_y += 7;
+    }
+
+    if(gameChar_x > canyon.x_pos + 30 && gameChar_x < canyon.x_pos + 120 + canyon.width)  
+    {
+        isPlummenting = true;
+    }
+
+    if( isPlummenting == true && gameChar_y < floorPos_y)
+    {
+        isPlummenting = false; 
+    }
 
 }
+
