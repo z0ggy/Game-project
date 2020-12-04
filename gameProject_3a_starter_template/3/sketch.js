@@ -9,7 +9,6 @@ Game interaction
 */
 
 
-
 function setup()
 {
 	createCanvas(1024, 576);
@@ -21,7 +20,8 @@ function setup()
 	isRight = false;
 	isPlummeting = false;
 	isFalling = false;
-}
+	collectable.isFound = false;
+}	
 
 function draw()
 {
@@ -39,10 +39,10 @@ function draw()
 	drawTree();
 
 	drawCollectable();
+   
 
 	//the game character
-	noStroke();
-	drawMovements();
+	drawCharacter();
 
 	///////////INTERACTION CODE//////////
 	//Put conditional statements to move the game character below here
@@ -57,8 +57,8 @@ function keyPressed()
 	userInteraction();
 
 	//open up the console to see how these work
-	console.log("keyPressed: " + key);
-	console.log("keyPressed: " + keyCode);
+	//console.log("keyPressed: " + key);
+	//console.log("keyPressed: " + keyCode);
 }
 
 function keyReleased()

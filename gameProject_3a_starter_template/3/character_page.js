@@ -174,8 +174,9 @@ function standingFront()
 }
 
 
-function drawMovements()
+function drawCharacter()
 {
+    noStroke();
     if(isLeft && isFalling)
 	{
 		// add your jumping-left code
@@ -211,4 +212,12 @@ function drawMovements()
 		// add your standing front facing code
 		standingFront();
 	}
+}
+
+function testDistance()
+{
+    if(dist(gameChar_x, gameChar_y, 200, ) < 200)
+    {
+        console.log("THIS IS LAST WARNING");
+    }
 }

@@ -3,12 +3,12 @@ function userInteraction()
     if (keyCode == 37)
 	{	
 		isLeft = true;
-		console.log("isLeft value " + isLeft);
+		console.log("key pressed isLeft value = " + isLeft);
 	}
 	else if (keyCode == 39)
 	{	
 		isRight = true;
-		console.log("isRight value " + isRight);
+		console.log("key pressed isRight value = " + isRight);
 	}
 
 	if (keyCode == 32)
@@ -23,12 +23,12 @@ function stopUserInteraction()
     if (keyCode == 37)
 	{	
 		isLeft = false;
-		console.log("isLeft value " + isLeft);
+		console.log("key released isLeft value = " + isLeft);
 	}
 	else if (keyCode == 39)
 	{	
 		isRight = false;
-		console.log("isRight value " + isRight);
+		console.log("key released isRight value = " + isRight);
 	}
 
 	if (keyCode == 32)
@@ -36,7 +36,4 @@ function stopUserInteraction()
 		isPlummenting = false;
 		console.log("isPlummenting value " + isPlummenting);
 	}
-
-	console.log("keyReleased: " + key);
-	console.log("keyReleased: " + keyCode);
 }
