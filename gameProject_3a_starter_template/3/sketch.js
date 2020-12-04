@@ -8,7 +8,6 @@ Game interaction
 
 */
 
-
 function setup()
 {
 	createCanvas(1024, 576);
