@@ -39,6 +39,10 @@ function interactionSteatment()
     {
         isPlummenting = true;
     }
+    else
+    {
+        isPlummenting = false;
+    }
 
     if( isPlummenting == true && gameChar_y < floorPos_y)
     {

@@ -33,7 +33,7 @@ floorPos_y = 432; //NB. we are now using a variable for the floor position
         
         canyon = {
             x_pos: 0, 
-            width: 100
+            width: 70
         };
         
         
