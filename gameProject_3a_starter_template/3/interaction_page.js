@@ -35,7 +35,7 @@ function interactionSteatment()
         gameChar_y += 7;
     }
 
-    if(gameChar_x > canyon.x_pos + 30 && gameChar_x < canyon.x_pos + 120 + canyon.width)  
+    if((gameChar_x > canyon.x_pos + 30) && (gameChar_x < canyon.x_pos + 120 + canyon.width) && (gameChar_y >= floorPos_y))  
     {
         isPlummenting = true;
     }
@@ -44,10 +44,10 @@ function interactionSteatment()
         isPlummenting = false;
     }
 
-    if( isPlummenting == true && gameChar_y < floorPos_y)
-    {
-        isPlummenting = false; 
-    }
+    // if( isPlummenting == true && gameChar_y < floorPos_y)
+    // {
+    //     isPlummenting = false; 
+    // }
 
 }
 

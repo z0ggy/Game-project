@@ -213,11 +213,3 @@ function drawCharacter()
 		standingFront();
 	}
 }
-
-function testDistance()
-{
-    if(dist(gameChar_x, gameChar_y, 200, ) < 200)
-    {
-        console.log("THIS IS LAST WARNING");
-    }
-}
