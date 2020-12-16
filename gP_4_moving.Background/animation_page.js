@@ -12,11 +12,13 @@ function userInteraction()
     //character jumping is hard-coded instead declare variable ("var jumping;")
 	if (keyCode == 32 && gameChar_y >= floorPos_y) // stop character to jump higher
 	{
-        gameChar_y -= 100;
+		gameChar_y -= 100;
+		console.log("JUMP FOREST   ")
 	}
     
 }
 
+// character stop after key released
 function stopUserInteraction()
 {
     if (keyCode == 37)
