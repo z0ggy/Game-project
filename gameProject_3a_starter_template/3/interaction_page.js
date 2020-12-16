@@ -34,15 +34,17 @@ function interactionSteatment()
     if(isPlummenting == true)
     {
         gameChar_y += 7;
+        // plummentig character cannot go outside of canyon walls
+        gameChar_x = constrain(gameChar_x, canyon.x_pos + 80, canyon.x_pos + 80 + canyon.width);
         
     }
-//    // reset skech 
-//    if (gameChar_y >= height && keyCode == 75)
-//        {
-//             //isPlummenting = false;
-//             resetSkech();
-//
-//        }
+   // reset skech 
+   if (gameChar_y >= height && keyCode == 75)
+       {
+            //isPlummenting = false;
+            resetSkech();
+
+       }
     
 //    function keyPressed(){
 //        resetSkech();
