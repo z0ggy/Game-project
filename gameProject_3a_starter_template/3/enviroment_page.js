@@ -1,35 +1,26 @@
-var floorPos_y;
-
-var gameChar_x;
-var gameChar_y;
+let floorPos_y;
 
 var treePos_x;
 var treePos_y;
 
-var canyon;
+let canyon;
 
-var mountain;
-var cloud;
+let mountain;
+let cloud;
 
 var width;
 var height;
 
-floorPos_y = 432; //NB. we are now using a variable for the floor position
 
 	//NB. We are now using the built in variables height and width
-	gameChar_x = width/2;
-	gameChar_y = floorPos_y;
 
-	treePos_x = width/2;
-	treePos_y = height/2;
+	
     
     //NB. we are now using a variable for the floor position
     
-        gameChar_x = width/2;
-        gameChar_y = floorPos_y;
     
-        treePos_x = width/2;
-        treePos_y = height/2;
+        //treePos_x = width/2;
+        //treePos_y = height/2;
         
         canyon = {
             x_pos: 0, 
@@ -92,18 +83,17 @@ floorPos_y = 432; //NB. we are now using a variable for the floor position
 
     function drawTree()
     {
-        treePos_y = 350;
-	fill(155,103,60); //tree trunk
-    rect(treePos_x, treePos_y, 20, 82); 
+        treePos_y = height/1.64;
+	    fill(155,103,60); //tree trunk
+        rect(treePos_x, treePos_y, 20, 82); 
 	
-    fill(0,255,0); //branches
-    triangle(treePos_x - 40, treePos_y + 10, 
-             treePos_x + 10, treePos_y - 50, 
-             treePos_x + 60, treePos_y + 10);
+        fill(0,255,0); //branches
 
-    triangle(treePos_x - 30, treePos_y - 20,
-             treePos_x + 10, treePos_y - 70,
-             treePos_x + 50, treePos_y - 20);
+        ellipse(treePos_x + 10, treePos_y - 30, 80, 80);
+        ellipse(treePos_x - 30, treePos_y - 50, 80, 80);
+        ellipse(treePos_x + 50, treePos_y - 50, 80, 80);
+        ellipse(treePos_x - 20, treePos_y - 90, 80, 80);
+        ellipse(treePos_x + 30, treePos_y - 90, 80, 80);
     }
 
     

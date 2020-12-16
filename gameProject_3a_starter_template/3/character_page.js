@@ -1,176 +1,284 @@
-var gameChar_x;
-var gameChar_y;
+let gameChar_x;
+let gameChar_y;
 
 
 
 function jumpingLeft()
 {
     //Head
-		fill(255, 227, 48);
-		rect(gameChar_x - 15, gameChar_y - 72, 30, 26, 5);
-		rect(gameChar_x - 6, gameChar_y - 78, 12, 10);
-		//Eyes and mouth
-		stroke(60);
-		strokeWeight(3);
-		point(gameChar_x - 6, gameChar_y - 64);
-		strokeWeight(2);
-		line(gameChar_x - 15, gameChar_y - 54, gameChar_x - 10, gameChar_y - 54);
-		//body
-		strokeWeight(1);
-		fill(0);
-		rect(gameChar_x - 15, gameChar_y - 46, 30, 27);
-		//Belt
-		fill(98, 74, 46);
-		rect(gameChar_x - 15, gameChar_y - 19, 30, 7);
-		//Legs
-		fill(0, 0, 255);
-		rect(gameChar_x - 5, gameChar_y - 12, 20, 8);
-		//Arms
-		fill(200, 100, 100);
-		rect(gameChar_x - 7, gameChar_y - 46, 15, 43);
+		fill(41, 152, 69);
+    rect(gameChar_x, gameChar_y - 70, 50, 25, 5);//head
+    rect(gameChar_x + 25, gameChar_y - 45, 25, 27, 5, 5, 1, 1);//body light
+    fill(50, 110, 60);
+    rect(gameChar_x + 25, gameChar_y - 45, 25, 7, 5, 5, 0, 0);// body dark
+    fill(215, 110, 40);
+    rect(gameChar_x + 25, gameChar_y - 21, 25, 3, 2)// belt
+    fill(95, 198, 209);
+    rect(gameChar_x + 25, gameChar_y - 19, 25, 12, 2, 2, 3, 3)// hips
+    fill(215, 110, 40);
+    ellipse(gameChar_x + 32, gameChar_y - 2, 4, 4);//shoes
+    ellipse(gameChar_x + 43, gameChar_y - 2, 4, 4);
+    fill(95, 198, 209);
+    rect(gameChar_x + 30, gameChar_y - 11, 4, 8);//left leg
+    rect(gameChar_x + 41, gameChar_y - 11, 4, 8);//right leg
+    stroke(255);
+    strokeWeight(2);
+    line(gameChar_x, gameChar_y - 56, gameChar_x +35, gameChar_y - 56);//mouth
+    noStroke();
+    fill(0);
+    ellipse(gameChar_x + 5, gameChar_y - 60, 3, 3);//nose
+    ellipse(gameChar_x + 10, gameChar_y - 60, 3, 3);
+    fill(255, 0, 255);
+    ellipse(gameChar_x + 34, gameChar_y - 73, 9, 9);//glases
+    ellipse(gameChar_x + 42, gameChar_y - 73, 9, 9);
+    rect(gameChar_x + 27, gameChar_y - 73, 3, 2);
+    rect(gameChar_x + 46, gameChar_y - 73, 3, 2);
+    fill(255);
+    ellipse(gameChar_x + 34, gameChar_y - 73, 6, 6);//eyes
+    ellipse(gameChar_x + 42, gameChar_y - 73, 6, 6);
+    fill(0);
+    ellipse(gameChar_x + 34, gameChar_y - 73, 3, 3);
+    ellipse(gameChar_x + 42, gameChar_y - 73, 3, 3);
+    //arms
+    angleMode(DEGREES);
+    push();
+    translate(gameChar_x + 38, gameChar_y - 43);
+    rotate(-45);
+    fill(41, 152, 69);
+    rect(0, 0, 3, 30, 5);
+    pop();
 }
 
 function jumpingRight()
 {
     //Head
-		fill(255, 227, 48);
-		rect(gameChar_x - 15, gameChar_y - 72, 30, 26, 5);
-		rect(gameChar_x - 6, gameChar_y - 78, 12, 10);
-		//Eyes and mouth
-		stroke(60);
-		strokeWeight(3);
-		point(gameChar_x + 6, gameChar_y - 64);
-		strokeWeight(2);
-		line(gameChar_x + 10, gameChar_y - 54, gameChar_x +15, gameChar_y - 54);
-		//body
-		strokeWeight(1);
-		fill(0);
-		rect(gameChar_x - 15, gameChar_y - 46, 30, 27);
-		//Belt
-		fill(98, 74, 46);
-		rect(gameChar_x - 15, gameChar_y - 19, 30, 7);
-		//Legs
-		fill(0, 0, 255);
-		rect(gameChar_x - 15, gameChar_y - 12, 20, 8);
-		//Arms
-		fill(200, 100, 100);
-		rect(gameChar_x - 7, gameChar_y - 46, 15, 43);
+    fill(41, 152, 69);
+    rect(gameChar_x, gameChar_y - 70, 50, 25, 5);//head
+    rect(gameChar_x, gameChar_y - 45, 25, 27, 5, 5, 1, 1);//body light
+    fill(50, 110, 60);
+    rect(gameChar_x, gameChar_y - 45, 25, 7, 5, 5, 0, 0);// body dark
+    fill(215, 110, 40);
+    rect(gameChar_x, gameChar_y - 21, 25, 3, 2)// belt
+    fill(95, 198, 209);
+    rect(gameChar_x, gameChar_y - 18, 25, 12, 2, 2, 3, 3)// hips
+    fill(215, 110, 40);
+    ellipse(gameChar_x + 7, gameChar_y - 2, 4, 4);//shoes
+    ellipse(gameChar_x + 18, gameChar_y - 2, 4, 4);
+    fill(95, 198, 209);
+    rect(gameChar_x + 5, gameChar_y - 11, 4, 8);//left leg
+    rect(gameChar_x + 16, gameChar_y - 11, 4, 8);//right leg
+    stroke(255);
+    strokeWeight(2);
+    line(gameChar_x + 15, gameChar_y - 56, gameChar_x +50, gameChar_y - 56);//mouth
+    noStroke();
+    fill(0);
+    ellipse(gameChar_x + 45, gameChar_y - 60, 3, 3);//nose
+    ellipse(gameChar_x + 40, gameChar_y - 60, 3, 3);
+    fill(255, 0, 255);
+    ellipse(gameChar_x + 7, gameChar_y - 73, 9, 9);//glases
+    ellipse(gameChar_x + 15, gameChar_y - 73, 9, 9);
+    rect(gameChar_x + 1, gameChar_y - 73, 3, 2);
+    rect(gameChar_x + 19, gameChar_y - 73, 3, 2);
+    fill(255);
+    ellipse(gameChar_x + 7, gameChar_y - 73, 6, 6);//eyes
+    ellipse(gameChar_x + 15, gameChar_y - 73, 6, 6);
+    fill(0);
+    ellipse(gameChar_x + 7, gameChar_y - 73, 3, 3);
+    ellipse(gameChar_x + 15, gameChar_y - 73, 3, 3);
+    //arms
+    push();
+    translate(gameChar_x + 9, gameChar_y - 43);
+    rotate(45);
+    fill(41, 152, 69);
+    rect(0, 0, 3, 30, 5);
+    pop();
 }
 
 function walkingLeft()
 {
-    //Head
-		fill(255, 227, 48);
-		rect(gameChar_x - 15, gameChar_y - 72, 30, 26, 5);
-		rect(gameChar_x - 6, gameChar_y - 78, 12, 10);
-		//Eyes and mouth
-		stroke(60);
-		strokeWeight(3);
-		point(gameChar_x - 6, gameChar_y - 64);
-		strokeWeight(2);
-		line(gameChar_x - 15, gameChar_y - 54, gameChar_x - 10, gameChar_y - 54);
-		//body
-		strokeWeight(1);
-		fill(0);
-		rect(gameChar_x - 15, gameChar_y - 46, 30, 27);
-		//Belt
-		fill(98, 74, 46);
-		rect(gameChar_x - 15, gameChar_y - 19, 30, 7);
-		//Legs
-		fill(0, 0, 255);
-		rect(gameChar_x - 5, gameChar_y - 12, 20, 15);
-		rect(gameChar_x - 25, gameChar_y - 12, 20, 9);
-		//Arms
-		fill(200, 100, 100);
-		rect(gameChar_x - 7, gameChar_y - 46, 15, 37);
+    fill(41, 152, 69);
+    rect(gameChar_x, gameChar_y -73, 50, 25, 5);//head
+    rect(gameChar_x + 25, gameChar_y - 48, 25, 27, 5, 5, 1, 1);//body light
+    fill(50, 110, 60);
+    rect(gameChar_x + 25, gameChar_y - 48, 25, 7, 5, 5, 0, 0);// body dark
+    fill(215, 110, 40);
+    rect(gameChar_x + 25, gameChar_y - 24, 25, 3, 2)// belt
+    fill(95, 198, 209);
+    rect(gameChar_x + 25, gameChar_y - 21, 25, 12, 2, 2, 3, 3)// hips
+    fill(215, 110, 40);
+    ellipse(gameChar_x + 32, gameChar_y, 4, 4);//shoes
+    ellipse(gameChar_x + 43, gameChar_y, 4, 4);
+    fill(95, 198, 209);
+    rect(gameChar_x + 30, gameChar_y - 9, 4, 8);//left leg
+    rect(gameChar_x + 41, gameChar_y - 9, 4, 8);//right leg
+    stroke(255);
+    strokeWeight(2);
+    line(gameChar_x, gameChar_y - 59, gameChar_x +35, gameChar_y - 59);//mouth
+    noStroke();
+    fill(0);
+    ellipse(gameChar_x + 5, gameChar_y - 63, 3, 3);//nose
+    ellipse(gameChar_x + 10, gameChar_y - 63, 3, 3);
+    fill(255, 0, 255);
+    ellipse(gameChar_x + 34, gameChar_y - 76, 9, 9);//glases
+    ellipse(gameChar_x + 42, gameChar_y - 76, 9, 9);
+    rect(gameChar_x + 27, gameChar_y - 76, 3, 2);
+    rect(gameChar_x + 46, gameChar_y - 76, 3, 2);
+    fill(255);
+    ellipse(gameChar_x + 34, gameChar_y - 76, 6, 6);//eyes
+    ellipse(gameChar_x + 42, gameChar_y - 76, 6, 6);
+    fill(0);
+    ellipse(gameChar_x + 34, gameChar_y - 76, 3, 3);
+    ellipse(gameChar_x + 42, gameChar_y - 76, 3, 3);
+    //arms
+    angleMode(DEGREES);
+    push();
+    translate(gameChar_x + 38, gameChar_y - 46);
+    rotate(45);
+    fill(41, 152, 69);
+    rect(0, 0, 3, 30, 5);
+    pop();
 }
 
 function walkingRight()
 {
     //Head
-		 fill(255, 227, 48);
-		 rect(gameChar_x - 15, gameChar_y - 72, 30, 26, 5);
-		 rect(gameChar_x - 6, gameChar_y - 78, 12, 10);
-		 //Eyes and mouth
-		 stroke(60);
-		 strokeWeight(3);
-		 point(gameChar_x + 6, gameChar_y - 64);
-		 strokeWeight(2);
-		 line(gameChar_x + 10, gameChar_y - 54, gameChar_x +15, gameChar_y - 54);
-		 //body
-		 strokeWeight(1);
-		 fill(0);
-		 rect(gameChar_x - 15, gameChar_y - 46, 30, 27);
-		 //Belt
-		 fill(98, 74, 46);
-		 rect(gameChar_x - 15, gameChar_y - 19, 30, 7);
-		 //Legs
-		 fill(0, 0, 255);
-		 rect(gameChar_x - 15, gameChar_y - 12, 20, 15);
-		 rect(gameChar_x + 5, gameChar_y - 12, 20, 9);
-		 //Arms
-		 fill(200, 100, 100);
-		 rect(gameChar_x - 7, gameChar_y - 46, 15, 37);
+		 //Head
+    fill(41, 152, 69);
+    rect(gameChar_x, gameChar_y - 73, 50, 25, 5);//head
+    rect(gameChar_x, gameChar_y - 48, 25, 27, 5, 5, 1, 1);//body light
+    fill(50, 110, 60);
+    rect(gameChar_x, gameChar_y - 48, 25, 7, 5, 5, 0, 0);// body dark
+    fill(215, 110, 40);
+    rect(gameChar_x, gameChar_y - 24, 25, 3, 2)// belt
+    fill(95, 198, 209);
+    rect(gameChar_x, gameChar_y - 21, 25, 12, 2, 2, 3, 3)// hips
+    fill(215, 110, 40);
+    ellipse(gameChar_x + 7, gameChar_y, 4, 4);//shoes
+    ellipse(gameChar_x + 18, gameChar_y, 4, 4);
+    fill(95, 198, 209);
+    rect(gameChar_x + 5, gameChar_y - 9, 4, 8);//left leg
+    rect(gameChar_x + 16, gameChar_y - 9, 4, 8);//right leg
+    stroke(255);
+    strokeWeight(2);
+    line(gameChar_x + 15, gameChar_y - 59, gameChar_x +50, gameChar_y - 59);//mouth
+    noStroke();
+    fill(0);
+    ellipse(gameChar_x + 45, gameChar_y - 63, 3, 3);//nose
+    ellipse(gameChar_x + 40, gameChar_y - 63, 3, 3);
+    fill(255, 0, 255);
+    ellipse(gameChar_x + 7, gameChar_y - 76, 9, 9);//glases
+    ellipse(gameChar_x + 15, gameChar_y - 76, 9, 9);
+    rect(gameChar_x + 1, gameChar_y - 76, 3, 2);
+    rect(gameChar_x + 19, gameChar_y - 76, 3, 2);
+    fill(255);
+    ellipse(gameChar_x + 7, gameChar_y - 76, 6, 6);//eyes
+    ellipse(gameChar_x + 15, gameChar_y - 76, 6, 6);
+    fill(0);
+    ellipse(gameChar_x + 7, gameChar_y - 76, 3, 3);
+    ellipse(gameChar_x + 15, gameChar_y - 76, 3, 3);
+    //arms
+    angleMode(DEGREES);
+    push();
+    translate(gameChar_x + 9, gameChar_y - 46);
+    rotate(-45);
+    fill(41, 152, 69);
+    rect(0, 0, 3, 30, 5);
+    pop();
 }
 
 function jumpingFacingForward()
 {
     //Head
-        fill(255, 227, 48);
-        rect(gameChar_x - 15, gameChar_y - 72, 30, 26, 5);
-        rect(gameChar_x - 6, gameChar_y - 78, 12, 10);
-         //Eyes and mouth
-        stroke(60);
-        strokeWeight(3);
-        point(gameChar_x - 6, gameChar_y - 64);
-        point(gameChar_x + 6, gameChar_y - 64);
-        strokeWeight(2);
-        line(gameChar_x - 3, gameChar_y - 54, gameChar_x + 3, gameChar_y - 54);
-        //Body
-        strokeWeight(1);
-        fill(0);
-        rect(gameChar_x - 18, gameChar_y - 46, 37, 27);
-        //Arms
-        fill(200, 100, 100);
-        rect(gameChar_x - 25, gameChar_y - 46, 7, 37);
-        rect(gameChar_x + 18, gameChar_y - 46, 7, 37);
-        //Belt
-        fill(98, 74, 46);
-        rect(gameChar_x - 18, gameChar_y - 19, 36, 7);
-        //Legs
-        fill(0, 0, 255);
-        rect(gameChar_x - 18, gameChar_y - 12, 17, 3);
-        rect(gameChar_x + 1, gameChar_y - 12, 17, 3);
+         fill(41, 152, 69);
+    rect(gameChar_x + 15, gameChar_y - 69, 25, 25, 5);//head
+    rect(gameChar_x + 15, gameChar_y - 45, 25, 27, 5, 5, 1, 1);//body light
+    fill(50, 110, 60);
+    rect(gameChar_x + 15, gameChar_y - 45, 25, 7, 5, 5, 0, 0);// body dark
+    fill(215, 110, 40);
+    rect(gameChar_x + 15, gameChar_y - 21, 25, 3, 2)// belt
+    fill(95, 198, 209);
+    rect(gameChar_x + 15, gameChar_y - 18, 25, 12, 2, 2, 3, 3)// hips
+    fill(215, 110, 40);
+    ellipse(gameChar_x + 22, gameChar_y - 2, 4, 4);//shoes
+    ellipse(gameChar_x + 33, gameChar_y - 2, 4, 4);
+    fill(95, 198, 209);
+    rect(gameChar_x + 20, gameChar_y - 11, 4, 8);//left leg
+    rect(gameChar_x + 31, gameChar_y - 11, 4, 8);//right leg
+    stroke(255);
+    strokeWeight(2);
+    line(gameChar_x + 15, gameChar_y - 55, gameChar_x +40, gameChar_y - 55);//mouth
+    noStroke();
+    fill(0);
+    ellipse(gameChar_x + 25, gameChar_y - 59, 3, 3);//nose
+    ellipse(gameChar_x + 30, gameChar_y - 59, 3, 3);
+    fill(255, 0, 255);
+    ellipse(gameChar_x + 24, gameChar_y - 72, 9, 9);//glases
+    ellipse(gameChar_x + 32, gameChar_y - 72, 9, 9);
+    rect(gameChar_x + 17, gameChar_y - 72, 3, 2);
+    rect(gameChar_x + 36, gameChar_y - 72, 3, 2);
+    fill(255);
+    ellipse(gameChar_x + 24, gameChar_y - 72, 6, 6);//eyes
+    ellipse(gameChar_x + 32, gameChar_y - 72, 6, 6);
+    fill(0);
+    ellipse(gameChar_x + 24, gameChar_y - 72, 3, 3);
+    ellipse(gameChar_x + 32, gameChar_y - 72, 3, 3);
+    //arms
+    angleMode(DEGREES);
+    fill(41, 152, 69);
+    push();
+    translate(gameChar_x + 16, gameChar_y - 41);
+    rotate(160);
+    rect(0, 0, 3, 30, 0, 5, 5, 5);
+    pop();
+    
+    push();
+    translate(gameChar_x + 42, gameChar_y - 41);
+    rotate(-160);
+    rect(0, 0, 3, 30, 5, 0, 5, 5);
+    pop();
 }
 
 function standingFront()
 {
     //Head
-		fill(255, 227, 48); 
-		rect(gameChar_x - 15, gameChar_y - 72, 30, 26, 5);
-		rect(gameChar_x - 6, gameChar_y - 78, 12, 10);
-		//Eyes and mouth
-		stroke(60);
-		strokeWeight(3);
-		point(gameChar_x - 6, gameChar_y - 64);
-		point(gameChar_x + 6, gameChar_y - 64);
-		strokeWeight(2);
-		line(gameChar_x - 3, gameChar_y - 54, gameChar_x + 3, gameChar_y - 54);
-		//Body
-		strokeWeight(1);
-		fill(0);
-		rect(gameChar_x - 18, gameChar_y - 46, 37, 27);
-		//Arms
-		fill(200, 100, 100);
-		rect(gameChar_x - 25, gameChar_y - 46, 7 , 37);
-		rect(gameChar_x + 18, gameChar_y - 46, 7 , 37);
-		//Belt
-		fill(98, 74, 46);
-		rect(gameChar_x - 18, gameChar_y - 19, 36, 7);
-		//Legs
-		fill(0, 0, 255);
-		rect(gameChar_x - 18, gameChar_y - 12, 17, 15);
-		rect(gameChar_x + 1, gameChar_y - 12, 17, 15);
+	fill(41, 152, 69);
+    rect(gameChar_x + 15, gameChar_y - 73, 25, 25, 5);//head
+    rect(gameChar_x + 15, gameChar_y - 48, 25, 27, 5, 5, 1, 1);//body light
+    fill(41, 152, 69);
+    fill(50, 110, 60);
+    rect(gameChar_x + 15, gameChar_y - 48, 25, 7, 5, 5, 0, 0);// body dark
+    fill(215, 110, 40);
+    rect(gameChar_x + 15, gameChar_y - 24, 25, 3, 2)// belt
+    fill(95, 198, 209);
+    rect(gameChar_x + 15, gameChar_y - 21, 25, 12, 2, 2, 3, 3)// hips
+    fill(215, 110, 40);
+    ellipse(gameChar_x + 22, gameChar_y, 4, 4);//shoes
+    ellipse(gameChar_x + 33, gameChar_y, 4, 4);
+    fill(95, 198, 209);
+    rect(gameChar_x + 20, gameChar_y - 9, 4, 8);//left leg
+    rect(gameChar_x + 31, gameChar_y - 9, 4, 8);//right leg
+    stroke(255);
+    strokeWeight(2);
+    line(gameChar_x + 15, gameChar_y - 59, gameChar_x +40, gameChar_y - 59);//mouth
+    noStroke();
+    fill(0);
+    ellipse(gameChar_x + 25, gameChar_y - 63, 3, 3);//nose
+    ellipse(gameChar_x + 30, gameChar_y - 63, 3, 3);
+    fill(255, 0, 255);
+    ellipse(gameChar_x + 24, gameChar_y - 76, 9, 9);//glases
+    ellipse(gameChar_x + 32, gameChar_y - 76, 9, 9);
+    rect(gameChar_x + 17, gameChar_y - 76, 3, 2);
+    rect(gameChar_x + 36, gameChar_y - 76, 3, 2);
+    fill(255);
+    ellipse(gameChar_x + 24, gameChar_y - 76, 6, 6);//eyes
+    ellipse(gameChar_x + 32, gameChar_y - 76, 6, 6);
+    fill(0);
+    ellipse(gameChar_x + 24, gameChar_y - 76, 3, 3);
+    ellipse(gameChar_x + 32, gameChar_y - 76, 3, 3);
+    //arms
+    fill(41, 152, 69);
+    rect(gameChar_x + 12, gameChar_y - 46, 3, 30, 5, 0, 5, 5);
+    rect(gameChar_x + 40, gameChar_y - 46, 3, 30, 0, 5, 5, 5);
 }
 
 
