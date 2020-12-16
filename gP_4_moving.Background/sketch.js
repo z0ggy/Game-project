@@ -53,6 +53,7 @@ function draw()
 	// Draw collectable items
 
 	// Draw the game character - this must be last
+	drawCharacter();
 
 	//////// Game character logic ///////
 	// Logic to move
