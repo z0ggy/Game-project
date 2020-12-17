@@ -15,7 +15,8 @@ var scrollPos;
 
 let clouds;
 let mountains;
-//let trees_x;
+let collectables;
+let trees_x;
 let cX = 200;
 let cY = 100;
 let cS = 2;
@@ -43,6 +44,19 @@ function setup()
 		{x_pos: 360, y_pos: 180, scale: 2.0}
 
 	];
+
+	mountains = [
+		{x_pos: 100, y_pos: 400, scale: 1.0},
+		{x_pos: 500, y_pos: 400, scale: .7},
+		{x_pos: 700, y_pos: 400, scale: .9}
+	];
+
+	collectables = [
+		{x_pos: 40, y_pos: floorPos_y, scale: 1.0, isFound: false},
+		{x_pos: 200, y_pos: floorPos_y, scale: 1.0, isFound: false},
+		{x_pos: 400, y_pos: floorPos_y, scale: 1.0, isFound: false}
+	];
+
 }
 
 function draw()
@@ -51,21 +65,30 @@ function draw()
 
 	drawGround(); // draw some green ground
 
+	push();
+	translate(scrollPos, 0);
 	// Draw clouds.
 	for(var i = 0; i < clouds.length; i++)
 	{
 		fill(255);
-		ellipse(clouds[i].x_pos,                      clouds[i].y_pos, 100* clouds[i].scale, 80 * clouds[i].scale);
-		ellipse(clouds[i].x_pos+35*clouds[i].scale,   clouds[i].y_pos, 80 * clouds[i].scale, 60 * clouds[i].scale);
-		ellipse(clouds[i].x_pos+70*clouds[i].scale,   clouds[i].y_pos, 40 * clouds[i].scale, 30 * clouds[i].scale);
-		
-		// ellipse(cX,     cY, 100*cS, 80*cS);
-		// ellipse(cX+50*cS,  cY, 80*cS,  60*cS);
-		// ellipse(cX+100*cS, cY, 60*cS,  40*cS);
+		ellipse(clouds[i].x_pos, clouds[i].y_pos, 100* clouds[i].scale, 80 * clouds[i].scale);
+		ellipse(clouds[i].x_pos+35*clouds[i].scale, clouds[i].y_pos, 80 * clouds[i].scale, 60 * clouds[i].scale);
+		ellipse(clouds[i].x_pos+70*clouds[i].scale, clouds[i].y_pos, 40 * clouds[i].scale, 30 * clouds[i].scale);
 	}
 
 	// Draw mountains.
 	//drawMountain();
+	for(var i = 0; i < mountains.length; i++)
+	{
+		fill(150);
+        noStroke();
+        triangle(mountains[i].x_pos + 50, mountains[i].y_pos + 32, 
+                mountains[i].x_pos + 150 * mountains[i].scale, mountains[i].y_pos - 300 * mountains[i].scale,
+                mountains[i].x_pos + 250 * mountains[i].scale, mountains[i].y_pos + 32);
+        triangle(mountains[i].x_pos + 150, mountains[i].y_pos + 32, 
+                mountains[i].x_pos + 150 * mountains[i].scale, mountains[i].y_pos - 250 * mountains[i].scale,
+                mountains[i].x_pos + 350 * mountains[i].scale, mountains[i].y_pos + 32);
+	}
 
 	// Draw trees.
 	for(var i = 0; i < trees_x.length; i++)
@@ -84,7 +107,26 @@ function draw()
 	// Draw canyons
 
 	// Draw collectable items
+	for(var i = 0; i < collectables.length; i++)
+	{
+		if (collectables[i].isFound == false) {
 
+			noStroke();
+			fill(255, 0, 0);
+			rect(collectables[i].x_pos, collectables[i].y_pos - 40, 40, 40);
+			rect(collectables[i].x_pos - 5, collectables[i].y_pos - 45, 50, 10);
+			fill(222, 200, 0);
+			rect(collectables[i].x_pos + 18, collectables[i].y_pos - 45, 4, 43);
+			rect(collectables[i].x_pos, collectables[i].y_pos - 25, 40, 4);
+		}
+		if (dist(gameChar_x, gameChar_y, collectables[i].x_pos, collectables[i].y_pos + 10) < 30) {
+			collectables[i].isFound = true;
+			console.log("collectable X " + collectables[i].isFound);
+		}
+
+	}
+
+	pop();
 	// Draw the game character - this must be last
 	drawCharacter();
 

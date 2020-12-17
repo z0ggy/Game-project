@@ -3,7 +3,7 @@ let floorPos_y;
 var treePos_x;
 var treePos_y;
 
-let trees_x;
+//let trees_x;
 
 let canyon;
 
