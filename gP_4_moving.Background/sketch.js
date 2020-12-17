@@ -16,6 +16,7 @@ var scrollPos;
 let clouds;
 let mountains;
 let collectables;
+let canyons;
 let trees_x;
 let cX = 200;
 let cY = 100;
@@ -36,7 +37,7 @@ function setup()
 	scrollPos = 0;
 
 	// Initialise arrays of scenery objects.
-	trees_x = [100, 350, 600, 1000];
+	trees_x = [200, 350, 600, 1000];
 	clouds = [
 		{x_pos: 100, y_pos: 100, scale: 0.7},
 		{x_pos: 600, y_pos: 120, scale: 0.8},
@@ -46,15 +47,20 @@ function setup()
 	];
 
 	mountains = [
-		{x_pos: 100, y_pos: 400, scale: 1.0},
-		{x_pos: 500, y_pos: 400, scale: .7},
-		{x_pos: 700, y_pos: 400, scale: .9}
+		{x_pos: 150, y_pos: 400, scale: .7},
+		{x_pos: 300, y_pos: 400, scale: 1.1},
+		{x_pos: 820, y_pos: 400, scale: .6}
 	];
 
 	collectables = [
 		{x_pos: 180, y_pos: floorPos_y, scale: 1.0, isFound: false},
 		{x_pos: 400, y_pos: floorPos_y, scale: 1.0, isFound: false},
 		{x_pos: 650, y_pos: floorPos_y, scale: 1.0, isFound: false}
+	];
+
+	canyons = [
+		{x_pos: 0, width: 50},
+		{x_pos: 700, width: 50}
 	];
 
 }
@@ -77,7 +83,6 @@ function draw()
 	}
 
 	// Draw mountains.
-	//drawMountain();
 	for(var i = 0; i < mountains.length; i++)
 	{
 		fill(150);
@@ -105,6 +110,20 @@ function draw()
 	}
 
 	// Draw canyons
+	for(var i = 0; i < canyons.length; i++)
+	{
+		fill(139,69,19);
+        triangle(canyons[i].x_pos + 30, 576,
+                 canyons[i].x_pos + 80, 432,
+                 canyons[i].x_pos + 80, 576);
+        
+        triangle(canyons[i].x_pos + 120 + canyons[i].width, 576,
+                 canyons[i].x_pos + 120 + canyons[i].width, 432,
+                 canyons[i].x_pos + 170 + canyons[i].width, 576);
+    
+        fill(100, 155, 255);
+        rect(canyons[i].x_pos + 80, 432, 40 + canyons[i].width, 144); //blue canyon gap
+	}
 
 	// Draw collectable items
 	for(var i = 0; i < collectables.length; i++)

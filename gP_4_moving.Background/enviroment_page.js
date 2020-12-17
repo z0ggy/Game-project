@@ -88,9 +88,7 @@ var height;
         treePos_y = height/1.64;
 	    fill(155,103,60); //tree trunk
         rect(trees_x[i], treePos_y, 20, 82); 
-	
         fill(0,255,0); //branches
-
         ellipse(trees_x[i] + 10, treePos_y - 30, 80, 80);
         ellipse(trees_x[i] - 30, treePos_y - 50, 80, 80);
         ellipse(trees_x[i] + 50, treePos_y - 50, 80, 80);
