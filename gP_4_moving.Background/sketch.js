@@ -52,9 +52,9 @@ function setup()
 	];
 
 	collectables = [
-		{x_pos: 40, y_pos: floorPos_y, scale: 1.0, isFound: false},
-		{x_pos: 200, y_pos: floorPos_y, scale: 1.0, isFound: false},
-		{x_pos: 400, y_pos: floorPos_y, scale: 1.0, isFound: false}
+		{x_pos: 180, y_pos: floorPos_y, scale: 1.0, isFound: false},
+		{x_pos: 400, y_pos: floorPos_y, scale: 1.0, isFound: false},
+		{x_pos: 650, y_pos: floorPos_y, scale: 1.0, isFound: false}
 	];
 
 }
@@ -121,7 +121,6 @@ function draw()
 		}
 		if (dist(gameChar_x, gameChar_y, collectables[i].x_pos, collectables[i].y_pos + 10) < 30) {
 			collectables[i].isFound = true;
-			console.log("collectable X " + collectables[i].isFound);
 		}
 
 	}
@@ -154,6 +153,7 @@ function draw()
 		else
 		{
 			scrollPos -= 5; // negative for moving against the background
+			pop();
 		}
 
 	}
@@ -186,4 +186,24 @@ function keyReleased()
 	{
 		isRight = false;
 	}
+}
+
+function drawCollectables()
+{
+	for(var i = 0; i < collectables.length; i++)
+	{
+		if (collectables[i].isFound == false) {
+
+			noStroke();
+			fill(255, 0, 0);
+			rect(collectables[i].x_pos, collectables[i].y_pos - 40, 40, 40);
+			rect(collectables[i].x_pos - 5, collectables[i].y_pos - 45, 50, 10);
+			fill(222, 200, 0);
+			rect(collectables[i].x_pos + 18, collectables[i].y_pos - 45, 4, 43);
+			rect(collectables[i].x_pos, collectables[i].y_pos - 25, 40, 4);
+		}
+		if (dist(gameChar_x, gameChar_y, collectables[i].x_pos, collectables[i].y_pos + 10) < 30) {
+			collectables[i].isFound = true;
+		}
+}
 }
