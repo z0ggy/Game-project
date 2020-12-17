@@ -6,11 +6,11 @@ Week 6
 
 */
 
-// var gameChar_x;
-// var gameChar_y;
-// var floorPos_y;
-// var isLeft;
-// var isRight;
+var gameChar_x;
+var gameChar_y;
+var floorPos_y;
+var isLeft;
+var isRight;
 var scrollPos;
 
 let clouds;
@@ -32,6 +32,7 @@ function setup()
 	// Boolean variables to control the movement of the game character.
 	isLeft = false;
 	isRight = false;
+	isPlummenting = false;
 
 	// Variable to control the background scrolling.
 	scrollPos = 0;
@@ -67,9 +68,11 @@ function setup()
 
 function draw()
 {
-	drawSky(); // fill the sky blue
+	background(100,155,255); //fill the sky blue
 
-	drawGround(); // draw some green ground
+	noStroke();
+	fill(0,155,0);
+	rect(0, floorPos_y, width, height - floorPos_y); //draw some green ground
 
 	push();
 	translate(scrollPos, 0);
@@ -122,7 +125,8 @@ function draw()
                  canyons[i].x_pos + 170 + canyons[i].width, 576);
     
         fill(100, 155, 255);
-        rect(canyons[i].x_pos + 80, 432, 40 + canyons[i].width, 144); //blue canyon gap
+		rect(canyons[i].x_pos + 80, 432, 40 + canyons[i].width, 144); //blue canyon gap
+	
 	}
 
 	// Draw collectable items
@@ -144,9 +148,49 @@ function draw()
 
 	}
 
+
 	pop();
 	// Draw the game character - this must be last
-	drawCharacter();
+	//drawCharacter();
+	//Head
+	fill(41, 152, 69);
+    rect(gameChar_x + 15, gameChar_y - 73, 25, 25, 5);//head
+    rect(gameChar_x + 15, gameChar_y - 48, 25, 27, 5, 5, 1, 1);//body light
+    fill(41, 152, 69);
+    fill(50, 110, 60);
+    rect(gameChar_x + 15, gameChar_y - 48, 25, 7, 5, 5, 0, 0);// body dark
+    fill(215, 110, 40);
+    rect(gameChar_x + 15, gameChar_y - 24, 25, 3, 2)// belt
+    fill(95, 198, 209);
+    rect(gameChar_x + 15, gameChar_y - 21, 25, 12, 2, 2, 3, 3)// hips
+    fill(215, 110, 40);
+    ellipse(gameChar_x + 22, gameChar_y, 4, 4);//shoes
+    ellipse(gameChar_x + 33, gameChar_y, 4, 4);
+    fill(95, 198, 209);
+    rect(gameChar_x + 20, gameChar_y - 9, 4, 8);//left leg
+    rect(gameChar_x + 31, gameChar_y - 9, 4, 8);//right leg
+    stroke(255);
+    strokeWeight(2);
+    line(gameChar_x + 15, gameChar_y - 59, gameChar_x +40, gameChar_y - 59);//mouth
+    noStroke();
+    fill(0);
+    ellipse(gameChar_x + 25, gameChar_y - 63, 3, 3);//nose
+    ellipse(gameChar_x + 30, gameChar_y - 63, 3, 3);
+    fill(255, 0, 255);
+    ellipse(gameChar_x + 24, gameChar_y - 76, 9, 9);//glases
+    ellipse(gameChar_x + 32, gameChar_y - 76, 9, 9);
+    rect(gameChar_x + 17, gameChar_y - 76, 3, 2);
+    rect(gameChar_x + 36, gameChar_y - 76, 3, 2);
+    fill(255);
+    ellipse(gameChar_x + 24, gameChar_y - 76, 6, 6);//eyes
+    ellipse(gameChar_x + 32, gameChar_y - 76, 6, 6);
+    fill(0);
+    ellipse(gameChar_x + 24, gameChar_y - 76, 3, 3);
+    ellipse(gameChar_x + 32, gameChar_y - 76, 3, 3);
+    //arms
+    fill(41, 152, 69);
+    rect(gameChar_x + 12, gameChar_y - 46, 3, 30, 5, 0, 5, 5);
+    rect(gameChar_x + 40, gameChar_y - 46, 3, 30, 0, 5, 5, 5);
 
 	//////// Game character logic ///////
 	// Logic to move
@@ -176,6 +220,7 @@ function draw()
 		}
 
 	}
+
 }
 
 
@@ -205,24 +250,4 @@ function keyReleased()
 	{
 		isRight = false;
 	}
-}
-
-function drawCollectables()
-{
-	for(var i = 0; i < collectables.length; i++)
-	{
-		if (collectables[i].isFound == false) {
-
-			noStroke();
-			fill(255, 0, 0);
-			rect(collectables[i].x_pos, collectables[i].y_pos - 40, 40, 40);
-			rect(collectables[i].x_pos - 5, collectables[i].y_pos - 45, 50, 10);
-			fill(222, 200, 0);
-			rect(collectables[i].x_pos + 18, collectables[i].y_pos - 45, 4, 43);
-			rect(collectables[i].x_pos, collectables[i].y_pos - 25, 40, 4);
-		}
-		if (dist(gameChar_x, gameChar_y, collectables[i].x_pos, collectables[i].y_pos + 10) < 30) {
-			collectables[i].isFound = true;
-		}
-}
 }

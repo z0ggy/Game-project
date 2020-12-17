@@ -59,15 +59,15 @@ function interactionSteatment()
     
 
 
-    if((gameChar_x >= canyon.x_pos + 80) && (gameChar_x <= canyon.x_pos + 80 + canyon.width) && (gameChar_y >=floorPos_y))  
-    {
-        isPlummenting = true;
-        print("PLUMENTING");
-    }
-    else
-    {
-        isPlummenting = false;
-    }
+    // if((gameChar_x >= canyon.x_pos + 80) && (gameChar_x <= canyon.x_pos + 80 + canyon.width) && (gameChar_y >=floorPos_y))  
+    // {
+    //     isPlummenting = true;
+    //     print("PLUMENTING");
+    // }
+    // else
+    // {
+    //     isPlummenting = false;
+    // }
 
 
 
