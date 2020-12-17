@@ -6,11 +6,11 @@ Week 6
 
 */
 
-var gameChar_x;
-var gameChar_y;
-var floorPos_y;
-var isLeft;
-var isRight;
+// var gameChar_x;
+// var gameChar_y;
+// var floorPos_y;
+// var isLeft;
+// var isRight;
 var scrollPos;
 
 let clouds;
