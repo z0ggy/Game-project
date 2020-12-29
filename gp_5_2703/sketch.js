@@ -11,6 +11,7 @@ var scrollPos;
 var trees_x;
 var collectables;
 var canyons;
+var mountains;
 var gameChar_world_x;
 
 var isLeft;
@@ -576,22 +577,24 @@ function drawCanyon(t_canyon)
 
 function checkCanyon(t_canyon)
 {	
-	if((gameChar_world_x >= t_canyon.x_pos + 80) && (gameChar_world_x <= t_canyon.x_pos + 80 + t_canyon.width) && (gameChar_y >=floorPos_y))  
-    {
-        isPlummenting = true;
-        print("PLUMENTING");
-    }
-    else
-    {
-        isPlummenting = false;
-    }
-	if(isPlummenting == true)
+	if(isPlummeting == true)
     {
         gameChar_y += 7;
         // plummentig character cannot go outside of canyon walls
         gameChar_world_x = constrain(gameChar_world_x, t_canyon.x_pos + 80, t_canyon.x_pos + 80 + t_canyon.width);
-        
+        console.log("CANT GET OUT");
+	}
+	
+	if((gameChar_world_x >= t_canyon.x_pos + 80) && (gameChar_world_x <= t_canyon.x_pos + 80 + t_canyon.width) && (gameChar_y >=floorPos_y))  
+    {
+        isPlummeting = true;
+        print("PLUMENTING");
     }
+    else
+    {
+        isPlummeting = false;
+    }
+	
 }
 
 // ----------------------------------
