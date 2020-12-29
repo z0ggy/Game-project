@@ -36,6 +36,32 @@ function setup()
 	isPlummeting = false;
 
 	// Initialise arrays of scenery objects.
+	trees_x = [-1350, - 1200, -1000, - 600, - 350, - 200, 0, 200, 350, 600, 1000, 1200, 1350, 1600, 2000];
+	clouds = [
+		{x_pos: -1660, y_pos: 180, scale: r},
+		{x_pos: -1160, y_pos: 180, scale: r},
+		{x_pos: -960, y_pos: 180, scale: r},
+		{x_pos: -460, y_pos: 180, scale: r},
+		{x_pos: -360, y_pos: 180, scale: r},
+		{x_pos: -800, y_pos: 180, scale: r},
+		{x_pos: -200, y_pos: 180, scale: r},
+		{x_pos: 100, y_pos: 100, scale: r},
+		{x_pos: 600, y_pos: 120, scale: r},
+		{x_pos: 800, y_pos: 100, scale: r},
+		{x_pos: 360, y_pos: 180, scale: r},
+		{x_pos: 460, y_pos: 180, scale: r},
+		{x_pos: 960, y_pos: 180, scale: r},
+		{x_pos: 1160, y_pos: 180, scale: r},
+		{x_pos: 1660, y_pos: 180, scale: r},
+		{x_pos: 2000, y_pos: 180, scale: r},
+		{x_pos: 2200, y_pos: 180, scale: r},
+	];
+
+	mountains = [
+		{x_pos: 150, y_pos: 400, scale: .7},
+		{x_pos: 300, y_pos: 400, scale: 1.1},
+		{x_pos: 820, y_pos: 400, scale: .6}
+	];
 }
 
 function draw()
