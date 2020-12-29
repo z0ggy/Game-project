@@ -9,6 +9,8 @@ var gameChar_y;
 var floorPos_y;
 var scrollPos;
 var trees_x;
+var collectables;
+var canyons;
 var gameChar_world_x;
 
 var isLeft;
@@ -57,6 +59,16 @@ function setup()
 		{x_pos: 300, y_pos: 400, scale: 1.1},
 		{x_pos: 820, y_pos: 400, scale: .6}
 	];
+	collectables = [
+		{x_pos: 180, y_pos: floorPos_y, scale: 1.0, isFound: false},
+		{x_pos: 400, y_pos: floorPos_y, scale: 1.0, isFound: false},
+		{x_pos: 650, y_pos: floorPos_y, scale: 1.0, isFound: false}
+	];
+
+	canyons = [
+		{x_pos: 0, width: 50},
+		{x_pos: 700, width: 50}
+	];
 }
 
 function draw()
@@ -67,6 +79,8 @@ function draw()
 	fill(0,155,0);
 	rect(0, floorPos_y, width, height/4); // draw some green ground
 
+	push();
+	translate(scrollPos, 0);
 	// Draw clouds.
 	drawClouds();
 
@@ -79,9 +93,20 @@ function draw()
 	
 
 	// Draw canyons.
+		for(var i = 0; i < canyons.length; i++)
+	{
+		drawCanyon(canyons[i]);
+		checkCanyon(canyons[i]);
+	}
+	
 
 	// Draw collectable items.
-
+	for(var i = 0; i < collectables.length; i++)
+	{
+		drawCollectable(collectables[i]);
+		checkCollectable(collectables[i]);
+	}
+	pop();
 	// Draw game character.
 	
 	drawGameChar();
@@ -534,14 +559,39 @@ function drawTrees()
 
 function drawCanyon(t_canyon)
 {
+	fill(139,69,19);
+	triangle(t_canyon.x_pos + 30, 576,
+			 t_canyon.x_pos + 80, 432,
+			 t_canyon.x_pos + 80, 576);
+	
+	triangle(t_canyon.x_pos + 120 + t_canyon.width, 576,
+			 t_canyon.x_pos + 120 + t_canyon.width, 432,
+			 t_canyon.x_pos + 170 + t_canyon.width, 576);
 
+	fill(100, 155, 255);
+	rect(t_canyon.x_pos + 80, 432, 40 + t_canyon.width, 144); //blue canyon gap
 }
 
 // Function to check character is over a canyon.
 
 function checkCanyon(t_canyon)
-{
-
+{	
+	if((gameChar_world_x >= t_canyon.x_pos + 80) && (gameChar_world_x <= t_canyon.x_pos + 80 + t_canyon.width) && (gameChar_y >=floorPos_y))  
+    {
+        isPlummenting = true;
+        print("PLUMENTING");
+    }
+    else
+    {
+        isPlummenting = false;
+    }
+	if(isPlummenting == true)
+    {
+        gameChar_y += 7;
+        // plummentig character cannot go outside of canyon walls
+        gameChar_world_x = constrain(gameChar_world_x, t_canyon.x_pos + 80, t_canyon.x_pos + 80 + t_canyon.width);
+        
+    }
 }
 
 // ----------------------------------
@@ -552,12 +602,24 @@ function checkCanyon(t_canyon)
 
 function drawCollectable(t_collectable)
 {
+	if (t_collectable.isFound == false) {
 
+		noStroke();
+		fill(255, 0, 0);
+		rect(t_collectable.x_pos, t_collectable.y_pos - 40, 40, 40);
+		rect(t_collectable.x_pos - 5, t_collectable.y_pos - 45, 50, 10);
+		fill(222, 200, 0);
+		rect(t_collectable.x_pos + 18, t_collectable.y_pos - 45, 4, 43);
+		rect(t_collectable.x_pos, t_collectable.y_pos - 25, 40, 4);
+	}
+	
 }
 
 // Function to check character has collected an item.
 
 function checkCollectable(t_collectable)
 {
-
+	if (dist(gameChar_world_x, gameChar_y, t_collectable.x_pos, t_collectable.y_pos + 10) < 30) {
+		t_collectable.isFound = true;
+	}
 }
