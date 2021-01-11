@@ -18,6 +18,7 @@ var isLeft;
 var isRight;
 var isFalling;
 var isPlummeting;
+var game_score;
 
 function setup()
 {
@@ -70,6 +71,8 @@ function setup()
 		{x_pos: 0, width: 50},
 		{x_pos: 700, width: 50}
 	];
+
+	game_score = 0;
 }
 
 function draw()
@@ -104,13 +107,18 @@ function draw()
 	// Draw collectable items.
 	for(var i = 0; i < collectables.length; i++)
 	{
-		drawCollectable(collectables[i]);
-		checkCollectable(collectables[i]);
+		if(!collectables[i].isFound)
+		{
+			drawCollectable(collectables[i]);
+			checkCollectable(collectables[i]);
+		}
 	}
 	pop();
 	// Draw game character.
-	
 	drawGameChar();
+
+	// Draw Score text
+	drawScore();
 
 	// Logic to make the game character move or the background scroll.
 	if(isLeft)
@@ -582,13 +590,11 @@ function checkCanyon(t_canyon)
         gameChar_y += 7;
         // plummentig character cannot go outside of canyon walls
         gameChar_world_x = constrain(gameChar_world_x, t_canyon.x_pos + 80, t_canyon.x_pos + 80 + t_canyon.width);
-        console.log("CANT GET OUT");
 	}
 	
 	if((gameChar_world_x >= t_canyon.x_pos + 80) && (gameChar_world_x <= t_canyon.x_pos + 80 + t_canyon.width) && (gameChar_y >=floorPos_y))  
     {
         isPlummeting = true;
-        print("PLUMENTING");
     }
     else
     {
@@ -624,5 +630,13 @@ function checkCollectable(t_collectable)
 {
 	if (dist(gameChar_world_x, gameChar_y, t_collectable.x_pos, t_collectable.y_pos + 10) < 30) {
 		t_collectable.isFound = true;
+		game_score += 1;
 	}
+}
+
+function drawScore()
+{
+	fill(255);
+	noStroke();
+	text("SCORE: "+game_score, 20, 20);
 }
