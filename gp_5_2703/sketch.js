@@ -19,6 +19,7 @@ var isRight;
 var isFalling;
 var isPlummeting;
 var game_score;
+var flagpole;
 
 function setup()
 {
@@ -72,6 +73,8 @@ function setup()
 		{x_pos: 700, width: 50}
 	];
 
+	flagpole = {x_pos: 200, isReached: false};
+
 	game_score = 0;
 }
 
@@ -113,6 +116,8 @@ function draw()
 			checkCollectable(collectables[i]);
 		}
 	}
+	renderFlagpole();
+	checkFlagpole();
 	pop();
 	// Draw game character.
 	drawGameChar();
@@ -639,4 +644,45 @@ function drawScore()
 	fill(255);
 	noStroke();
 	text("SCORE: "+game_score, 20, 20);
+}
+
+function renderFlagpole()
+{
+	
+	var flagY = floorPos_y - 200;
+	stroke(255);
+	strokeWeight(5);
+	line(flagpole.x_pos, floorPos_y, flagpole.x_pos, floorPos_y - 200);
+	fill(255, 0, 255);
+	noStroke();
+	if (!flagpole.isReached)
+	{
+		rect(flagpole.x_pos, flagY, 40, 30);
+	}
+	else
+	{
+		rect(flagpole.x_pos, flagY+ 170	, 40, 30);
+	}	
+
+
+	// flagY = floorPos_y - 30;
+	// stroke(255);
+	// strokeWeight(5);
+	// line(flagpole.x_pos, floorPos_y, flagpole.x_pos, floorPos_y - 200);
+	// fill(255, 0, 255);
+	// noStroke();
+	// rect(flagpole.x_pos, flagY, 40, 30);
+	
+}
+
+function checkFlagpole()
+{
+	d = dist(flagpole.x_pos, floorPos_y -200, gameChar_x, gameChar_y);
+	console.log(d);
+
+	if( d < 30)
+	{
+		flagpole.isReached = true;
+		console.log(d);
+	}
 }
