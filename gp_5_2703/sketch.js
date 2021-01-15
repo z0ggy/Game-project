@@ -384,9 +384,7 @@ function drawGameChar()
 		pop();
 
 	}
-	//TODO add is plummenting
-	else if(isFalling)    // || isPlummenting)
-	{
+	else if(isFalling)    	{
 		// add your jumping facing forwards code
 		//Head
 		fill(41, 152, 69);
