@@ -20,62 +20,15 @@ var isFalling;
 var isPlummeting;
 var game_score;
 var flagpole;
+var lives;
 
 function setup()
 {
 	createCanvas(1024, 576);
-	floorPos_y = height * 3/4;
-	gameChar_x = width/2;
-	gameChar_y = floorPos_y;
+	
+	lives = 3;
 
-	// Variable to control the background scrolling.
-	scrollPos = 0;
-
-	// Variable to store the real position of the gameChar in the game
-	// world. Needed for collision detection.
-	gameChar_world_x = gameChar_x - scrollPos;
-
-	// Boolean variables to control the movement of the game character.
-	isLeft = false;
-	isRight = false;
-	isFalling = false;
-	isPlummeting = false;
-
-	// Initialise arrays of scenery objects.
-	let r = 1;
-	trees_x = [-1350, - 1200, -1000, - 600, - 350, - 200, 0, 200, 350, 600, 1000, 1200, 1350, 1600, 2000];
-	clouds = [
-		{x_pos: -460, y_pos: 180, scale: r},
-		{x_pos: -360, y_pos: 180, scale: r},
-		{x_pos: -800, y_pos: 180, scale: r},
-		{x_pos: -200, y_pos: 180, scale: r},
-		{x_pos: 100, y_pos: 100, scale: r},
-		{x_pos: 600, y_pos: 120, scale: r},
-		{x_pos: 800, y_pos: 100, scale: r},
-		{x_pos: 360, y_pos: 180, scale: r},
-		{x_pos: 460, y_pos: 180, scale: r},
-		{x_pos: 960, y_pos: 180, scale: r},
-	];
-
-	mountains = [
-		{x_pos: 150, y_pos: 400, scale: .7},
-		{x_pos: 300, y_pos: 400, scale: 1.1},
-		{x_pos: 820, y_pos: 400, scale: .6}
-	];
-	collectables = [
-		{x_pos: 180, y_pos: floorPos_y, scale: 1.0, isFound: false},
-		{x_pos: 400, y_pos: floorPos_y, scale: 1.0, isFound: false},
-		{x_pos: 650, y_pos: floorPos_y, scale: 1.0, isFound: false}
-	];
-
-	canyons = [
-		{x_pos: 0, width: 50},
-		{x_pos: 700, width: 50}
-	];
-
-	flagpole = {x_pos: 200, isReached: false};
-
-	game_score = 0;
+	startGame();
 }
 
 function draw()
@@ -116,14 +69,44 @@ function draw()
 			checkCollectable(collectables[i]);
 		}
 	}
+	// Draw flag pole and check if is reached
 	renderFlagpole();
 	checkFlagpole();
+
+	// Check remaining lives
+	checkPlayerDie();
 	pop();
 	// Draw game character.
 	drawGameChar();
 
 	// Draw Score text
 	drawScore();
+
+	// Draw lives tokens
+	drawLivesToken();
+
+	// Logic for displays "Game over" when lives is less than 1
+	if(lives < 1)
+	{
+		textAlign(CENTER);
+		textStyle(BOLD);
+		stroke(255, 99, 71);
+		fill(255, 215, 0);
+		textSize(50);
+		text("GAME OVER", width/2, height/2);
+		textSize(20);
+		text("INSERT COIN", width/2, height*0.55);
+		return;
+	}
+
+	// Logic for displays "Level complete. Press space to continue." when `flagpole.isReached` is true.
+	if(flagpole.isReached == true)
+	{
+		textAlign(CENTER);
+		textStyle(BOLD);
+		text("Press space to continue", width/2, height/3);
+		return;
+	}
 
 	// Logic to make the game character move or the background scroll.
 	if(isLeft)
@@ -163,6 +146,14 @@ function draw()
 
 	// Update real position of gameChar for collision detection.
 	gameChar_world_x = gameChar_x - scrollPos;
+
+	// Check collision detection game character with flag pole
+	if(flagpole.isReached == false)
+	{
+		checkFlagpole();
+	}
+
+	
 }
 
 
@@ -587,7 +578,6 @@ function drawCanyon(t_canyon)
 }
 
 // Function to check character is over a canyon.
-
 function checkCanyon(t_canyon)
 {	
 	if(isPlummeting == true)
@@ -613,7 +603,6 @@ function checkCanyon(t_canyon)
 // ----------------------------------
 
 // Function to draw collectable objects.
-
 function drawCollectable(t_collectable)
 {
 	if (t_collectable.isFound == false) {
@@ -630,7 +619,6 @@ function drawCollectable(t_collectable)
 }
 
 // Function to check character has collected an item.
-
 function checkCollectable(t_collectable)
 {
 	if (dist(gameChar_world_x, gameChar_y, t_collectable.x_pos, t_collectable.y_pos + 10) < 30) {
@@ -639,17 +627,21 @@ function checkCollectable(t_collectable)
 	}
 }
 
+// Function to draw Score:
 function drawScore()
 {
+	textAlign(LEFT);
+	textStyle(BOLD);
+	textSize(16);
 	fill(255);
 	noStroke();
-	text("SCORE: "+game_score, 20, 20);
+	text("SCORE: "+game_score, 30, 20);
 }
-
+// Function to draw flagpole
 function renderFlagpole()
 {
 	
-	var flagY = floorPos_y - 200;
+	var flagY = floorPos_y - 30;
 	stroke(255);
 	strokeWeight(5);
 	line(flagpole.x_pos, floorPos_y, flagpole.x_pos, floorPos_y - 200);
@@ -661,28 +653,101 @@ function renderFlagpole()
 	}
 	else
 	{
-		rect(flagpole.x_pos, flagY+ 170	, 40, 30);
+		rect(flagpole.x_pos, flagY - 200, 40, 30);
 	}	
-
-
-	// flagY = floorPos_y - 30;
-	// stroke(255);
-	// strokeWeight(5);
-	// line(flagpole.x_pos, floorPos_y, flagpole.x_pos, floorPos_y - 200);
-	// fill(255, 0, 255);
-	// noStroke();
-	// rect(flagpole.x_pos, flagY, 40, 30);
-	
 }
 
+// Function to check coolisions flag pole with gameCharacter
 function checkFlagpole()
 {
-	d = dist(flagpole.x_pos, floorPos_y -200, gameChar_x, gameChar_y);
-	console.log(d);
+	var d = abs(gameChar_world_x - flagpole.x_pos);
 
-	if( d < 30)
+	if( d < 15)
 	{
 		flagpole.isReached = true;
-		console.log(d);
+	}
+}
+
+// Function to check if player die
+function checkPlayerDie()
+{
+	if(gameChar_y >= height && gameChar_y < height+ 12)
+	{
+		lives -= 1;
+		console.log("Lives counter "+ lives);
+	}
+	else if(lives > 0 && gameChar_y > height) 
+	{
+		startGame();
+	}
+}
+
+function startGame()
+{
+	gameChar_x = width/2;
+	floorPos_y = height * 3/4;
+	gameChar_y = floorPos_y;
+	
+
+	// Variable to control the background scrolling.
+	scrollPos = 0;
+
+	/* Variable to store the real position of the gameChar in the game
+	   world. Needed for collision detection.*/
+	gameChar_world_x = gameChar_x - scrollPos;
+
+	// Boolean variables to control the movement of the game character.
+	isLeft = false;
+	isRight = false;
+	isFalling = false;textAlign(LEFT);
+	isPlummeting = false;
+
+	// Initialise arrays of scenery objects.
+	let r = 1;
+	trees_x = [-1350, - 1200, -1000, - 600, - 350, - 200, 0, 200, 350, 600, 1000, 1200, 1350, 1600, 2000];
+	clouds = [
+		{x_pos: -460, y_pos: 180, scale: r},
+		{x_pos: -360, y_pos: 180, scale: r},
+		{x_pos: -800, y_pos: 180, scale: r},
+		{x_pos: -200, y_pos: 180, scale: r},
+		{x_pos: 100, y_pos: 100, scale: r},
+		{x_pos: 600, y_pos: 120, scale: r},
+		{x_pos: 800, y_pos: 100, scale: r},
+		{x_pos: 360, y_pos: 180, scale: r},
+		{x_pos: 460, y_pos: 180, scale: r},
+		{x_pos: 960, y_pos: 180, scale: r},
+	];
+
+	mountains = [
+		{x_pos: 150, y_pos: 400, scale: .7},
+		{x_pos: 300, y_pos: 400, scale: 1.1},
+		{x_pos: 820, y_pos: 400, scale: .6}
+	];
+	collectables = [
+		{x_pos: 180, y_pos: floorPos_y, scale: 1.0, isFound: false},
+		{x_pos: 400, y_pos: floorPos_y, scale: 1.0, isFound: false},
+		{x_pos: 650, y_pos: floorPos_y, scale: 1.0, isFound: false}
+	];
+
+	canyons = [
+		{x_pos: 0, width: 50},
+		{x_pos: 700, width: 50}
+	];
+
+	flagpole = {x_pos: 1200, isReached: false};
+
+	game_score = 0;
+
+}
+
+function drawLivesToken()
+{
+	for( var i = 0; i < lives; i++)
+	{
+		fill(255, 0, 255);
+		stroke(255);
+		strokeWeight(5);
+		ellipse(width - 150 + i * 25, height/22, 20, 20);
+	console.log(lives);
 	}
 }
