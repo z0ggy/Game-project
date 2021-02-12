@@ -1,6 +1,6 @@
 /*
 
-The Game Project 5 - Bring it all together
+The Game Project 6
 
 */
 
@@ -669,13 +669,9 @@ function checkFlagpole()
 // Function to check if player die
 function checkPlayerDie()
 {
-	if(gameChar_y >= height && gameChar_y < height+ 12)
+	if(gameChar_y > height)
 	{
 		lives -= 1;
-		console.log("Lives counter "+ lives);
-	}
-	else if(lives > 0 && gameChar_y > height) 
-	{
 		startGame();
 	}
 }
