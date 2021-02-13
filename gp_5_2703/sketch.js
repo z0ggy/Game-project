@@ -1,9 +1,13 @@
 /*
 
-The Game Project 6
+- Copy your game project code into this file
+- for the p5.Sound library look here https://p5js.org/reference/#/libraries/p5.sound
+- for finding cool sounds perhaps look here
+https://freesound.org/
 
 */
 
+var jumpSound;
 var gameChar_x;
 var gameChar_y;
 var floorPos_y;
@@ -21,6 +25,16 @@ var isPlummeting;
 var game_score;
 var flagpole;
 var lives;
+
+
+function preload()
+{
+	soundFormats('mp3','wav');
+
+	//load sound
+	jumpSound = loadSound('assets/jump.wav');
+    jumpSound.setVolume(0.1);
+}
 
 function setup()
 {
@@ -177,7 +191,9 @@ function keyPressed(){
 	if (keyCode == 32 && gameChar_y >= floorPos_y) // stop character to jump higher
 	{
         gameChar_y -= 100;
-	}                                          
+	    jumpSound.play();
+	}
+	
 
 }
 
@@ -385,7 +401,7 @@ function drawGameChar()
 
 	}
 	else if(isFalling)    	{
-		// add your jumping facing forwards code
+		//jumping facing forwards code
 		//Head
 		fill(41, 152, 69);
 		rect(gameChar_x + 15, gameChar_y - 69, 25, 25, 5);//head
@@ -461,8 +477,7 @@ function drawGameChar()
 		pop();
 	}
 	else {
-		// add your standing front facing code
-		//Head
+		// standing front facing code
 		fill(41, 152, 69);
 		rect(gameChar_x + 15, gameChar_y - 73, 25, 25, 5); //head
 		rect(gameChar_x + 15, gameChar_y - 48, 25, 27, 5, 5, 1, 1); //body light
@@ -508,7 +523,6 @@ function drawGameChar()
 // Background render functions
 // ---------------------------
 
-// Function to draw cloud objects.
 function drawClouds()
 {
 	for(var i = 0; i < clouds.length; i++)
@@ -520,7 +534,6 @@ function drawClouds()
 	}
 }
 
-// Function to draw mountains objects.
 function drawMountains()
 {
 	for(var i = 0; i < mountains.length; i++)
@@ -536,7 +549,6 @@ function drawMountains()
 	}
 }
 
-// Function to draw trees objects.
 function drawTrees()
 {
 	for(var i = 0; i < trees_x.length; i++)
@@ -557,8 +569,6 @@ function drawTrees()
 // ---------------------------------
 // Canyon render and check functions
 // ---------------------------------
-
-// Function to draw canyon objects.
 
 function drawCanyon(t_canyon)
 {
