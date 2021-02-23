@@ -6,6 +6,7 @@
 https://freesound.org/
 
 */
+let foundSound;
 let walkSound;
 let jumpSound;
 let gameChar_x;
@@ -35,6 +36,9 @@ function preload()
 	jumpSound = loadSound('assets/jump.wav');
     jumpSound.setVolume(0.1);
 	walkSound = loadSound('assets/walk.wav');
+	walkSound.setVolume(0.5);
+	foundSound = loadSound('assets/found');
+	foundSound.setVolume(0.5);
 }
 
 function setup()
@@ -183,11 +187,13 @@ function keyPressed(){
 	if(key == 'A' || keyCode == 37)
 	{
 		isLeft = true;
+		walkSound.play();
 	}
 
 	if(key == 'D' || keyCode == 39)
 	{
 		isRight = true;
+		walkSound.play();
 	}
 	if (keyCode == 32 && gameChar_y >= floorPos_y) // stop character to jump higher
 	{
@@ -204,11 +210,13 @@ function keyReleased()
 	if(key == 'A' || keyCode == 37)
 	{
 		isLeft = false;
+		walkSound.stop();
 	}
 
 	if(key == 'D' || keyCode == 39)
 	{
 		isRight = false;
+		walkSound.stop();
 	}
 
 }
@@ -217,15 +225,12 @@ function keyReleased()
 // ------------------------------
 // Game character render function
 // ------------------------------
-
-// Function to draw the game character.
 function drawGameChar()
 {
-	// draw game character
 	noStroke();
 	if (isLeft && isFalling) {
-		// add your jumping-left code
-		//Head
+		
+		//jumping-left code
 		fill(41, 152, 69);
 		rect(gameChar_x, gameChar_y - 70, 50, 25, 5); //head
 		rect(gameChar_x + 25, gameChar_y - 45, 25, 27, 5, 5, 1, 1); //body light
@@ -268,8 +273,8 @@ function drawGameChar()
 		rect(0, 0, 3, 30, 5);
 		pop();
 	} else if (isRight && isFalling) {
-		// add your jumping-right code
-		//Head
+		//jumping-right code
+		
 		fill(41, 152, 69);
 		rect(gameChar_x, gameChar_y - 70, 50, 25, 5); //head
 		rect(gameChar_x, gameChar_y - 45, 25, 27, 5, 5, 1, 1); //body light
@@ -312,7 +317,7 @@ function drawGameChar()
 		pop();
 
 	} else if (isLeft) {
-		// add your walking left code
+		//walking left code
 		fill(41, 152, 69);
 		rect(gameChar_x, gameChar_y - 73, 50, 25, 5); //head
 		rect(gameChar_x + 25, gameChar_y - 48, 25, 27, 5, 5, 1, 1); //body light
@@ -356,8 +361,8 @@ function drawGameChar()
 		pop();
 
 	} else if (isRight) {
-		// add your walking right code
-		//Head
+		//walking right code
+
 		fill(41, 152, 69);
 		rect(gameChar_x, gameChar_y - 73, 50, 25, 5); //head
 		rect(gameChar_x, gameChar_y - 48, 25, 27, 5, 5, 1, 1); //body light
@@ -633,6 +638,7 @@ function checkCollectable(t_collectable)
 	if (dist(gameChar_world_x, gameChar_y, t_collectable.x_pos, t_collectable.y_pos + 10) < 30) {
 		t_collectable.isFound = true;
 		game_score += 1;
+		foundSound.play();
 	}
 }
 
