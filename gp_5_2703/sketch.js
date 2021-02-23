@@ -6,6 +6,7 @@
 https://freesound.org/
 
 */
+let splashSound;
 let foundSound;
 let walkSound;
 let jumpSound;
@@ -39,6 +40,8 @@ function preload()
 	walkSound.setVolume(0.5);
 	foundSound = loadSound('assets/found');
 	foundSound.setVolume(0.5);
+	splashSound = loadSound('assets/splash.wav');
+	splashSound.setVolume(0.6);
 }
 
 function setup()
@@ -597,6 +600,7 @@ function checkCanyon(t_canyon)
 	if(isPlummeting == true)
     {
         gameChar_y += 7;
+
         // plummentig character cannot go outside of canyon walls
         gameChar_world_x = constrain(gameChar_world_x, t_canyon.x_pos + 80, t_canyon.x_pos + 80 + t_canyon.width);
 	}
@@ -690,6 +694,7 @@ function checkPlayerDie()
 	{
 		lives -= 1;
 		startGame();
+		splashSound.play();
 	}
 }
 
