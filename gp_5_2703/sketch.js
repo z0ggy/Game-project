@@ -6,25 +6,25 @@
 https://freesound.org/
 
 */
+let walkSound;
+let jumpSound;
+let gameChar_x;
+let gameChar_y;
+let floorPos_y;
+let scrollPos;
+let trees_x;
+let collectables;
+let canyons;
+let mountains;
+let gameChar_world_x;
 
-var jumpSound;
-var gameChar_x;
-var gameChar_y;
-var floorPos_y;
-var scrollPos;
-var trees_x;
-var collectables;
-var canyons;
-var mountains;
-var gameChar_world_x;
-
-var isLeft;
-var isRight;
-var isFalling;
-var isPlummeting;
-var game_score;
-var flagpole;
-var lives;
+let isLeft;
+let isRight;
+let isFalling;
+let isPlummeting;
+let game_score;
+let flagpole;
+let lives;
 
 
 function preload()
@@ -34,6 +34,7 @@ function preload()
 	//load sound
 	jumpSound = loadSound('assets/jump.wav');
     jumpSound.setVolume(0.1);
+	walkSound = loadSound('assets/walk.wav');
 }
 
 function setup()
