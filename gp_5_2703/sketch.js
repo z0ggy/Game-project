@@ -17,6 +17,7 @@ let scrollPos;
 let trees_x;
 let collectables;
 let canyons;
+let mountain;
 let mountains;
 let gameChar_world_x;
 
@@ -51,6 +52,8 @@ function setup()
 	lives = 3;
 
 	startGame();
+
+	mountain = createMountain();
 }
 
 function draw()
@@ -68,6 +71,7 @@ function draw()
 
 	// Draw mountains.
 	drawMountains();
+	mountain.draw();
 	
 
 	// Draw trees.
@@ -766,4 +770,30 @@ function drawLivesToken()
 		ellipse(width - 150 + i * 25, height/22, 20, 20);
 	console.log(lives);
 	}
+}
+
+function createMountain()
+{
+	var mount = {
+		x: -300,
+		y: 400,
+		scale: 1,
+
+		draw: function()
+		{
+			
+			
+			fill(200,0,0);
+ 		    noStroke();
+ 		    triangle(this.x + 50, this.y + 32, 
+ 		             this.x + 150 * this.scale, this.y - 300 * this.scale,
+ 		             this.x + 250 * this.scale, this.y + 32);
+ 		    //    triangle(mountains[i].x_pos + 150, mountains[i].y_pos + 32, 
+ 		    //            mountains[i].x_pos + 150 * mountains[i].scale, mountains[i].y_pos - 250 * mountains[i].scale,
+ 		    //            mountains[i].x_pos + 350 * mountains[i].scale, mountains[i].y_pos + 32);
+			
+
+		}
+	}
+	return mount;
 }
