@@ -10,16 +10,20 @@ let splashSound;
 let foundSound;
 let walkSound;
 let jumpSound;
+
 let gameChar_x;
 let gameChar_y;
+
 let floorPos_y;
 let scrollPos;
+
 let trees_x;
 let collectables;
 let canyons;
-let mountain;
 let mountains;
 let gameChar_world_x;
+
+let reacts;
 
 let isLeft;
 let isRight;
@@ -48,12 +52,26 @@ function preload()
 function setup()
 {
 	createCanvas(1024, 576);
+
+	mountains = [];
+    
+    let incr = (width)/5 +20;
+    
+    for(let i = 0; i < 5; i++)
+    {
+        let mount = createMountain();
+        mountains.push(mount);
+        mountains[i].x += i * incr;
+        console.table(mountains[i]);
+    }
 	
 	lives = 3;
 
 	startGame();
 
-	mountain = createMountain();
+	
+
+
 }
 
 function draw()
@@ -70,8 +88,15 @@ function draw()
 	drawClouds();
 
 	// Draw mountains.
-	drawMountains();
-	mountain.draw();
+	//drawMountains();
+	//mountains.forEach(element => element.draw());
+	for(let i = 0; i < mountains.length; i++)
+	{
+		//print(mountains[i]);
+		//mountains[i].draw();
+	}
+
+	mountains.forEach(mountain => (mountain).draw());
 	
 
 	// Draw trees.
@@ -547,20 +572,20 @@ function drawClouds()
 	}
 }
 
-function drawMountains()
-{
-	for(var i = 0; i < mountains.length; i++)
-	{
-		fill(150);
-        noStroke();
-        triangle(mountains[i].x_pos + 50, mountains[i].y_pos + 32, 
-                mountains[i].x_pos + 150 * mountains[i].scale, mountains[i].y_pos - 300 * mountains[i].scale,
-                mountains[i].x_pos + 250 * mountains[i].scale, mountains[i].y_pos + 32);
-        triangle(mountains[i].x_pos + 150, mountains[i].y_pos + 32, 
-                mountains[i].x_pos + 150 * mountains[i].scale, mountains[i].y_pos - 250 * mountains[i].scale,
-                mountains[i].x_pos + 350 * mountains[i].scale, mountains[i].y_pos + 32);
-	}
-}
+//function drawMountains()
+// {
+// 	for(var i = 0; i < mountains.length; i++)
+// 	{
+// 		fill(150);
+//         noStroke();
+//         triangle(mountains[i].x_pos + 50, mountains[i].y_pos + 32, 
+//                 mountains[i].x_pos + 150 * mountains[i].scale, mountains[i].y_pos - 300 * mountains[i].scale,
+//                 mountains[i].x_pos + 250 * mountains[i].scale, mountains[i].y_pos + 32);
+//         triangle(mountains[i].x_pos + 150, mountains[i].y_pos + 32, 
+//                 mountains[i].x_pos + 150 * mountains[i].scale, mountains[i].y_pos - 250 * mountains[i].scale,
+//                 mountains[i].x_pos + 350 * mountains[i].scale, mountains[i].y_pos + 32);
+// 	}
+// }
 
 function drawTrees()
 {
@@ -738,11 +763,11 @@ function startGame()
 		{x_pos: 960, y_pos: 180, scale: r},
 	];
 
-	mountains = [
-		{x_pos: 150, y_pos: 400, scale: .7},
-		{x_pos: 300, y_pos: 400, scale: 1.1},
-		{x_pos: 820, y_pos: 400, scale: .6}
-	];
+	// mountains = [
+	// 	{x_pos: 150, y_pos: 400, scale: .7},
+	// 	{x_pos: 300, y_pos: 400, scale: 1.1},
+	// 	{x_pos: 820, y_pos: 400, scale: .6}
+	// ];
 	collectables = [
 		{x_pos: 180, y_pos: floorPos_y, scale: 1.0, isFound: false},
 		{x_pos: 400, y_pos: floorPos_y, scale: 1.0, isFound: false},
@@ -772,28 +797,45 @@ function drawLivesToken()
 	}
 }
 
+// function createMountain()
+// {
+// 	let mount = {
+// 		x: 100,
+// 		y: 400,
+// 		scale: 1,
+// 		draw: function()
+// 		{
+			
+			
+// 			fill(200,0,0);
+//  		    noStroke();
+//  		    triangle(this.x + 50, this.y + 32, 
+//  		             this.x + 150 * this.scale, this.y - 300 * this.scale,
+//  		             this.x + 250 * this.scale, this.y + 32);
+//  		    //    triangle(mountains[i].x_pos + 150, mountains[i].y_pos + 32, 
+//  		    //            mountains[i].x_pos + 150 * mountains[i].scale, mountains[i].y_pos - 250 * mountains[i].scale,
+//  		    //            mountains[i].x_pos + 350 * mountains[i].scale, mountains[i].y_pos + 32);
+			
+
+// 		}
+// 	}
+// 	return mount;
+// }
+
 function createMountain()
 {
-	var mount = {
-		x: -300,
-		y: 400,
+   let mount = {
+        x: 100, 
+        y: 400, 
 		scale: 1,
-
-		draw: function()
-		{
-			
-			
-			fill(200,0,0);
- 		    noStroke();
- 		    triangle(this.x + 50, this.y + 32, 
+        draw: function()
+        {
+        	fill(200, 0, 200);
+			noStroke();
+			triangle(this.x + 50, this.y + 32, 
  		             this.x + 150 * this.scale, this.y - 300 * this.scale,
  		             this.x + 250 * this.scale, this.y + 32);
- 		    //    triangle(mountains[i].x_pos + 150, mountains[i].y_pos + 32, 
- 		    //            mountains[i].x_pos + 150 * mountains[i].scale, mountains[i].y_pos - 250 * mountains[i].scale,
- 		    //            mountains[i].x_pos + 350 * mountains[i].scale, mountains[i].y_pos + 32);
-			
-
-		}
-	}
-	return mount;
+        }
+    }
+    return mount;
 }
