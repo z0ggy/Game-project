@@ -6,6 +6,7 @@
 https://freesound.org/
 
 */
+let backgroundMusic;
 let splashSound;
 let foundSound;
 let walkSound;
@@ -43,19 +44,22 @@ function preload()
     jumpSound.setVolume(0.1);
 	walkSound = loadSound('assets/walk.wav');
 	walkSound.setVolume(0.5);
-	foundSound = loadSound('assets/found');
+	foundSound = loadSound('assets/found.mp3');
 	foundSound.setVolume(0.5);
 	splashSound = loadSound('assets/splash.wav');
 	splashSound.setVolume(0.6);
+	backgroundMusic = loadSound('assets/background.mp3')
+	backgroundMusic.setVolume(0.2);
 }
 
 function setup()
 {
 	createCanvas(1024, 576);
+	backgroundMusic.loop();
 
 	mountains = [];
     
-    let incr = (width)/5 +20;
+    let incr = (width+1000)/2.5;
     
     for(let i = 0; i < 5; i++)
     {
@@ -825,7 +829,7 @@ function drawLivesToken()
 function createMountain()
 {
    let mount = {
-        x: 100, 
+        x: -800, 
         y: 400, 
 		scale: 1,
         draw: function()
