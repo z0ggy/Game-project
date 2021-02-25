@@ -21,6 +21,7 @@ let scrollPos;
 let trees_x;
 let collectables;
 let canyons;
+let canyonsFactory;//change to canyons afer implementing factory
 let mountains;
 let gameChar_world_x;
 
@@ -34,7 +35,7 @@ let game_score;
 let flagpole;
 let lives;
 
-
+let c;// temporary for delete
 function preload()
 {
 	soundFormats('mp3','wav');
@@ -66,15 +67,21 @@ function setup()
         let mount = createMountain();
         mountains.push(mount);
         mountains[i].x += i * incr;
-        console.table(mountains[i]);
     }
+
+	canyonsFactory = [];
+
+	for(let i = 0; i < 4; i++)
+	{
+		let canyon = createCanyon();
+		canyonsFactory.push(canyon);
+		canyonsFactory[i].x += i * incr;
+		console.table(canyonsFactory[i]);
+	}
 	
 	lives = 3;
 
 	startGame();
-
-	
-
 
 }
 
@@ -92,14 +99,6 @@ function draw()
 	drawClouds();
 
 	// Draw mountains.
-	//drawMountains();
-	//mountains.forEach(element => element.draw());
-	for(let i = 0; i < mountains.length; i++)
-	{
-		//print(mountains[i]);
-		//mountains[i].draw();
-	}
-
 	mountains.forEach(mountain => (mountain).draw());
 	
 
@@ -108,12 +107,16 @@ function draw()
 	
 
 	// Draw canyons.
-		for(var i = 0; i < canyons.length; i++)
-	{
-		drawCanyon(canyons[i]);
-		checkCanyon(canyons[i]);
-	}
-	
+	// 	for(var i = 0; i < canyons.length; i++)
+	// {
+	// 	drawCanyon(canyons[i]);
+	// 	checkCanyon(canyons[i]);
+	// }
+
+	canyonsFactory.forEach(canyon => (canyon).draw());
+	canyonsFactory.forEach(canyon => (canyon).checkCanyon());
+
+	//canyonsFactory.forEach(x => { x.draw; x.checkCanyon; });
 
 	// Draw collectable items.
 	for(var i = 0; i < collectables.length; i++)
@@ -836,10 +839,84 @@ function createMountain()
         {
         	fill(200, 0, 200);
 			noStroke();
-			triangle(this.x + 50, this.y + 32, 
+			triangle(this.x, this.y + 32, 
  		             this.x + 150 * this.scale, this.y - 300 * this.scale,
  		             this.x + 250 * this.scale, this.y + 32);
         }
     }
     return mount;
+}
+
+function createCanyon()
+{
+	let canyon = {
+		x: -600,
+		width: random(30, 55),
+
+		draw: function()
+		{
+			fill(139,69,19);
+			triangle(this.x + 30, 576,
+					 this.x + 80, 432,
+					 this.x + 80, 576);
+	
+			triangle(this.x + 120 + this.width, 576,
+					 this.x + 120 + this.width, 432,
+					 this.x + 170 + this.width, 576);
+
+			fill(100, 155, 255);
+			rect(this.x + 80, 432, 40 + this.width, 144); //blue canyon gap
+		},
+
+		draWater: function() 
+		{
+
+    		background(254,254,255);
+
+   			 fill(100,200,255,200);
+    			beginShape();
+
+    			let xoff = this.x; 
+
+    			for (let x = 0; x <= 100; x += 10) 
+				{
+
+        		var y = map(noise(xoff, yoff), 0, 1, 400, 450);
+
+        			vertex(this.x, y);
+        			xoff += 0.05;
+    			}
+    			yoff += 0.03;
+    			vertex(100, height);
+    			vertex(0, height);
+    			endShape(CLOSE);
+		},
+
+		checkCanyon: function()
+		{	
+			if(isPlummeting == true)
+    		{
+        		gameChar_y += 7;
+
+        		// plummentig character cannot go outside of canyon walls
+        		gameChar_world_x = constrain(gameChar_world_x, 
+					this.x + 80, 
+					this.x + 80 + 
+					this.width);
+			}
+	
+			if((gameChar_world_x >= this.x + 80) 
+				&& (gameChar_world_x <= this.x + 80 + this.width) 
+				&& (gameChar_y >=floorPos_y))  
+    		{
+        		isPlummeting = true;
+    		}
+    		else
+    		{
+        		isPlummeting = false;
+    		}
+	
+		}	
+	}
+	return canyon;
 }
