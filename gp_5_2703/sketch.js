@@ -18,11 +18,12 @@ let gameChar_y;
 let floorPos_y;
 let scrollPos;
 
-let trees_x;
+//let trees_x;
 let collectables;
 let canyons;
-let canyonsFactory;//change to canyons afer implementing factory
+let yoff = 0;
 let mountains;
+let trees;
 let gameChar_world_x;
 
 let reacts;
@@ -57,26 +58,35 @@ function setup()
 {
 	createCanvas(1024, 576);
 	backgroundMusic.loop();
-
+    // Add mountain to array  
 	mountains = [];
-    
     let incr = (width+1000)/2.5;
-    
+	
     for(let i = 0; i < 5; i++)
     {
         let mount = createMountain();
         mountains.push(mount);
-        mountains[i].x += i * incr;
+        mountains[i].x += i * incr/2;
     }
-
-	canyonsFactory = [];
-
+//Add canyons to array
+	canyons = [];
 	for(let i = 0; i < 4; i++)
 	{
 		let canyon = createCanyon();
-		canyonsFactory.push(canyon);
-		canyonsFactory[i].x += i * incr;
-		console.table(canyonsFactory[i]);
+		canyons.push(canyon);
+		canyons[i].x += i * incr;
+	}
+
+//Add tree to array
+
+	trees = [];
+	for(let i = 0; i < 10; i++)
+	{
+		let tree = createTree();
+		trees.push(tree);
+		trees[i].x += i * incr;
+
+		console.table(trees[i]);
 	}
 	
 	lives = 3;
@@ -103,20 +113,14 @@ function draw()
 	
 
 	// Draw trees.
-	drawTrees();
+	//drawTrees();
+	let t = createTree();
+	t.draw();
+	trees.forEach(tree => (tree).draw());
 	
-
-	// Draw canyons.
-	// 	for(var i = 0; i < canyons.length; i++)
-	// {
-	// 	drawCanyon(canyons[i]);
-	// 	checkCanyon(canyons[i]);
-	// }
-
-	canyonsFactory.forEach(canyon => (canyon).draw());
-	canyonsFactory.forEach(canyon => (canyon).checkCanyon());
-
-	//canyonsFactory.forEach(x => { x.draw; x.checkCanyon; });
+	// Draw canyons
+	canyons.forEach(canyon => (canyon).draw());
+	canyons.forEach(canyon => (canyon).checkCanyon());
 
 	// Draw collectable items.
 	for(var i = 0; i < collectables.length; i++)
@@ -781,10 +785,10 @@ function startGame()
 		{x_pos: 650, y_pos: floorPos_y, scale: 1.0, isFound: false}
 	];
 
-	canyons = [
-		{x_pos: 0, width: 50},
-		{x_pos: 700, width: 50}
-	];
+	// canyons = [
+	// 	{x_pos: 0, width: 50},
+	// 	{x_pos: 700, width: 50}
+	// ];
 
 	flagpole = {x_pos: 1200, isReached: false};
 
@@ -919,4 +923,27 @@ function createCanyon()
 		}	
 	}
 	return canyon;
+}
+
+function createTree() 
+{
+	let tree = {
+		x: -550,
+		y: height / 1.64,
+		scale: random(0.8, 1.2),
+
+		draw: function () 
+		{
+			fill(155, 103, 60); //tree trunk
+			rect(this.x, this.y, 20, 82);
+			fill(0, 255, 0); //branches
+			ellipse(this.x + 10, this.y - 30, 80, 80);
+			ellipse(this.x - 30, this.y - 50, 80, 80);
+			ellipse(this.x + 50, this.y - 50, 80, 80);
+			ellipse(this.x - 20, this.y - 90, 80, 80);
+			ellipse(this.x + 30, this.y - 90, 80, 80);
+
+		}
+	}
+	return tree;
 }
