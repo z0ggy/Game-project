@@ -83,6 +83,7 @@ function setup() {
 		trees.push(tree);
 		trees[i].x += i * incr;
 	}
+		console.table(trees);
 
 	//Add cloud to array
 	clouds = [];
@@ -90,15 +91,25 @@ function setup() {
 		let cloud = createCloud();
 		clouds.push(cloud);
 		clouds[i].x += i * incr/2.5;
-
-		console.table(clouds[i]);
 	}
+
+	//Add collectables to array
+	collectables = [];
+	for(let i = 0; i < 4; i++)
+	{
+		let coll = createCollectable();
+		collectables.push(coll);
+		collectables[i].x += i * incr/2;
+	}
+		console.table(collectables);
 
 	lives = 3;
 
 	startGame();
 
 }
+
+//TODO MAKE INCR FROM -500 to 1500
 
 function draw() {
 	background(100, 155, 255); // fill the sky blue
@@ -132,15 +143,29 @@ function draw() {
 	{
 		canyon.draw();
 		canyon.checkCanyon();
+		//canyon.draWater();
 	});
 
 	// Draw collectable items.
-	for (var i = 0; i < collectables.length; i++) {
-		if (!collectables[i].isFound) {
-			drawCollectable(collectables[i]);
-			checkCollectable(collectables[i]);
-		}
+let col = createCollectable();
+// col.draw();
+//col.checkCollectable();
+
+//collectables.forEach(colectable => (colectable).draw());
+collectables.forEach(function(colectable)
+{
+	if(!colectable.isFound)
+	{
+		colectable.draw();
+		colectable.checkCollectable();
 	}
+});
+	// for (var i = 0; i < collectables.length; i++) {
+	// 	if (!collectables[i].isFound) {
+	// 		drawCollectable(collectables[i]);
+	// 		checkCollectable(collectables[i]);
+	// 	}
+	// }
 	// Draw flag pole and check if is reached
 	renderFlagpole();
 	checkFlagpole();
@@ -586,74 +611,75 @@ function drawGameChar() {
 // 	}
 // }
 
-function drawTrees() {
-	for (var i = 0; i < trees_x.length; i++) {
-		treePos_y = height / 1.64;
-		fill(155, 103, 60); //tree trunk
-		rect(trees_x[i], treePos_y, 20, 82);
-		fill(0, 255, 0); //branches
-		ellipse(trees_x[i] + 10, treePos_y - 30, 80, 80);
-		ellipse(trees_x[i] - 30, treePos_y - 50, 80, 80);
-		ellipse(trees_x[i] + 50, treePos_y - 50, 80, 80);
-		ellipse(trees_x[i] - 20, treePos_y - 90, 80, 80);
-		ellipse(trees_x[i] + 30, treePos_y - 90, 80, 80);
-	}
-}
+// function drawTrees() {
+// 	for (var i = 0; i < trees_x.length; i++) {
+// 		treePos_y = height / 1.64;
+// 		fill(155, 103, 60); //tree trunk
+// 		rect(trees_x[i], treePos_y, 20, 82);
+// 		fill(0, 255, 0); //branches
+// 		ellipse(trees_x[i] + 10, treePos_y - 30, 80, 80);
+// 		ellipse(trees_x[i] - 30, treePos_y - 50, 80, 80);
+// 		ellipse(trees_x[i] + 50, treePos_y - 50, 80, 80);
+// 		ellipse(trees_x[i] - 20, treePos_y - 90, 80, 80);
+// 		ellipse(trees_x[i] + 30, treePos_y - 90, 80, 80);
+// 	}
+// }
 
 
 // ---------------------------------
 // Canyon render and check functions
 // ---------------------------------
 
-function drawCanyon(t_canyon) {
-	fill(139, 69, 19);
-	triangle(t_canyon.x_pos + 30, 576,
-		t_canyon.x_pos + 80, 432,
-		t_canyon.x_pos + 80, 576);
+// function drawCanyon(t_canyon) {
+// 	fill(139, 69, 19);
+// 	triangle(t_canyon.x_pos + 30, 576,
+// 		t_canyon.x_pos + 80, 432,
+// 		t_canyon.x_pos + 80, 576);
 
-	triangle(t_canyon.x_pos + 120 + t_canyon.width, 576,
-		t_canyon.x_pos + 120 + t_canyon.width, 432,
-		t_canyon.x_pos + 170 + t_canyon.width, 576);
+// 	triangle(t_canyon.x_pos + 120 + t_canyon.width, 576,
+// 		t_canyon.x_pos + 120 + t_canyon.width, 432,
+// 		t_canyon.x_pos + 170 + t_canyon.width, 576);
 
-	fill(100, 155, 255);
-	rect(t_canyon.x_pos + 80, 432, 40 + t_canyon.width, 144); //blue canyon gap
-}
+// 	fill(100, 155, 255);
+// 	rect(t_canyon.x_pos + 80, 432, 40 + t_canyon.width, 144); //blue canyon gap
+// }
 
-// Function to check character is over a canyon.
-function checkCanyon(t_canyon) {
-	if (isPlummeting == true) {
-		gameChar_y += 7;
+// // Function to ch{…}k character is over a canyon.
+// function checkCanyon(t_canyon) {
+// 	if (isPlummeting == true) {
+// 		gameChar_y += 7;
 
-		// plummentig character cannot go outside of canyon walls
-		gameChar_world_x = constrain(gameChar_world_x, t_canyon.x_pos + 80, t_canyon.x_pos + 80 + t_canyon.width);
-	}
+// 		// plummentig character cannot go outside of canyon walls
+// 		gameChar_world_x = constrain(gameChar_world_x, t_canyon.x_pos + 80, t_canyon.x_pos + 80 + t_canyon.width);
+// 	}
 
-	if ((gameChar_world_x >= t_canyon.x_pos + 80) && (gameChar_world_x <= t_canyon.x_pos + 80 + t_canyon.width) && (gameChar_y >= floorPos_y)) {
-		isPlummeting = true;
-	} else {
-		isPlummeting = false;
-	}
+// 	if ((gameChar_world_x >= t_canyon.x_pos + 80) && (gameChar_world_x <= t_canyon.x_pos + 80 + t_canyon.width) && (gameChar_y >= floorPos_y)) {
+// 		isPlummeting = true;
+// 	} else {
+// 		isPlummeting = false;
+// 	}
 
-}
+// }
 
 // ----------------------------------
 // Collectable items render and check functions
 // ----------------------------------
 
 // Function to draw collectable objects.
-function drawCollectable(t_collectable) {
-	if (t_collectable.isFound == false) {
 
-		noStroke();
-		fill(255, 0, 0);
-		rect(t_collectable.x_pos, t_collectable.y_pos - 40, 40, 40);
-		rect(t_collectable.x_pos - 5, t_collectable.y_pos - 45, 50, 10);
-		fill(222, 200, 0);
-		rect(t_collectable.x_pos + 18, t_collectable.y_pos - 45, 4, 43);
-		rect(t_collectable.x_pos, t_collectable.y_pos - 25, 40, 4);
-	}
+// function drawCollectable(t_collectable) {
+// 	if (t_collectable.isFound == false) {
 
-}
+// 		noStroke();
+// 		fill(255, 0, 0);
+// 		rect(t_collectable.x_pos, t_collectable.y_pos - 40, 40, 40);
+// 		rect(t_collectable.x_pos - 5, t_collectable.y_pos - 45, 50, 10);
+// 		fill(222, 200, 0);
+// 		rect(t_collectable.x_pos + 18, t_collectable.y_pos - 45, 4, 43);
+// 		rect(t_collectable.x_pos, t_collectable.y_pos - 25, 40, 4);
+// 	}
+
+// }
 
 // Function to check character has collected an item.
 function checkCollectable(t_collectable) {
@@ -728,7 +754,7 @@ function startGame() {
 	isPlummeting = false;
 
 	// Initialise arrays of scenery objects.
-	let r = 1;
+	//let r = 1;
 	//trees_x = [-1350, - 1200, -1000, - 600, - 350, - 200, 0, 200, 350, 600, 1000, 1200, 1350, 1600, 2000];
 	// clouds = [
 	// 	{x_pos: -460, y_pos: 180, scale: r},
@@ -748,25 +774,25 @@ function startGame() {
 	// 	{x_pos: 300, y_pos: 400, scale: 1.1},
 	// 	{x_pos: 820, y_pos: 400, scale: .6}
 	// ];
-	collectables = [{
-			x_pos: 180,
-			y_pos: floorPos_y,
-			scale: 1.0,
-			isFound: false
-		},
-		{
-			x_pos: 400,
-			y_pos: floorPos_y,
-			scale: 1.0,
-			isFound: false
-		},
-		{
-			x_pos: 650,
-			y_pos: floorPos_y,
-			scale: 1.0,
-			isFound: false
-		}
-	];
+	// collectables = [{
+	// 		x_pos: 180,
+	// 		y_pos: floorPos_y,
+	// 		scale: 1.0,
+	// 		isFound: false
+	// 	},
+	// 	{
+	// 		x_pos: 400,
+	// 		y_pos: floorPos_y,
+	// 		scale: 1.0,
+	// 		isFound: false
+	// 	},
+	// 	{
+	// 		x_pos: 650,
+	// 		y_pos: floorPos_y,
+	// 		scale: 1.0,
+	// 		isFound: false
+	// 	}
+	// ];
 
 	// canyons = [
 	// 	{x_pos: 0, width: 50},
@@ -774,7 +800,7 @@ function startGame() {
 	// ];
 
 	flagpole = {
-		x_pos: 1200,
+		x_pos: 2200,
 		isReached: false
 	};
 
@@ -788,7 +814,6 @@ function drawLivesToken() {
 		stroke(255);
 		strokeWeight(5);
 		ellipse(width - 150 + i * 25, height / 22, 20, 20);
-		console.log(lives);
 	}
 }
 
@@ -861,7 +886,7 @@ function createCanyon() {
 
 			let xoff = this.x;
 
-			for (let x = 0; x <= 100; x += 10) {
+			for (let x = this.x; x <= this.width; x += 10) {
 
 				var y = map(noise(xoff, yoff), 0, 1, 400, 450);
 
@@ -869,8 +894,8 @@ function createCanyon() {
 				xoff += 0.05;
 			}
 			yoff += 0.03;
-			vertex(100, height);
-			vertex(0, height);
+			vertex(this.x + this.width, height);
+			vertex(this.x, height);
 			endShape(CLOSE);
 		},
 
@@ -898,13 +923,15 @@ function createCanyon() {
 	return canyon;
 }
 
-function createTree() {
+function createTree() 
+{
 	let tree = {
 		x: -550,
 		y: height / 1.64,
 		scale: random(0.8, 1.2),
 
-		draw: function () {
+		draw: function () 
+		{
 			fill(155, 103, 60); //tree trunk
 			rect(this.x, this.y, 20, 82);
 			fill(0, 255, 0); //branches
@@ -919,13 +946,15 @@ function createTree() {
 	return tree;
 }
 
-function createCloud() {
+function createCloud() 
+{
 	let cloud = {
 		x: -460,
 		y: random(100, 180),
 		scale: random(0.7, 1.1),
 
-		draw: function () {
+		draw: function () 
+		{
 			fill(255);
 			ellipse(this.x, this.y, 100 * this.scale, 80 * this.scale);
 			ellipse(this.x + 35 * this.scale, this.y, 80 * this.scale, 60 * this.scale);
@@ -933,4 +962,52 @@ function createCloud() {
 		}
 	}
 	return cloud;
+}
+
+function createCollectable()
+{	
+	let c = {
+		x: 600,
+		y: 432,
+		isFound: false,
+		
+		checkCollectable: function()
+		{
+			if (dist(gameChar_world_x, gameChar_y, this.x, this.y + 10) < 30) {
+			this.isFound = true;
+			game_score += 1;
+			foundSound.play();
+	}
+		},
+		draw: function()
+		{
+			if (this.isFound == false)
+			 {
+
+				noStroke();
+				fill(255, 0, 0);
+				rect(this.x, this.y - 40, 40, 40);
+				rect(this.x - 5, this.y - 45, 50, 10);
+				fill(222, 200, 0);
+				rect(this.x + 18, this.y - 45, 4, 43);
+				rect(this.x, this.y - 25, 40, 4);
+			}
+		}
+	}
+	return c;
+}
+
+
+function createWaterfall()
+{	
+	let w = {
+		x: -600,
+		y: 400,
+
+		draw: function()
+		{
+
+		}
+	}
+
 }
