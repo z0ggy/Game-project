@@ -58,17 +58,43 @@ function setup() {
 	createCanvas(1024, 576);
 	backgroundMusic.loop();
 
-	// Add mountain to array  
-	mountains = [];
+	lives = 3;
+
+	startGame();
+
+}
+
+function startGame() {
+	gameChar_x = width / 2;
+	floorPos_y = height * 3 / 4;
+	gameChar_y = floorPos_y;
+	textAlign(LEFT);
+
+	// Variable to control the background scrolling.
+	scrollPos = 0;
+
+	// Variable to store width range in the game
 	let incr = (width + 1000) / 2.5;
 
+	/* Variable to store the real position of the gameChar in the game
+	   world. Needed for collision detection.*/
+	gameChar_world_x = gameChar_x - scrollPos;
+
+	// Boolean variables to control the movement of the game character.
+	isLeft = false;
+	isRight = false;
+	isFalling = false;
+	isPlummeting = false;
+
+	// Initialise arrays of scenery objects.
+
+	mountains = [];
 	for (let i = 0; i < 5; i++) {
 		let mount = createMountain();
 		mountains.push(mount);
 		mountains[i].x += i * incr / 2;
 	}
 
-	//Add canyons to array
 	canyons = [];
 	for (let i = 0; i < 4; i++) {
 		let canyon = createCanyon();
@@ -77,7 +103,6 @@ function setup() {
 	}
 
 
-	//Add tree to array
 	trees = [];
 	for (let i = 0; i < 10; i++) {
 		let tree = createTree();
@@ -86,7 +111,6 @@ function setup() {
 	}
 		console.table(trees);
 
-	//Add cloud to array
 	clouds = [];
 	for (let i = 0; i < 10; i++) {
 		let cloud = createCloud();
@@ -94,7 +118,6 @@ function setup() {
 		clouds[i].x += i * incr/2.5;
 	}
 
-	//Add collectables to array
 	collectables = [];
 	for(let i = 0; i < 4; i++)
 	{
@@ -102,11 +125,17 @@ function setup() {
 		collectables.push(coll);
 		collectables[i].x += i * incr/2;
 	}
-		console.table(collectables);
 
-	lives = 3;
+	platforms = [];
+	platforms.push(createPlatform(100, floorPos_y - 100, 100));	
+	
 
-	startGame();
+	flagpole = {
+		x_pos: 2200,
+		isReached: false
+	};
+
+	game_score = 0;
 
 }
 
@@ -156,6 +185,11 @@ collectables.forEach(function(colectable)
 		colectable.checkCollectable();
 	}
 });
+
+platforms.forEach(function(platform)
+{
+	platform.draw();
+})
 
 	// Draw flag pole and check if is reached
 	renderFlagpole();
@@ -212,13 +246,28 @@ collectables.forEach(function(colectable)
 	}
 
 	// Logic to make the game character rise and fall.
-	if (gameChar_y < floorPos_y) {
-		gameChar_y += 2;
-		isFalling = true;
-	} else {
+	if (gameChar_y < floorPos_y) 
+	{
+		let isContact = false;
+		for(let i = 0; i < platforms.length; i++)
+		{
+			if(platforms[i].checkContact(gameChar_world_x, gameChar_y))
+			{
+				isContact = true;
+				break;
+			}
+		}
+		if(!isContact)
+		{
+			gameChar_y += 2;
+			isFalling = true;
+		}
+	} 
+	else 
+	{
 		isFalling = false;
 	}
-
+	
 	// Update real position of gameChar for collision detection.
 	gameChar_world_x = gameChar_x - scrollPos;
 
@@ -248,10 +297,13 @@ function keyPressed() {
 		isRight = true;
 		walkSound.play();
 	}
-	if (keyCode == 32 && gameChar_y >= floorPos_y) // stop character to jump higher
+	if (keyCode == 32  || key == 'ww')//&& gameChar_y >= floorPos_y) // stop character to jump higher
 	{
-		gameChar_y -= 100;
-		jumpSound.play();
+		if(!isFalling)
+		{
+			gameChar_y -= 100;
+			jumpSound.play();
+		}
 	}
 
 
@@ -724,80 +776,7 @@ function checkPlayerDie() {
 	}
 }
 
-function startGame() {
-	gameChar_x = width / 2;
-	floorPos_y = height * 3 / 4;
-	gameChar_y = floorPos_y;
 
-
-	// Variable to control the background scrolling.
-	scrollPos = 0;
-
-	/* Variable to store the real position of the gameChar in the game
-	   world. Needed for collision detection.*/
-	gameChar_world_x = gameChar_x - scrollPos;
-
-	// Boolean variables to control the movement of the game character.
-	isLeft = false;
-	isRight = false;
-	isFalling = false;
-	textAlign(LEFT);
-	isPlummeting = false;
-
-	// Initialise arrays of scenery objects.
-	//let r = 1;
-	//trees_x = [-1350, - 1200, -1000, - 600, - 350, - 200, 0, 200, 350, 600, 1000, 1200, 1350, 1600, 2000];
-	// clouds = [
-	// 	{x_pos: -460, y_pos: 180, scale: r},
-	// 	{x_pos: -360, y_pos: 180, scale: r},
-	// 	{x_pos: -800, y_pos: 180, scale: r},
-	// 	{x_pos: -200, y_pos: 180, scale: r},
-	// 	{x_pos: 100, y_pos: 100, scale: r},
-	// 	{x_pos: 600, y_pos: 120, scale: r},
-	// 	{x_pos: 800, y_pos: 100, scale: r},
-	// 	{x_pos: 360, y_pos: 180, scale: r},
-	// 	{x_pos: 460, y_pos: 180, scale: r},
-	// 	{x_pos: 960, y_pos: 180, scale: r},
-	// ];
-
-	// mountains = [
-	// 	{x_pos: 150, y_pos: 400, scale: .7},
-	// 	{x_pos: 300, y_pos: 400, scale: 1.1},
-	// 	{x_pos: 820, y_pos: 400, scale: .6}
-	// ];
-	// collectables = [{
-	// 		x_pos: 180,
-	// 		y_pos: floorPos_y,
-	// 		scale: 1.0,
-	// 		isFound: false
-	// 	},
-	// 	{
-	// 		x_pos: 400,
-	// 		y_pos: floorPos_y,
-	// 		scale: 1.0,
-	// 		isFound: false
-	// 	},
-	// 	{
-	// 		x_pos: 650,
-	// 		y_pos: floorPos_y,
-	// 		scale: 1.0,
-	// 		isFound: false
-	// 	}
-	// ];
-
-	// canyons = [
-	// 	{x_pos: 0, width: 50},
-	// 	{x_pos: 700, width: 50}
-	// ];
-
-	flagpole = {
-		x_pos: 2200,
-		isReached: false
-	};
-
-	game_score = 0;
-
-}
 
 function drawLivesToken() {
 	for (var i = 0; i < lives; i++) {
@@ -867,32 +846,10 @@ function createCanyon() {
 			fill(100, 155, 255);
 			rect(this.x + 80, 432, 40 + this.width, 144); //blue canyon gap
 		},
-
-		draWater: function () {
-
-			background(254, 254, 255);
-
-			fill(100, 200, 255, 200);
-			beginShape();
-
-			let xoff = this.x;
-
-			for (let x = this.x; x <= this.width; x += 10) {
-
-				var y = map(noise(xoff, yoff), 0, 1, 400, 450);
-
-				vertex(this.x, y);
-				xoff += 0.05;
-			}
-			yoff += 0.03;
-			vertex(this.x + this.width, height);
-			vertex(this.x, height);
-			endShape(CLOSE);
-		},
-
+		
 		checkCanyon: function () {
 			if (isPlummeting == true) {
-				gameChar_y += 7;
+				gameChar_y += 5;
 
 				// plummentig character cannot go outside of canyon walls
 				gameChar_world_x = constrain(gameChar_world_x,
@@ -988,17 +945,32 @@ function createCollectable()
 	return c;
 }
 
-
-function createWaterfall()
-{	
-	let w = {
-		x: -600,
-		y: 400,
-
+function createPlatform(x, y, length)
+{
+	let platform = {
+		x: x,
+		y: y,
+		length: length,
 		draw: function()
 		{
+			fill(100, 100, 100);
+			rect(this.x, this.y, this.length, 15, 25, 0, 0, 0);
+			rect(this.x, this.y, 15, 30, 25, 0, 0, 0);
+		},
+		checkContact: function(gc_x, gc_y)
+		{
+			if(gc_x > this.x - 30 && gc_x < this.x + this.length)
+			{
+				let d = this.y - gc_y;
+				if(d >= 0 && d < 3)
+				{
+					isFalling = false;
+					return true;
+				}
+			}
 
+			return false;
 		}
 	}
-
+	return platform;
 }
