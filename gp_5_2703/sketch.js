@@ -36,7 +36,8 @@ let game_score;
 let flagpole;
 let lives;
 
-let c; // temporary for delete
+let platforms;
+
 function preload() {
 	soundFormats('mp3', 'wav');
 
@@ -50,7 +51,7 @@ function preload() {
 	splashSound = loadSound('assets/splash.wav');
 	splashSound.setVolume(0.6);
 	backgroundMusic = loadSound('assets/background.mp3')
-	backgroundMusic.setVolume(0.2);
+	backgroundMusic.setVolume(0.0);
 }
 
 function setup() {
@@ -147,11 +148,6 @@ function draw() {
 	});
 
 	// Draw collectable items.
-let col = createCollectable();
-// col.draw();
-//col.checkCollectable();
-
-//collectables.forEach(colectable => (colectable).draw());
 collectables.forEach(function(colectable)
 {
 	if(!colectable.isFound)
@@ -160,12 +156,7 @@ collectables.forEach(function(colectable)
 		colectable.checkCollectable();
 	}
 });
-	// for (var i = 0; i < collectables.length; i++) {
-	// 	if (!collectables[i].isFound) {
-	// 		drawCollectable(collectables[i]);
-	// 		checkCollectable(collectables[i]);
-	// 	}
-	// }
+
 	// Draw flag pole and check if is reached
 	renderFlagpole();
 	checkFlagpole();
