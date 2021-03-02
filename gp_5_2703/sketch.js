@@ -140,6 +140,7 @@ function startGame() {
 }
 
 //TODO MAKE INCR FROM -500 to 1500
+//change mountain colors
 
 function draw() {
 	background(100, 155, 255); // fill the sky blue
@@ -725,13 +726,13 @@ function drawGameChar() {
 // }
 
 // Function to check character has collected an item.
-function checkCollectable(t_collectable) {
-	if (dist(gameChar_world_x, gameChar_y, t_collectable.x_pos, t_collectable.y_pos + 10) < 30) {
-		t_collectable.isFound = true;
-		game_score += 1;
-		foundSound.play();
-	}
-}
+// function checkCollectable(t_collectable) {
+// 	if (dist(gameChar_world_x, gameChar_y, t_collectable.x_pos, t_collectable.y_pos + 10) < 30) {
+// 		t_collectable.isFound = true;
+// 		game_score += 1;
+// 		foundSound.play();
+// 	}
+// }
 
 // Function to draw Score:
 function drawScore() {
