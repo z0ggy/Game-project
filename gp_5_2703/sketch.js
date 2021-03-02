@@ -97,9 +97,9 @@ function startGame() {
 
 	canyons = [];
 	for (let i = 0; i < 4; i++) {
-		let canyon = createCanyon();
+		let canyon = createCanyon(-600 + i * incr, random(30, 55));
 		canyons.push(canyon);
-		canyons[i].x += i * incr;
+		//canyons[i].x += i * incr;
 	}
 
 
@@ -815,10 +815,10 @@ function createMountain() {
 	return mount;
 }
 
-function createCanyon() {
+function createCanyon(x, width) {
 	let canyon = {
-		x: -600,
-		width: random(30, 55),
+		x: x,
+		width: width,
 
 		draw: function () {
 			fill(139, 69, 19);
