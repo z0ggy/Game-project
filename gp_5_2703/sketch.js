@@ -112,9 +112,9 @@ function startGame() {
 
 	clouds = [];
 	for (let i = 0; i < 10; i++) {
-		let cloud = createCloud();
+		let cloud = createCloud(-600 + i * incr/2.5, random(100, 200));
 		clouds.push(cloud);
-		clouds[i].x += i * incr / 2.5;
+		//clouds[i].x += i * incr / 2.5;
 	}
 
 	collectables = [];
@@ -879,10 +879,10 @@ function createTree() {
 	return tree;
 }
 
-function createCloud() {
+function createCloud(x, y) {
 	let cloud = {
-		x: -460,
-		y: random(100, 180),
+		x: x,
+		y: y,
 		scale: random(0.7, 1.1),
 
 		draw: function () {
