@@ -90,9 +90,8 @@ function startGame() {
 
 	mountains = [];
 	for (let i = 0; i < 5; i++) {
-		let mount = createMountain();
+		let mount = createMountain(-800 + i * incr / 2, floorPos_y - 32, random(0.8, 1,2));
 		mountains.push(mount);
-		mountains[i].x += i * incr / 2;
 	}
 
 	canyons = [];
@@ -799,11 +798,11 @@ function drawLivesToken() {
 // 	return mount;
 // }
 
-function createMountain() {
+function createMountain(x, y, scale) {
 	let mount = {
-		x: -800,
-		y: 400,
-		scale: 1,
+		x: x,
+		y: y,
+		scale: scale,
 		draw: function () {
 			fill(200, 0, 200);
 			noStroke();
