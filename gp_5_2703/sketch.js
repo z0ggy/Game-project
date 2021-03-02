@@ -105,9 +105,9 @@ function startGame() {
 
 	trees = [];
 	for (let i = 0; i < 10; i++) {
-		let tree = createTree();
+		let tree = createTree(-600 + i* incr, floorPos_y - 80);
 		trees.push(tree);
-		trees[i].x += i * incr;
+		//trees[i].x += i * incr;
 	}
 
 	clouds = [];
@@ -858,10 +858,10 @@ function createCanyon() {
 	return canyon;
 }
 
-function createTree() {
+function createTree(x, y) {
 	let tree = {
-		x: -550,
-		y: height / 1.64,
+		x: x,
+		y: y,
 		scale: random(0.8, 1.2),
 
 		draw: function () {
