@@ -109,27 +109,27 @@ function startGame() {
 		trees.push(tree);
 		trees[i].x += i * incr;
 	}
-		console.table(trees);
 
 	clouds = [];
 	for (let i = 0; i < 10; i++) {
 		let cloud = createCloud();
 		clouds.push(cloud);
-		clouds[i].x += i * incr/2.5;
+		clouds[i].x += i * incr / 2.5;
 	}
 
 	collectables = [];
-	for(let i = 0; i < 4; i++)
-	{
-		let coll = createCollectable();
+	for (let i = 0; i < 4; i++) {
+		let coll = createCollectable(600 + i * incr / 2, floorPos_y);
 		collectables.push(coll);
-		collectables[i].x += i * incr/2;
+		//collectables[i].x += i * incr/2;
 	}
+	console.table(collectables);
 
 	platforms = [];
-	platforms.push(createPlatform(100, floorPos_y - 100, 100));	
-	
+	platforms.push(createPlatform(100, floorPos_y - 100, 100));
+	console.table(platforms);
 
+	// Initialize flagpole object
 	flagpole = {
 		x_pos: 2200,
 		isReached: false
@@ -141,6 +141,7 @@ function startGame() {
 
 //TODO MAKE INCR FROM -500 to 1500
 //change mountain colors
+// fix platform lenght player can hang in air
 
 function draw() {
 	background(100, 155, 255); // fill the sky blue
@@ -156,13 +157,11 @@ function draw() {
 	mountains.forEach(mountain => (mountain).draw());
 
 	// Draw clouds.
-	clouds.forEach(function(cloud)
-	{
+	clouds.forEach(function (cloud) {
 		cloud.draw();
 		cloud.x += 0.1;
-		if (cloud.x > width + 1500)
-		{
-			cloud.x = - 500;
+		if (cloud.x > width + 1500) {
+			cloud.x = -500;
 		}
 	});
 
@@ -170,31 +169,25 @@ function draw() {
 	trees.forEach(tree => (tree).draw());
 
 	// Draw canyons
-	canyons.forEach(function(canyon)
-	{
+	canyons.forEach(function (canyon) {
 		canyon.draw();
 		canyon.checkCanyon();
-		//canyon.draWater();
 	});
 
 	// Draw collectable items.
-collectables.forEach(function(colectable)
-{
-	if(!colectable.isFound)
-	{
-		colectable.draw();
-		colectable.checkCollectable();
-	}
-});
+	collectables.forEach(function (colectable) {
+		if (!colectable.isFound) {
+			colectable.draw();
+			colectable.checkCollectable(gameChar_world_x, gameChar_y);
+		}
+	});
 
-platforms.forEach(function(platform)
-{
-	platform.draw();
-})
+	platforms.forEach(function (platform) {
+		platform.draw();
+	})
 
-	// Draw flag pole and check if is reached
+	// Draw flag pole  reached
 	renderFlagpole();
-	checkFlagpole();
 
 	// Check remaining lives
 	checkPlayerDie();
@@ -247,28 +240,22 @@ platforms.forEach(function(platform)
 	}
 
 	// Logic to make the game character rise and fall.
-	if (gameChar_y < floorPos_y) 
-	{
+	if (gameChar_y < floorPos_y) {
 		let isContact = false;
-		for(let i = 0; i < platforms.length; i++)
-		{
-			if(platforms[i].checkContact(gameChar_world_x, gameChar_y))
-			{
+		for (let i = 0; i < platforms.length; i++) {
+			if (platforms[i].checkContact(gameChar_world_x, gameChar_y)) {
 				isContact = true;
 				break;
 			}
 		}
-		if(!isContact)
-		{
+		if (!isContact) {
 			gameChar_y += 2;
 			isFalling = true;
 		}
-	} 
-	else 
-	{
+	} else {
 		isFalling = false;
 	}
-	
+
 	// Update real position of gameChar for collision detection.
 	gameChar_world_x = gameChar_x - scrollPos;
 
@@ -298,10 +285,9 @@ function keyPressed() {
 		isRight = true;
 		walkSound.play();
 	}
-	if (keyCode == 32  || key == 'ww')//&& gameChar_y >= floorPos_y) // stop character to jump higher
+	if (keyCode == 32 || key == 'ww') //&& gameChar_y >= floorPos_y) // stop character to jump higher
 	{
-		if(!isFalling)
-		{
+		if (!isFalling) {
 			gameChar_y -= 100;
 			jumpSound.play();
 		}
@@ -847,7 +833,7 @@ function createCanyon() {
 			fill(100, 155, 255);
 			rect(this.x + 80, 432, 40 + this.width, 144); //blue canyon gap
 		},
-		
+
 		checkCanyon: function () {
 			if (isPlummeting == true) {
 				gameChar_y += 5;
@@ -872,15 +858,13 @@ function createCanyon() {
 	return canyon;
 }
 
-function createTree() 
-{
+function createTree() {
 	let tree = {
 		x: -550,
 		y: height / 1.64,
 		scale: random(0.8, 1.2),
 
-		draw: function () 
-		{
+		draw: function () {
 			fill(155, 103, 60); //tree trunk
 			rect(this.x, this.y, 20, 82);
 			fill(0, 255, 0); //branches
@@ -895,15 +879,13 @@ function createTree()
 	return tree;
 }
 
-function createCloud() 
-{
+function createCloud() {
 	let cloud = {
 		x: -460,
 		y: random(100, 180),
 		scale: random(0.7, 1.1),
 
-		draw: function () 
-		{
+		draw: function () {
 			fill(255);
 			ellipse(this.x, this.y, 100 * this.scale, 80 * this.scale);
 			ellipse(this.x + 35 * this.scale, this.y, 80 * this.scale, 60 * this.scale);
@@ -913,25 +895,21 @@ function createCloud()
 	return cloud;
 }
 
-function createCollectable()
-{	
+function createCollectable(x, y) {
 	let c = {
-		x: 600,
-		y: 432,
+		x: x,
+		y: y,
 		isFound: false,
-		
-		checkCollectable: function()
-		{
-			if (dist(gameChar_world_x, gameChar_y, this.x, this.y + 10) < 30) {
-			this.isFound = true;
-			game_score += 1;
-			foundSound.play();
-	}
+
+		checkCollectable: function (gc_x, gc_y) {
+			if (dist(gc_x, gc_y, this.x, this.y + 10) < 30) {
+				this.isFound = true;
+				game_score += 1;
+				foundSound.play();
+			}
 		},
-		draw: function()
-		{
-			if (this.isFound == false)
-			 {
+		draw: function () {
+			if (this.isFound == false) {
 
 				noStroke();
 				fill(255, 0, 0);
@@ -946,25 +924,20 @@ function createCollectable()
 	return c;
 }
 
-function createPlatform(x, y, length)
-{
+function createPlatform(x, y, length) {
 	let platform = {
 		x: x,
 		y: y,
 		length: length,
-		draw: function()
-		{
+		draw: function () {
 			fill(100, 100, 100);
 			rect(this.x, this.y, this.length, 15, 25, 0, 0, 0);
 			rect(this.x, this.y, 15, 30, 25, 0, 0, 0);
 		},
-		checkContact: function(gc_x, gc_y)
-		{
-			if(gc_x > this.x - 30 && gc_x < this.x + this.length)
-			{
+		checkContact: function (gc_x, gc_y) {
+			if (gc_x > this.x - 30 && gc_x < this.x + this.length) {
 				let d = this.y - gc_y;
-				if(d >= 0 && d < 3)
-				{
+				if (d >= 0 && d < 3) {
 					isFalling = false;
 					return true;
 				}
