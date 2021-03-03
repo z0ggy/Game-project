@@ -21,7 +21,6 @@ let scrollPos;
 let clouds;
 let collectables;
 let canyons;
-let yoff = 0;
 let mountains;
 let trees;
 let gameChar_world_x;
@@ -34,6 +33,7 @@ let isFalling;
 let isPlummeting;
 let game_score;
 let flagpole;
+let backpack;
 let lives;
 
 let platforms;
@@ -141,6 +141,7 @@ function startGame() {
 //TODO MAKE INCR FROM -500 to 1500
 //change mountain colors
 // fix platform lenght player can hang in air
+//Add sound for flagpole
 
 function draw() {
 	background(100, 155, 255); // fill the sky blue
@@ -690,9 +691,9 @@ function drawGameChar() {
 
 // }
 
-// ----------------------------------
+// --------------------------------------------
 // Collectable items render and check functions
-// ----------------------------------
+// --------------------------------------------
 
 // Function to draw collectable objects.
 
