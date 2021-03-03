@@ -14,6 +14,8 @@ let jumpSound;
 
 let gameChar_x;
 let gameChar_y;
+let isWalkingLeft;
+let isWalkingRight;
 
 let floorPos_y;
 let scrollPos;
@@ -134,6 +136,60 @@ function startGame() {
 		isReached: false
 	};
 
+	// Initialize backpack object
+	backpack = {
+		//isLeft: false,
+		//isRight: false,
+		isEqipeed: false,
+		checkBackpack: function()
+		{
+			let d = abs(dist(platforms[0].x+10, platforms[0].y, gameChar_world_x, gameChar_y));
+			if(d < 10)
+			{
+				this.isEqipeed = true;
+				print(this.isEqipeed);
+			}
+		},
+
+		draw: function()
+		{
+			if(!this.isEqipeed)
+			{
+				fill(222, 200, 0);
+				rect(platforms[0].x + 10, platforms[0].y - 30, 12, 30, 15);
+			}
+			if(isLeft && this.isEqipeed)
+			{
+				fill(222, 200, 0);
+				rect(gameChar_world_x + 50, gameChar_y - 48, 12, 30, 15);
+			}
+			else if(isRight && this.isEqipeed)
+			{
+				fill(222, 200, 0);
+				rect(gameChar_world_x - 12, gameChar_y - 48, 12, 30, 15);
+			}
+
+			if(this.isEqipeed && gameChar_y < floorPos_y && isRight)
+			{
+				fill(222, 200, 0);
+				rect(gameChar_world_x - 12, gameChar_y - 48, 12, 30, 15);
+				fill(255, 0, 0);
+				
+				rect(gameChar_world_x - 12, gameChar_y - 48, 12, 30, 15);
+				fill(255, 150, 0);
+                beginShape();
+                vertex(gameChar_world_x - 12 + 10, gameChar_y - 48 + 60);
+                vertex(gameChar_world_x - 12 + 13, gameChar_y - 48 + 80);
+                vertex(gameChar_world_x - 12 + 15, gameChar_y - 48 + 70);
+                vertex(gameChar_world_x - 12 + 18, gameChar_y - 48 + 80);
+                vertex(gameChar_world_x - 12 + 20, gameChar_y - 48 + 60);
+                endShape(CLOSE);
+
+			}
+
+		}
+	}
+
 	game_score = 0;
 
 }
@@ -184,7 +240,11 @@ function draw() {
 
 	platforms.forEach(function (platform) {
 		platform.draw();
-	})
+	});
+
+	// Draw backpack
+	backpack.checkBackpack();
+	backpack.draw();
 
 	// Draw flag pole  reached
 	renderFlagpole();
