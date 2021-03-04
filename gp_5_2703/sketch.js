@@ -25,9 +25,9 @@ let collectables;
 let canyons;
 let mountains;
 let trees;
+let flames;
+let enemies;
 let gameChar_world_x;
-
-let reacts;
 
 let isLeft;
 let isRight;
@@ -124,11 +124,17 @@ function startGame() {
 		collectables.push(coll);
 		//collectables[i].x += i * incr/2;
 	}
-	console.table(collectables);
+
+	enemies = [];
+	enemies.push(new Enemy(100, floorPos_y -10, 100));
+
+	// Initialize backpack's engine flame
+	flames = [];
+	//flames.push(createEngine(gameChar_world_x - 12, gameChar_y));
+
 
 	platforms = [];
 	platforms.push(createPlatform(100, floorPos_y - 100, 100));
-	console.table(platforms);
 
 	// Initialize flagpole object
 	flagpole = {
@@ -169,7 +175,7 @@ function startGame() {
 				rect(gameChar_world_x - 12, gameChar_y - 48, 12, 30, 15);
 			}
 
-			if(this.isEqipeed && gameChar_y < floorPos_y && isRight)
+			if(this.isEqipeed && gameChar_y < floorPos_y && isRight && isFalling) 
 			{
 				fill(222, 200, 0);
 				rect(gameChar_world_x - 12, gameChar_y - 48, 12, 30, 15);
@@ -177,13 +183,9 @@ function startGame() {
 				
 				rect(gameChar_world_x - 12, gameChar_y - 48, 12, 30, 15);
 				fill(255, 150, 0);
-                beginShape();
-                vertex(gameChar_world_x - 12 + 10, gameChar_y - 48 + 60);
-                vertex(gameChar_world_x - 12 + 13, gameChar_y - 48 + 80);
-                vertex(gameChar_world_x - 12 + 15, gameChar_y - 48 + 70);
-                vertex(gameChar_world_x - 12 + 18, gameChar_y - 48 + 80);
-                vertex(gameChar_world_x - 12 + 20, gameChar_y - 48 + 60);
-                endShape(CLOSE);
+                // 
+				
+				flames
 
 			}
 
@@ -245,6 +247,23 @@ function draw() {
 	// Draw backpack
 	backpack.checkBackpack();
 	backpack.draw();
+
+	// Draw enemies
+	enemies.forEach(function(enemy)
+	{
+		let isContact = enemy.checkContact(gameChar_world_x, gameChar_y);
+		enemy.draw();
+		enemy.update();
+		if(isContact)
+		{
+			if(lives > 0)
+			{
+				startGame();
+				//break;
+			}
+		}
+		
+	});
 
 	// Draw flag pole  reached
 	renderFlagpole();
@@ -984,20 +1003,24 @@ function createCollectable(x, y) {
 	return c;
 }
 
-function createPlatform(x, y, length) {
+function createPlatform(x, y, length) 
+{
 	let platform = {
 		x: x,
 		y: y,
 		length: length,
-		draw: function () {
+		draw: function () 
+		{
 			fill(100, 100, 100);
 			rect(this.x, this.y, this.length, 15, 25, 0, 0, 0);
 			rect(this.x, this.y, 15, 30, 25, 0, 0, 0);
 		},
-		checkContact: function (gc_x, gc_y) {
+		checkContact: function (gc_x, gc_y) 
+		{
 			if (gc_x > this.x - 30 && gc_x < this.x + this.length) {
 				let d = this.y - gc_y;
-				if (d >= 0 && d < 3) {
+				if (d >= 0 && d < 3) 
+				{
 					isFalling = false;
 					return true;
 				}
@@ -1007,4 +1030,55 @@ function createPlatform(x, y, length) {
 		}
 	}
 	return platform;
+}
+
+function Flame()
+{
+	this.x = 200;
+	this.y = 200;
+
+}
+
+
+function Enemy(x, y, range)
+{
+	this.x = x;
+	this.y = y;
+	this.range = range;
+
+	this.currentX = x;
+	this.incr = 1;
+
+	this.update = function()
+	{
+		this.currentX += this.incr;
+
+		if(this.currentX >= this.x + this.range)
+		{
+			this.incr = -1;
+		}
+		else if(this.currentX < this.x)
+		{
+			this.incr = 1;
+		}
+	}
+
+	this.draw = function()
+	{
+		fill(0)
+		ellipse(this.currentX, this.y, 20, 20);
+	}
+
+	this.checkContact = function(gc_x, gc_y)
+	{
+		let d = dist(gc_x, gc_y, this.currentX, this.y);
+
+		if(d < 15)
+		{
+			return true;
+		}
+		
+		return false;
+	}
+
 }
