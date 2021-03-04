@@ -26,7 +26,6 @@ let canyons;
 let mountains;
 let trees;
 let flames;
-let enemies;
 let gameChar_world_x;
 
 let isLeft;
@@ -39,6 +38,7 @@ let backpack;
 let lives;
 
 let platforms;
+let enemies;
 
 function preload() {
 	soundFormats('mp3', 'wav');
@@ -130,6 +130,12 @@ function startGame() {
 
 	// Initialize backpack's engine flame
 	flames = [];
+	for(let i = 0; i < 50; i++)
+	{
+
+		let f = new Flame();
+		flames.push(f);
+	}
 	//flames.push(createEngine(gameChar_world_x - 12, gameChar_y));
 
 
@@ -183,10 +189,6 @@ function startGame() {
 				
 				rect(gameChar_world_x - 12, gameChar_y - 48, 12, 30, 15);
 				fill(255, 150, 0);
-                // 
-				
-				flames
-
 			}
 
 		}
@@ -248,6 +250,12 @@ function draw() {
 	backpack.checkBackpack();
 	backpack.draw();
 
+	// Draw backpack flames
+	flames.forEach(function(flame)
+	{
+		flame.draw();
+		flame.update();
+	});
 	// Draw enemies
 	enemies.forEach(function(enemy)
 	{
@@ -1036,6 +1044,20 @@ function Flame()
 {
 	this.x = 200;
 	this.y = 200;
+	this.speedX = random(-1, 1);
+	this.speedY = random(1, 5);
+
+	this.draw = function()
+	{
+		fill(255);
+		ellipse(this.x, this.y, 20, 20);
+	}
+
+	this.update = function()
+	{
+		this.x += this.speedX;
+		this.y += this.speedY;
+	}
 
 }
 
