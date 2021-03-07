@@ -26,6 +26,7 @@ let canyons;
 let mountains;
 let trees;
 let flames;
+let particles;
 let gameChar_world_x;
 
 let isLeft;
@@ -39,6 +40,7 @@ let lives;
 
 let platforms;
 let enemies;
+let f;
 
 function preload() {
 	soundFormats('mp3', 'wav');
@@ -130,13 +132,15 @@ function startGame() {
 
 	// Initialize backpack's engine flame
 	flames = [];
-	for(let i = 0; i < 50; i++)
-	{
+	particles = [];
+	// for(let i = 0; i < 50; i++)
+	// {
 
-		let f = new Flame();
-		flames.push(f);
-	}
+	// 	let f = new Flame();
+	// 	flames.push(f);
+	// }
 	//flames.push(createEngine(gameChar_world_x - 12, gameChar_y));
+	 
 
 
 	platforms = [];
@@ -251,11 +255,27 @@ function draw() {
 	backpack.draw();
 
 	// Draw backpack flames
-	flames.forEach(function(flame)
-	{
-		flame.draw();
-		flame.update();
-	});
+	// flames.forEach(function(flame)
+	// {
+	// 	flame.draw();
+	// 	flame.update();
+	// });
+	let p = new Anki();
+  	particles.push(p)
+  
+  	for(let i = particles.length-1; i >= 0; i--)
+  	{
+    	particles[i].draw();
+    	particles[i].update();
+		
+    	if(particles[i].remove())
+
+    	{
+      		particles.splice(i,1);
+    	}
+		
+  	}
+
 	// Draw enemies
 	enemies.forEach(function(enemy)
 	{
@@ -1040,25 +1060,31 @@ function createPlatform(x, y, length)
 	return platform;
 }
 
-function Flame()
+function Anki()
 {
-	this.x = 200;
-	this.y = 200;
-	this.speedX = random(-1, 1);
-	this.speedY = random(1, 5);
+  this.x = 200;
+  this.y = 350;
+  this.vx = random(-1,1);
+  this.vy = random(-5,-1);
+  this.alpha = 255;
+  
+  this.draw = function()
+  {
+    fill(100, this.alpha);
+    ellipse(this.x, this.y, 20, 20);
+  }
+  
+  this.update = function()
+  {
+    this.x += this.vx;
+    this.y += this.vy;
+	this.alpha-=5
+  }
 
-	this.draw = function()
-	{
-		fill(255);
-		ellipse(this.x, this.y, 20, 20);
-	}
-
-	this.update = function()
-	{
-		this.x += this.speedX;
-		this.y += this.speedY;
-	}
-
+  this.remove = function()
+  {
+      return this.alpha < 0;
+  }
 }
 
 
