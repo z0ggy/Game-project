@@ -25,8 +25,8 @@ let collectables;
 let canyons;
 let mountains;
 let trees;
+//let flames;
 let flames;
-let particles;
 let gameChar_world_x;
 
 let isLeft;
@@ -40,7 +40,7 @@ let lives;
 
 let platforms;
 let enemies;
-let f;
+//let f;
 
 function preload() {
 	soundFormats('mp3', 'wav');
@@ -94,7 +94,7 @@ function startGame() {
 
 	mountains = [];
 	for (let i = 0; i < 5; i++) {
-		let mount = createMountain(-800 + i * incr / 2, floorPos_y - 32, random(0.8, 1,2));
+		let mount = createMountain(-800 + i * incr / 2, floorPos_y - 32, random(0.8, 1, 2));
 		mountains.push(mount);
 	}
 
@@ -108,14 +108,14 @@ function startGame() {
 
 	trees = [];
 	for (let i = 0; i < 10; i++) {
-		let tree = createTree(-600 + i* incr, floorPos_y - 80);
+		let tree = createTree(-600 + i * incr, floorPos_y - 80);
 		trees.push(tree);
 		//trees[i].x += i * incr;
 	}
 
 	clouds = [];
 	for (let i = 0; i < 10; i++) {
-		let cloud = createCloud(-600 + i * incr/2.5, random(100, 200));
+		let cloud = createCloud(-600 + i * incr / 2.5, random(100, 200));
 		clouds.push(cloud);
 		//clouds[i].x += i * incr / 2.5;
 	}
@@ -128,11 +128,11 @@ function startGame() {
 	}
 
 	enemies = [];
-	enemies.push(new Enemy(100, floorPos_y -10, 100));
+	enemies.push(new Enemy(100, floorPos_y - 10, 100));
 
 	// Initialize backpack's engine flame
 	flames = [];
-	particles = [];
+	//flames = [];
 	// for(let i = 0; i < 50; i++)
 	// {
 
@@ -140,7 +140,7 @@ function startGame() {
 	// 	flames.push(f);
 	// }
 	//flames.push(createEngine(gameChar_world_x - 12, gameChar_y));
-	 
+
 
 
 	platforms = [];
@@ -157,40 +157,32 @@ function startGame() {
 		//isLeft: false,
 		//isRight: false,
 		isEqipeed: false,
-		checkBackpack: function()
-		{
-			let d = abs(dist(platforms[0].x+10, platforms[0].y, gameChar_world_x, gameChar_y));
-			if(d < 10)
-			{
+		checkBackpack: function () {
+			let d = abs(dist(platforms[0].x + 10, platforms[0].y, gameChar_world_x, gameChar_y));
+			if (d < 10) {
 				this.isEqipeed = true;
 				print(this.isEqipeed);
 			}
 		},
 
-		draw: function()
-		{
-			if(!this.isEqipeed)
-			{
+		draw: function () {
+			if (!this.isEqipeed) {
 				fill(222, 200, 0);
 				rect(platforms[0].x + 10, platforms[0].y - 30, 12, 30, 15);
 			}
-			if(isLeft && this.isEqipeed)
-			{
+			if (isLeft && this.isEqipeed) {
 				fill(222, 200, 0);
 				rect(gameChar_world_x + 50, gameChar_y - 48, 12, 30, 15);
-			}
-			else if(isRight && this.isEqipeed)
-			{
+			} else if (isRight && this.isEqipeed) {
 				fill(222, 200, 0);
 				rect(gameChar_world_x - 12, gameChar_y - 48, 12, 30, 15);
 			}
 
-			if(this.isEqipeed && gameChar_y < floorPos_y && isRight && isFalling) 
-			{
+			if (this.isEqipeed && gameChar_y < floorPos_y && isRight && isFalling) {
 				fill(222, 200, 0);
 				rect(gameChar_world_x - 12, gameChar_y - 48, 12, 30, 15);
 				fill(255, 0, 0);
-				
+
 				rect(gameChar_world_x - 12, gameChar_y - 48, 12, 30, 15);
 				fill(255, 150, 0);
 			}
@@ -255,42 +247,37 @@ function draw() {
 	backpack.draw();
 
 	// Draw backpack flames
-	// flames.forEach(function(flame)
-	// {
-	// 	flame.draw();
-	// 	flame.update();
-	// });
-	let p = new Anki();
-  	particles.push(p)
-  
-  	for(let i = particles.length-1; i >= 0; i--)
-  	{
-    	particles[i].draw();
-    	particles[i].update();
-		
-    	if(particles[i].remove())
+	let p = new Flame();
+	flames.push(p)
 
-    	{
-      		particles.splice(i,1);
-    	}
-		
-  	}
+	for (let i = flames.length - 1; i >= 0; i--) 
+	{
+		if (backpack.isEqipeed && isFalling) 
+		{
+			flames[i].draw();
+			flames[i].update();
+
+			if (flames[i].remove())
+
+			{
+				flames.splice(i, 1);
+			}
+		}
+
+	}
 
 	// Draw enemies
-	enemies.forEach(function(enemy)
-	{
+	enemies.forEach(function (enemy) {
 		let isContact = enemy.checkContact(gameChar_world_x, gameChar_y);
 		enemy.draw();
 		enemy.update();
-		if(isContact)
-		{
-			if(lives > 0)
-			{
+		if (isContact) {
+			if (lives > 0) {
 				startGame();
 				//break;
 			}
 		}
-		
+
 	});
 
 	// Draw flag pole  reached
@@ -381,8 +368,8 @@ function draw() {
 
 function keyPressed() {
 
-	console.log("press" + keyCode);
-	console.log("press" + key);
+	//console.log("press" + keyCode);
+	//console.log("press" + key);
 	if (key == 'A' || keyCode == 37) {
 		isLeft = true;
 		walkSound.play();
@@ -1031,24 +1018,20 @@ function createCollectable(x, y) {
 	return c;
 }
 
-function createPlatform(x, y, length) 
-{
+function createPlatform(x, y, length) {
 	let platform = {
 		x: x,
 		y: y,
 		length: length,
-		draw: function () 
-		{
+		draw: function () {
 			fill(100, 100, 100);
 			rect(this.x, this.y, this.length, 15, 25, 0, 0, 0);
 			rect(this.x, this.y, 15, 30, 25, 0, 0, 0);
 		},
-		checkContact: function (gc_x, gc_y) 
-		{
+		checkContact: function (gc_x, gc_y) {
 			if (gc_x > this.x - 30 && gc_x < this.x + this.length) {
 				let d = this.y - gc_y;
-				if (d >= 0 && d < 3) 
-				{
+				if (d >= 0 && d < 3) {
 					isFalling = false;
 					return true;
 				}
@@ -1060,36 +1043,31 @@ function createPlatform(x, y, length)
 	return platform;
 }
 
-function Anki()
-{
-  this.x = 200;
-  this.y = 350;
-  this.vx = random(-1,1);
-  this.vy = random(-5,-1);
-  this.alpha = 255;
-  
-  this.draw = function()
-  {
-    fill(100, this.alpha);
-    ellipse(this.x, this.y, 20, 20);
-  }
-  
-  this.update = function()
-  {
-    this.x += this.vx;
-    this.y += this.vy;
-	this.alpha-=5
-  }
+function Flame() {
+	this.x = 200;
+	this.y = 350;
+	this.vx = random(-1, 1);
+	this.vy = random(-5, -1);
+	this.alpha = 255;
 
-  this.remove = function()
-  {
-      return this.alpha < 0;
-  }
+	this.draw = function () {
+		fill(100, this.alpha);
+		ellipse(this.x, this.y, 20, 20);
+	}
+
+	this.update = function () {
+		this.x += this.vx;
+		this.y += this.vy;
+		this.alpha -= 5
+	}
+
+	this.remove = function () {
+		return this.alpha < 0;
+	}
 }
 
 
-function Enemy(x, y, range)
-{
+function Enemy(x, y, range) {
 	this.x = x;
 	this.y = y;
 	this.range = range;
@@ -1097,35 +1075,28 @@ function Enemy(x, y, range)
 	this.currentX = x;
 	this.incr = 1;
 
-	this.update = function()
-	{
+	this.update = function () {
 		this.currentX += this.incr;
 
-		if(this.currentX >= this.x + this.range)
-		{
+		if (this.currentX >= this.x + this.range) {
 			this.incr = -1;
-		}
-		else if(this.currentX < this.x)
-		{
+		} else if (this.currentX < this.x) {
 			this.incr = 1;
 		}
 	}
 
-	this.draw = function()
-	{
+	this.draw = function () {
 		fill(0)
 		ellipse(this.currentX, this.y, 20, 20);
 	}
 
-	this.checkContact = function(gc_x, gc_y)
-	{
+	this.checkContact = function (gc_x, gc_y) {
 		let d = dist(gc_x, gc_y, this.currentX, this.y);
 
-		if(d < 15)
-		{
+		if (d < 15) {
 			return true;
 		}
-		
+
 		return false;
 	}
 
