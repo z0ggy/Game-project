@@ -91,7 +91,6 @@ function startGame() {
 	isPlummeting = false;
 
 	// Initialise arrays of scenery objects.
-
 	mountains = [];
 	for (let i = 0; i < 5; i++) {
 		let mount = createMountain(-800 + i * incr / 2, floorPos_y - 32, random(0.8, 1, 2));
@@ -102,7 +101,6 @@ function startGame() {
 	for (let i = 0; i < 4; i++) {
 		let canyon = createCanyon(-600 + i * incr, random(30, 55));
 		canyons.push(canyon);
-		//canyons[i].x += i * incr;
 	}
 
 
@@ -110,39 +108,27 @@ function startGame() {
 	for (let i = 0; i < 10; i++) {
 		let tree = createTree(-600 + i * incr, floorPos_y - 80);
 		trees.push(tree);
-		//trees[i].x += i * incr;
 	}
 
 	clouds = [];
 	for (let i = 0; i < 10; i++) {
 		let cloud = createCloud(-600 + i * incr / 2.5, random(100, 200));
 		clouds.push(cloud);
-		//clouds[i].x += i * incr / 2.5;
 	}
 
 	collectables = [];
 	for (let i = 0; i < 4; i++) {
 		let coll = createCollectable(600 + i * incr / 2, floorPos_y);
 		collectables.push(coll);
-		//collectables[i].x += i * incr/2;
 	}
 
 	enemies = [];
 	enemies.push(new Enemy(100, floorPos_y - 10, 100));
 
-	// Initialize backpack's engine flame
+	// Initialize jet backpack flame array
 	flames = [];
-	//flames = [];
-	// for(let i = 0; i < 50; i++)
-	// {
 
-	// 	let f = new Flame();
-	// 	flames.push(f);
-	// }
-	//flames.push(createEngine(gameChar_world_x - 12, gameChar_y));
-
-
-
+	// Initialize platforms array
 	platforms = [];
 	platforms.push(createPlatform(100, floorPos_y - 100, 100));
 
@@ -152,16 +138,14 @@ function startGame() {
 		isReached: false
 	};
 
-	// Initialize backpack object
+	// Initialize jet backpack object
 	backpack = {
-		//isLeft: false,
-		//isRight: false,
 		isEqipeed: false,
+		isFlame: false,
 		checkBackpack: function () {
 			let d = abs(dist(platforms[0].x + 10, platforms[0].y, gameChar_world_x, gameChar_y));
 			if (d < 10) {
 				this.isEqipeed = true;
-				print(this.isEqipeed);
 			}
 		},
 
@@ -185,8 +169,52 @@ function startGame() {
 
 				rect(gameChar_world_x - 12, gameChar_y - 48, 12, 30, 15);
 				fill(255, 150, 0);
+				this.isFlame = true;
+			}
+			
+			if (this.isEqipeed && gameChar_y < floorPos_y && isLeft && isFalling) {
+				fill(222, 200, 0);
+				rect(gameChar_world_x + 50, gameChar_y - 48, 12, 30, 15);
+				fill(255, 0, 0);
+
+				rect(gameChar_world_x + 50, gameChar_y - 48, 12, 30, 15);
+				fill(255, 150, 0);
+				this.isFlame = true;
 			}
 
+			if (this.isEqipeed && isLeft && isFalling && isRight) 
+			{
+				fill(222, 200, 0);
+				rect(gameChar_world_x + 50, gameChar_y - 48, 12, 30, 15);
+				fill(255, 0, 0);
+
+				rect(gameChar_world_x + 50, gameChar_y - 48, 12, 30, 15);
+				fill(255, 150, 0);
+				this.isFlame = true;
+			}
+
+		},
+
+		drawFlame: function () 
+		{
+			if (this.isFlame) 
+			{
+				let p = new Flame();
+				flames.push(p)
+
+				for (let i = flames.length - 1; i >= 0; i--) 
+				{
+					flames[i].update();
+					flames[i].draw();
+
+					if (flames[i].remove())
+
+					{
+						flames.splice(i, 1);
+					}
+				}
+
+			}
 		}
 	}
 
@@ -245,26 +273,26 @@ function draw() {
 	// Draw backpack
 	backpack.checkBackpack();
 	backpack.draw();
+	backpack.drawFlame();
 
 	// Draw backpack flames
-	let p = new Flame();
-	flames.push(p)
+	// let p = new Flame();
+	// flames.push(p)
 
-	for (let i = flames.length - 1; i >= 0; i--) 
-	{
-		if (backpack.isEqipeed && isFalling) 
-		{
-			flames[i].draw();
-			flames[i].update();
+	// for (let i = flames.length - 1; i >= 0; i--) 
+	// {
+	// 	if (backpack.isEqipeed && isFalling && gameChar_y < floorPos_y) 
+	// 	{
+	// 		flames[i].update();
+	// 		flames[i].draw();
 
-			if (flames[i].remove())
+	// 		if (flames[i].remove())
 
-			{
-				flames.splice(i, 1);
-			}
-		}
-
-	}
+	// 		{
+	// 			flames.splice(i, 1);
+	// 		}
+	// 	}
+	// }
 
 	// Draw enemies
 	enemies.forEach(function (enemy) {
@@ -379,11 +407,15 @@ function keyPressed() {
 		isRight = true;
 		walkSound.play();
 	}
-	if (keyCode == 32 || key == 'ww') //&& gameChar_y >= floorPos_y) // stop character to jump higher
-	{
+	if (keyCode == 32 || key == 'w') {
 		if (!isFalling) {
 			gameChar_y -= 100;
 			jumpSound.play();
+		}
+
+		if (!isFalling && backpack.isEqipeed) {
+			gameChar_y -= 180;
+			//TODO engine sound Play
 		}
 	}
 
@@ -401,7 +433,6 @@ function keyReleased() {
 		isRight = false;
 		walkSound.stop();
 	}
-
 }
 
 
@@ -1044,24 +1075,38 @@ function createPlatform(x, y, length) {
 }
 
 function Flame() {
-	this.x = 200;
-	this.y = 350;
+	this.v = createVector(gameChar_world_x, gameChar_y);
 	this.vx = random(-1, 1);
-	this.vy = random(-5, -1);
+	this.vy = random(5, 9);
 	this.alpha = 255;
+	this.r = 20;
 
-	this.draw = function () {
-		fill(100, this.alpha);
-		ellipse(this.x, this.y, 20, 20);
+	this.draw = function () 
+	{
+		if (isRight && isFalling) 
+		{
+			noStroke();
+			fill(random(250,255), random(100,160), random(70,80), this.alpha);
+			ellipse(this.v.x - 10, this.v.y - 10, this.r);
+		}
+		if (isLeft && isFalling) {
+
+			noStroke();
+			fill(random(250,255), random(100,160), random(70,80), this.alpha);
+			ellipse(this.v.x + 60, this.v.y - 10, this.r);
+		}
 	}
 
-	this.update = function () {
-		this.x += this.vx;
-		this.y += this.vy;
-		this.alpha -= 5
+	this.update = function () 
+	{
+		this.v.x += this.vx;
+		this.v.y += this.vy;
+		this.alpha -= 30;
+		this.r -= 3;
 	}
 
-	this.remove = function () {
+	this.remove = function () 
+	{
 		return this.alpha < 0;
 	}
 }
@@ -1075,25 +1120,30 @@ function Enemy(x, y, range) {
 	this.currentX = x;
 	this.incr = 1;
 
-	this.update = function () {
+	this.update = function () 
+	{
 		this.currentX += this.incr;
 
-		if (this.currentX >= this.x + this.range) {
+		if (this.currentX >= this.x + this.range) 
+		{
 			this.incr = -1;
 		} else if (this.currentX < this.x) {
 			this.incr = 1;
 		}
 	}
 
-	this.draw = function () {
+	this.draw = function () 
+	{
 		fill(0)
 		ellipse(this.currentX, this.y, 20, 20);
 	}
 
-	this.checkContact = function (gc_x, gc_y) {
+	this.checkContact = function (gc_x, gc_y) 
+	{
 		let d = dist(gc_x, gc_y, this.currentX, this.y);
 
-		if (d < 15) {
+		if (d < 15) 
+		{
 			return true;
 		}
 
