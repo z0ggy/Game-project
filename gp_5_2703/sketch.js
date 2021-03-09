@@ -123,7 +123,7 @@ function startGame() {
 	}
 
 	enemies = [];
-	enemies.push(new Enemy(100, floorPos_y - 10, 100));
+	enemies.push(new Enemy(100, floorPos_y - 40, 100));
 
 	// Initialize jet backpack flame array
 	flames = [];
@@ -1135,7 +1135,7 @@ function Enemy(x, y, range) {
 	this.draw = function () 
 	{
 		fill(0)
-		ellipse(this.currentX, this.y, 20, 20);
+		rect(this.currentX, this.y, 40, 40);
 	}
 
 	this.checkContact = function (gc_x, gc_y) 
