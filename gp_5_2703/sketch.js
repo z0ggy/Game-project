@@ -299,6 +299,7 @@ function draw() {
 		let isContact = enemy.checkContact(gameChar_world_x, gameChar_y);
 		enemy.draw();
 		enemy.update();
+		enemy.drawEye();
 		if (isContact) {
 			if (lives > 0) {
 				startGame();
@@ -1111,11 +1112,13 @@ function Flame() {
 	}
 }
 
-
-function Enemy(x, y, range) {
+// TODO change check contact distance 
+function Enemy(x, y, range) 
+{
 	this.x = x;
 	this.y = y;
 	this.range = range;
+	this.size = 100;
 
 	this.currentX = x;
 	this.incr = 1;
@@ -1137,6 +1140,27 @@ function Enemy(x, y, range) {
 		fill(0)
 		rect(this.currentX, this.y, 40, 40);
 	}
+
+	this.drawEye = function ()
+	 {
+		var v = createVector(mouseX - width / 2, mouseY - height / 2);
+		v.normalize();
+		v.mult((this.size * 0.1) / 2);
+
+		fill(255);
+		ellipse(this.currentX + 10, this.y + 10, this.size * 0.15);
+		ellipse(this.currentX + 30, this.y + 10, this.size * 0.15);
+
+		fill(0);
+		ellipse(
+			-this.size * 0.2 + v.x,
+			-this.size * 0.1 + v.y,
+			this.size * 0.05);
+		ellipse(
+			this.size * 0.2 + v.x,
+			-this.size * 0.1 + v.y,
+			this.size * 0.05);
+	},
 
 	this.checkContact = function (gc_x, gc_y) 
 	{
