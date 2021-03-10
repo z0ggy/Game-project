@@ -947,17 +947,17 @@ function createCanyon(x, width) {
 		width: width,
 
 		draw: function () {
+			// fill(139, 69, 19);
+			// triangle(this.x + 30, 576,
+			// 	this.x + 80, 432,
+			// 	this.x + 80, 576);
+
+			// triangle(this.x + 120 + this.width, 576,
+			// 	this.x + 120 + this.width, 432,
+			// 	this.x + 170 + this.width, 576);
+
 			fill(139, 69, 19);
-			triangle(this.x + 30, 576,
-				this.x + 80, 432,
-				this.x + 80, 576);
-
-			triangle(this.x + 120 + this.width, 576,
-				this.x + 120 + this.width, 432,
-				this.x + 170 + this.width, 576);
-
-			fill(100, 155, 255);
-			rect(this.x + 80, 432, 40 + this.width, 144); //blue canyon gap
+			rect(this.x + 80, floorPos_y, 40 + this.width, 144); //blue canyon gap
 		},
 
 		checkCanyon: function () {
