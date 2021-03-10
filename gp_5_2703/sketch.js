@@ -1143,23 +1143,20 @@ function Enemy(x, y, range)
 
 	this.drawEye = function ()
 	 {
-		var v = createVector(mouseX - width / 2, mouseY - height / 2);
+		push();
+		translate(this.currentX, this.y);
+		var v = createVector(gameChar_world_x -this.currentX, gameChar_y - this.y);
 		v.normalize();
 		v.mult((this.size * 0.1) / 2);
 
 		fill(255);
-		ellipse(this.currentX + 10, this.y + 10, this.size * 0.15);
-		ellipse(this.currentX + 30, this.y + 10, this.size * 0.15);
-
-		fill(0);
-		ellipse(
-			-this.size * 0.2 + v.x,
-			-this.size * 0.1 + v.y,
-			this.size * 0.05);
-		ellipse(
-			this.size * 0.2 + v.x,
-			-this.size * 0.1 + v.y,
-			this.size * 0.05);
+		ellipse(10, 10, this.size * 0.15);
+        ellipse(30, 10, this.size * 0.15);
+            
+            fill(0);
+            ellipse(10 + v.x, 10 + v.y, this.size * 0.05);
+            ellipse(30 + v.x, 10 + v.y, this.size * 0.05);
+		pop();
 	},
 
 	this.checkContact = function (gc_x, gc_y) 
