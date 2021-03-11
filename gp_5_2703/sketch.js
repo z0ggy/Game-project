@@ -25,7 +25,7 @@ let collectables;
 let canyons;
 let mountains;
 let trees;
-//let flames;
+let steams;
 let flames;
 let gameChar_world_x;
 
@@ -128,8 +128,9 @@ function startGame() {
 	// Initialize jet backpack flame array
 	flames = [];
 
-	// Initialize platforms array
+	// Initialize platforms and steams array 
 	platforms = [];
+	steams = [];
 	platforms.push(createPlatform(100, floorPos_y - 100, 100));
 
 	// Initialize flagpole object
@@ -205,7 +206,7 @@ function startGame() {
 				for (let i = flames.length - 1; i >= 0; i--) 
 				{
 					flames[i].update();
-					flames[i].draw();
+					flames[i].drawOnCharacter();
 
 					if (flames[i].remove())
 
@@ -268,6 +269,7 @@ function draw() {
 
 	platforms.forEach(function (platform) {
 		platform.draw();
+		platform.drawFlame();
 	});
 
 	// Draw backpack
@@ -1055,10 +1057,32 @@ function createPlatform(x, y, length) {
 		x: x,
 		y: y,
 		length: length,
+		isFlame: true,
 		draw: function () {
 			fill(100, 100, 100);
 			rect(this.x, this.y, this.length, 15, 25, 0, 0, 0);
 			rect(this.x, this.y, 15, 30, 25, 0, 0, 0);
+		},
+		drawFlame: function () 
+		{
+			if (this.isFlame) 
+			{
+				let p = new Flame(this.x + 7, this.y + 30);
+				steams.push(p)
+
+				for (let i = steams.length - 1; i >= 0; i--) 
+				{
+					steams[i].update();
+					steams[i].draw();
+
+					if (steams[i].remove())
+
+					{
+						steams.splice(i, 1);
+					}
+				}
+
+			}
 		},
 		checkContact: function (gc_x, gc_y) {
 			if (gc_x > this.x - 30 && gc_x < this.x + this.length) {
@@ -1083,7 +1107,14 @@ function Flame(x, y) {
 	this.alpha = 255;
 	this.r = 20;
 
-	this.draw = function () 
+	this.draw = function()
+	{
+		noStroke();
+		fill(random(250,255), random(100,160), random(70,80), this.alpha);
+		ellipse(this.v.x, this.v.y, this.r);
+	}
+
+	this.drawOnCharacter = function () 
 	{
 		if (isRight && isFalling) 
 		{
