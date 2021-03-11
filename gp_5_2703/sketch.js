@@ -150,10 +150,10 @@ function startGame() {
 			}
 		},
 
-		draw: function () {
+		draw: function (x, y) {
 			if (!this.isEqipeed) {
 				fill(222, 200, 0);
-				rect(platforms[0].x + 10, platforms[0].y - 30, 12, 30, 15);
+				rect(x, y, 12, 30, 15);
 			}
 			if (isLeft && this.isEqipeed) {
 				fill(222, 200, 0);
@@ -274,7 +274,7 @@ function draw() {
 
 	// Draw backpack
 	backpack.checkBackpack();
-	backpack.draw();
+	backpack.draw(platforms[0].x + 10, platforms[0].y - 30);
 	backpack.drawFlame();
 
 	// Draw backpack flames
