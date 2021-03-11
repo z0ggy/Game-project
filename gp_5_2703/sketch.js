@@ -199,7 +199,7 @@ function startGame() {
 		{
 			if (this.isFlame) 
 			{
-				let p = new Flame();
+				let p = new Flame(gameChar_world_x, gameChar_y);
 				flames.push(p)
 
 				for (let i = flames.length - 1; i >= 0; i--) 
@@ -1075,8 +1075,9 @@ function createPlatform(x, y, length) {
 	return platform;
 }
 
-function Flame() {
-	this.v = createVector(gameChar_world_x, gameChar_y);
+//TODO add parameters for x, y and colors
+function Flame(x, y) {
+	this.v = createVector(x, y);
 	this.vx = random(-1, 1);
 	this.vy = random(5, 9);
 	this.alpha = 255;
