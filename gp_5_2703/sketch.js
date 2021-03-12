@@ -270,6 +270,7 @@ function draw() {
 	platforms.forEach(function (platform) {
 		platform.draw();
 		platform.drawFlame();
+		platform.checkFlame(gameChar_world_x, gameChar_y);
 	});
 
 	// Draw backpack
@@ -1057,7 +1058,7 @@ function createPlatform(x, y, length) {
 		x: x,
 		y: y,
 		length: length,
-		isFlame: true,
+		isFlame: false,
 		draw: function () {
 			fill(100, 100, 100);
 			rect(this.x, this.y, this.length, 15, 25, 0, 0, 0);
@@ -1084,6 +1085,19 @@ function createPlatform(x, y, length) {
 
 			}
 		},
+
+		checkFlame: function (gc_x, gc_y) {
+			let d = abs(this.x + 30 - gc_x);
+				if (d >= 0 && d < 70) {
+					this.isFlame = true;
+					//return true;
+				}
+				else
+				{
+					this.isFlame = false;
+				}
+		},
+
 		checkContact: function (gc_x, gc_y) {
 			if (gc_x > this.x - 30 && gc_x < this.x + this.length) {
 				let d = this.y - gc_y;
