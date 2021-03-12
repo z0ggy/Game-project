@@ -131,7 +131,7 @@ function startGame() {
 	// Initialize platforms and steams array 
 	platforms = [];
 	steams = [];
-	platforms.push(createPlatform(100, floorPos_y - 100, 100));
+	platforms.push(createPlatform(400, floorPos_y - 100, 100));
 
 	// Initialize flagpole object
 	flagpole = {
