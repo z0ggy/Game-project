@@ -11,6 +11,7 @@ let splashSound;
 let foundSound;
 let walkSound;
 let jumpSound;
+let hissSound;
 
 let gameChar_x;
 let gameChar_y;
@@ -54,8 +55,10 @@ function preload() {
 	foundSound.setVolume(0.6);
 	splashSound = loadSound('assets/splash.wav');
 	splashSound.setVolume(0.6);
-	backgroundMusic = loadSound('assets/background.mp3')
+	backgroundMusic = loadSound('assets/background.mp3');
 	backgroundMusic.setVolume(0.0);
+	hissSound = loadSound('assets/steam-hiss.wav');
+	hissSound.setVolume(0.5);
 }
 
 function setup() {
@@ -205,7 +208,7 @@ function startGame() {
 
 				for (let i = flames.length - 1; i >= 0; i--) 
 				{
-					flames[i].update();
+					flames[i].update(random(-1, 1), random(5, 9), 30, 3);
 					flames[i].drawOnCharacter();
 
 					if (flames[i].remove())
@@ -1073,7 +1076,7 @@ function createPlatform(x, y, length) {
 
 				for (let i = steams.length - 1; i >= 0; i--) 
 				{
-					steams[i].update();
+					steams[i].update(random(-1, 1), random(5, 9), 25, -1);
 					steams[i].draw();
 
 					if (steams[i].remove())
@@ -1090,11 +1093,12 @@ function createPlatform(x, y, length) {
 			let d = abs(this.x + 30 - gc_x);
 				if (d >= 0 && d < 70) {
 					this.isFlame = true;
-					//return true;
+					hissSound.play();
 				}
 				else
 				{
 					this.isFlame = false;
+					hissSound.stop();
 				}
 		},
 
@@ -1124,8 +1128,8 @@ function Flame(x, y) {
 	this.draw = function()
 	{
 		noStroke();
-		fill(random(250,255), random(100,160), random(70,80), this.alpha);
-		ellipse(this.v.x, this.v.y, this.r);
+		fill(170, 100);
+		ellipse(this.v.x, this.v.y, this.r + 5);
 	}
 
 	this.drawOnCharacter = function () 
@@ -1144,12 +1148,13 @@ function Flame(x, y) {
 		}
 	}
 
-	this.update = function () 
+	// Length of flame/steam
+	this.update = function (vx, vy, alpha, r) 
 	{
-		this.v.x += this.vx;
-		this.v.y += this.vy;
-		this.alpha -= 30;
-		this.r -= 3;
+		this.v.x += vx;
+		this.v.y += vy;
+		this.alpha -= alpha;
+		this.r -= r;
 	}
 
 	this.remove = function () 
