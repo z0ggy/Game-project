@@ -120,7 +120,7 @@ function startGame() {
 	}
 
 	collectables = [];
-	for (let i = 0; i < 4; i++) {
+	for (let i = 0; i < 3; i++) {
 		let coll = createCollectable(600 + i * incr / 2, floorPos_y);
 		collectables.push(coll);
 	}
@@ -135,6 +135,7 @@ function startGame() {
 	platforms = [];
 	steams = [];
 	platforms.push(createPlatform(400, floorPos_y - 100, 100));
+	platforms.push(createPlatform(1400, floorPos_y - 150, 200));
 
 	// Initialize flagpole object
 	flagpole = {
@@ -261,6 +262,9 @@ function draw() {
 		canyon.draw();
 		canyon.checkCanyon();
 	});
+	let grandeCanyon = createCanyon(1500, 400);
+		grandeCanyon.draw();
+		grandeCanyon.checkCanyon();
 
 	// Draw collectable items.
 	collectables.forEach(function (colectable) {
@@ -270,6 +274,7 @@ function draw() {
 		}
 	});
 
+	// Draw platforms
 	platforms.forEach(function (platform) {
 		platform.draw();
 		platform.drawFlame();
@@ -1093,12 +1098,12 @@ function createPlatform(x, y, length) {
 			let d = abs(this.x + 30 - gc_x);
 				if (d >= 0 && d < 70) {
 					this.isFlame = true;
-					hissSound.play();
+					//hissSound.play();
 				}
 				else
 				{
 					this.isFlame = false;
-					hissSound.stop();
+					//hissSound.stop();
 				}
 		},
 
