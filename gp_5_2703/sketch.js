@@ -12,6 +12,7 @@ let foundSound;
 let walkSound;
 let jumpSound;
 let hissSound;
+let jetSound;
 
 let gameChar_x;
 let gameChar_y;
@@ -59,6 +60,8 @@ function preload() {
 	backgroundMusic.setVolume(0.0);
 	hissSound = loadSound('assets/steam-hiss.wav');
 	hissSound.setVolume(0.5);
+	jetSound = loadSound('assets/jetSound.wav');
+	jetSound.setVolume(0.5);
 }
 
 function setup() {
@@ -96,7 +99,7 @@ function startGame() {
 	// Initialise arrays of scenery objects.
 	mountains = [];
 	for (let i = 0; i < 5; i++) {
-		let mount = createMountain(-800 + i * incr / 2, floorPos_y - 32, random(0.8, 1, 2));
+		let mount = createMountain(-800 + i * incr, floorPos_y - 32, random(0.8, 1, 2));
 		mountains.push(mount);
 	}
 
@@ -125,8 +128,10 @@ function startGame() {
 		collectables.push(coll);
 	}
 
+	// add enemy to array use constructor function
 	enemies = [];
 	enemies.push(new Enemy(100, floorPos_y - 40, 100));
+	enemies.push(new Enemy(900, floorPos_y - 40, 100));
 
 	// Initialize jet backpack flame array
 	flames = [];
@@ -286,25 +291,6 @@ function draw() {
 	backpack.draw(platforms[0].x + 10, platforms[0].y - 30);
 	backpack.drawFlame();
 
-	// Draw backpack flames
-	// let p = new Flame();
-	// flames.push(p)
-
-	// for (let i = flames.length - 1; i >= 0; i--) 
-	// {
-	// 	if (backpack.isEqipeed && isFalling && gameChar_y < floorPos_y) 
-	// 	{
-	// 		flames[i].update();
-	// 		flames[i].draw();
-
-	// 		if (flames[i].remove())
-
-	// 		{
-	// 			flames.splice(i, 1);
-	// 		}
-	// 	}
-	// }
-
 	// Draw enemies
 	enemies.forEach(function (enemy) {
 		let isContact = enemy.checkContact(gameChar_world_x, gameChar_y);
@@ -379,6 +365,7 @@ function draw() {
 		for (let i = 0; i < platforms.length; i++) {
 			if (platforms[i].checkContact(gameChar_world_x, gameChar_y)) {
 				isContact = true;
+				jetSound.stop();
 				break;
 			}
 		}
@@ -388,6 +375,7 @@ function draw() {
 		}
 	} else {
 		isFalling = false;
+		jetSound.stop();
 	}
 
 	// Update real position of gameChar for collision detection.
@@ -408,8 +396,6 @@ function draw() {
 
 function keyPressed() {
 
-	//console.log("press" + keyCode);
-	//console.log("press" + key);
 	if (key == 'A' || keyCode == 37) {
 		isLeft = true;
 		walkSound.play();
@@ -422,13 +408,13 @@ function keyPressed() {
 	if (keyCode == 32 || key == 'w') {
 		if (!isFalling) {
 			gameChar_y -= 100;
-			jumpSound.play();
 		}
 
 		if (!isFalling && backpack.isEqipeed) {
 			gameChar_y -= 180;
-			//TODO engine sound Play
+			jetSound.play();
 		}
+		
 	}
 
 
