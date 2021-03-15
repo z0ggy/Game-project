@@ -13,6 +13,7 @@ let walkSound;
 let jumpSound;
 let hissSound;
 let jetSound;
+let flagsound;
 
 let gameChar_x;
 let gameChar_y;
@@ -62,6 +63,8 @@ function preload() {
 	hissSound.setVolume(0.5);
 	jetSound = loadSound('assets/jetSound.wav');
 	jetSound.setVolume(0.5);
+	flagSound = loadSound('assets/flagSound.wav')
+	flagSound.setVolume(0.5);
 }
 
 function setup() {
@@ -232,10 +235,8 @@ function startGame() {
 
 }
 
-//TODO MAKE INCR FROM -500 to 1500
+//TODO 
 //change mountain colors
-// fix platform lenght player can hang in air
-//Add sound for flagpole
 
 function draw() {
 	background(100, 155, 255); // fill the sky blue
@@ -335,7 +336,7 @@ function draw() {
 	}
 
 	// Logic for displays "Level complete. Press space to continue." when `flagpole.isReached` is true.
-	if (flagpole.isReached == true) {
+	if (flagpole.isReached) {
 		textAlign(CENTER);
 		textStyle(BOLD);
 		text("Press space to continue", width / 2, height / 3);
@@ -865,6 +866,8 @@ function renderFlagpole() {
 		rect(flagpole.x_pos, flagY, 40, 30);
 	} else {
 		rect(flagpole.x_pos, flagY - 200, 40, 30);
+		flagSound.play();
+		noLoop();
 	}
 }
 
@@ -1094,7 +1097,7 @@ function createPlatform(x, y, length) {
 		},
 
 		checkContact: function (gc_x, gc_y) {
-			if (gc_x > this.x - 30 && gc_x < this.x + this.length) {
+			if (gc_x > this.x - 30 && gc_x < this.x + this.length - 20) {
 				let d = this.y - gc_y;
 				if (d >= 0 && d < 3) {
 					isFalling = false;
