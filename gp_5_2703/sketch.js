@@ -43,7 +43,6 @@ let lives;
 
 let platforms;
 let enemies;
-//let f;
 
 function preload() {
 	soundFormats('mp3', 'wav');
@@ -285,6 +284,7 @@ function draw() {
 		platform.draw();
 		platform.drawFlame();
 		platform.checkFlame(gameChar_world_x, gameChar_y);
+		platform.checkContact(gameChar_world_x, gameChar_y);
 	});
 
 	// Draw backpack
@@ -301,8 +301,8 @@ function draw() {
 		if (isContact) {
 			if (lives > 0) {
 				startGame();
-				//break;
 			}
+			lives--
 		}
 
 	});
@@ -386,8 +386,6 @@ function draw() {
 	if (flagpole.isReached == false) {
 		checkFlagpole();
 	}
-
-
 }
 
 
@@ -417,8 +415,6 @@ function keyPressed() {
 		}
 		
 	}
-
-
 }
 
 function keyReleased() {
@@ -433,7 +429,6 @@ function keyReleased() {
 		walkSound.stop();
 	}
 }
-
 
 // ------------------------------
 // Game character render function
@@ -485,8 +480,8 @@ function drawGameChar() {
 		rect(0, 0, 3, 30, 5);
 		pop();
 	} else if (isRight && isFalling) {
-		//jumping-right code
 
+		//jumping-right code
 		fill(41, 152, 69);
 		rect(gameChar_x, gameChar_y - 70, 50, 25, 5); //head
 		rect(gameChar_x, gameChar_y - 45, 25, 27, 5, 5, 1, 1); //body light
@@ -573,8 +568,8 @@ function drawGameChar() {
 		pop();
 
 	} else if (isRight) {
-		//walking right code
 
+		//walking right code
 		fill(41, 152, 69);
 		rect(gameChar_x, gameChar_y - 73, 50, 25, 5); //head
 		rect(gameChar_x, gameChar_y - 48, 25, 27, 5, 5, 1, 1); //body light
@@ -618,8 +613,8 @@ function drawGameChar() {
 		pop();
 
 	} else if (isFalling) {
+
 		//jumping facing forwards code
-		//Head
 		fill(41, 152, 69);
 		rect(gameChar_x + 15, gameChar_y - 69, 25, 25, 5); //head
 		rect(gameChar_x + 15, gameChar_y - 45, 25, 27, 5, 5, 1, 1); //body light
@@ -692,7 +687,9 @@ function drawGameChar() {
 		rotate(-160);
 		rect(0, 0, 3, 30, 5, 0, 5, 5);
 		pop();
+
 	} else {
+
 		// standing front facing code
 		fill(41, 152, 69);
 		rect(gameChar_x + 15, gameChar_y - 73, 25, 25, 5); //head
@@ -739,110 +736,17 @@ function drawGameChar() {
 // Background render functions
 // ---------------------------
 
-// function drawClouds()
-// {
-// 	for(var i = 0; i < clouds.length; i++)
-// 	{
-// 		fill(255);
-// 		ellipse(clouds[i].x_pos, clouds[i].y_pos, 100* clouds[i].scale, 80 * clouds[i].scale);
-// 		ellipse(clouds[i].x_pos+35*clouds[i].scale, clouds[i].y_pos, 80 * clouds[i].scale, 60 * clouds[i].scale);
-// 		ellipse(clouds[i].x_pos+70*clouds[i].scale, clouds[i].y_pos, 40 * clouds[i].scale, 30 * clouds[i].scale);
-// 	}
-// }
-
-//function drawMountains()
-// {
-// 	for(var i = 0; i < mountains.length; i++)
-// 	{
-// 		fill(150);
-//         noStroke();
-//         triangle(mountains[i].x_pos + 50, mountains[i].y_pos + 32, 
-//                 mountains[i].x_pos + 150 * mountains[i].scale, mountains[i].y_pos - 300 * mountains[i].scale,
-//                 mountains[i].x_pos + 250 * mountains[i].scale, mountains[i].y_pos + 32);
-//         triangle(mountains[i].x_pos + 150, mountains[i].y_pos + 32, 
-//                 mountains[i].x_pos + 150 * mountains[i].scale, mountains[i].y_pos - 250 * mountains[i].scale,
-//                 mountains[i].x_pos + 350 * mountains[i].scale, mountains[i].y_pos + 32);
-// 	}
-// }
-
-// function drawTrees() {
-// 	for (var i = 0; i < trees_x.length; i++) {
-// 		treePos_y = height / 1.64;
-// 		fill(155, 103, 60); //tree trunk
-// 		rect(trees_x[i], treePos_y, 20, 82);
-// 		fill(0, 255, 0); //branches
-// 		ellipse(trees_x[i] + 10, treePos_y - 30, 80, 80);
-// 		ellipse(trees_x[i] - 30, treePos_y - 50, 80, 80);
-// 		ellipse(trees_x[i] + 50, treePos_y - 50, 80, 80);
-// 		ellipse(trees_x[i] - 20, treePos_y - 90, 80, 80);
-// 		ellipse(trees_x[i] + 30, treePos_y - 90, 80, 80);
-// 	}
-// }
 
 
 // ---------------------------------
 // Canyon render and check functions
 // ---------------------------------
 
-// function drawCanyon(t_canyon) {
-// 	fill(139, 69, 19);
-// 	triangle(t_canyon.x_pos + 30, 576,
-// 		t_canyon.x_pos + 80, 432,
-// 		t_canyon.x_pos + 80, 576);
-
-// 	triangle(t_canyon.x_pos + 120 + t_canyon.width, 576,
-// 		t_canyon.x_pos + 120 + t_canyon.width, 432,
-// 		t_canyon.x_pos + 170 + t_canyon.width, 576);
-
-// 	fill(100, 155, 255);
-// 	rect(t_canyon.x_pos + 80, 432, 40 + t_canyon.width, 144); //blue canyon gap
-// }
-
-// // Function to ch{…}k character is over a canyon.
-// function checkCanyon(t_canyon) {
-// 	if (isPlummeting == true) {
-// 		gameChar_y += 7;
-
-// 		// plummentig character cannot go outside of canyon walls
-// 		gameChar_world_x = constrain(gameChar_world_x, t_canyon.x_pos + 80, t_canyon.x_pos + 80 + t_canyon.width);
-// 	}
-
-// 	if ((gameChar_world_x >= t_canyon.x_pos + 80) && (gameChar_world_x <= t_canyon.x_pos + 80 + t_canyon.width) && (gameChar_y >= floorPos_y)) {
-// 		isPlummeting = true;
-// 	} else {
-// 		isPlummeting = false;
-// 	}
-
-// }
 
 // --------------------------------------------
 // Collectable items render and check functions
 // --------------------------------------------
 
-// Function to draw collectable objects.
-
-// function drawCollectable(t_collectable) {
-// 	if (t_collectable.isFound == false) {
-
-// 		noStroke();
-// 		fill(255, 0, 0);
-// 		rect(t_collectable.x_pos, t_collectable.y_pos - 40, 40, 40);
-// 		rect(t_collectable.x_pos - 5, t_collectable.y_pos - 45, 50, 10);
-// 		fill(222, 200, 0);
-// 		rect(t_collectable.x_pos + 18, t_collectable.y_pos - 45, 4, 43);
-// 		rect(t_collectable.x_pos, t_collectable.y_pos - 25, 40, 4);
-// 	}
-
-// }
-
-// Function to check character has collected an item.
-// function checkCollectable(t_collectable) {
-// 	if (dist(gameChar_world_x, gameChar_y, t_collectable.x_pos, t_collectable.y_pos + 10) < 30) {
-// 		t_collectable.isFound = true;
-// 		game_score += 1;
-// 		foundSound.play();
-// 	}
-// }
 
 // Function to draw Score:
 function drawScore() {
@@ -890,7 +794,6 @@ function checkPlayerDie() {
 }
 
 
-
 function drawLivesToken() {
 	for (var i = 0; i < lives; i++) {
 		fill(255, 0, 255);
@@ -900,30 +803,6 @@ function drawLivesToken() {
 	}
 }
 
-// function createMountain()
-// {
-// 	let mount = {
-// 		x: 100,
-// 		y: 400,
-// 		scale: 1,
-// 		draw: function()
-// 		{
-
-
-// 			fill(200,0,0);
-//  		    noStroke();
-//  		    triangle(this.x + 50, this.y + 32, 
-//  		             this.x + 150 * this.scale, this.y - 300 * this.scale,
-//  		             this.x + 250 * this.scale, this.y + 32);
-//  		    //    triangle(mountains[i].x_pos + 150, mountains[i].y_pos + 32, 
-//  		    //            mountains[i].x_pos + 150 * mountains[i].scale, mountains[i].y_pos - 250 * mountains[i].scale,
-//  		    //            mountains[i].x_pos + 350 * mountains[i].scale, mountains[i].y_pos + 32);
-
-
-// 		}
-// 	}
-// 	return mount;
-// }
 
 function createMountain(x, y, scale) {
 	let mount = {
@@ -947,14 +826,6 @@ function createCanyon(x, width) {
 		width: width,
 
 		draw: function () {
-			// fill(139, 69, 19);
-			// triangle(this.x + 30, 576,
-			// 	this.x + 80, 432,
-			// 	this.x + 80, 576);
-
-			// triangle(this.x + 120 + this.width, 576,
-			// 	this.x + 120 + this.width, 432,
-			// 	this.x + 170 + this.width, 576);
 
 			fill(139, 69, 19);
 			rect(this.x + 80, floorPos_y, 40 + this.width, 144); //blue canyon gap
@@ -1061,41 +932,39 @@ function createPlatform(x, y, length) {
 			rect(this.x, this.y, this.length, 15, 25, 0, 0, 0);
 			rect(this.x, this.y, 15, 30, 25, 0, 0, 0);
 		},
+		// Add steam hiss to platform
 		drawFlame: function () 
 		{
 			if (this.isFlame) 
 			{
 				let p = new Flame(this.x + 7, this.y + 30);
 				steams.push(p)
-
-				for (let i = steams.length - 1; i >= 0; i--) 
-				{
-					steams[i].update(random(-1, 1), random(5, 9), 25, -1);
-					steams[i].draw();
-
-					if (steams[i].remove())
-
-					{
-						steams.splice(i, 1);
+				steams.forEach(function (steam) {
+					steam.update(random(-1, 1), random(5, 9), 25, -1);
+					steam.draw();
+					steam.checkSteamContact(gameChar_world_x, gameChar_y);
+					if(steam.remove()){
+						steams.splice(steam,1);
 					}
-				}
+				});
 
 			}
 		},
-
+		
+		// Distance to activate steam hiss
 		checkFlame: function (gc_x, gc_y) {
 			let d = abs(this.x + 30 - gc_x);
 				if (d >= 0 && d < 70) {
 					this.isFlame = true;
-					//hissSound.play();
 				}
+			
 				else
 				{
 					this.isFlame = false;
-					//hissSound.stop();
 				}
 		},
 
+		// Check if player is on platform
 		checkContact: function (gc_x, gc_y) {
 			if (gc_x > this.x - 30 && gc_x < this.x + this.length - 20) {
 				let d = this.y - gc_y;
@@ -1111,21 +980,21 @@ function createPlatform(x, y, length) {
 	return platform;
 }
 
-//TODO add parameters for x, y and colors
 function Flame(x, y) {
 	this.v = createVector(x, y);
 	this.vx = random(-1, 1);
 	this.vy = random(5, 9);
 	this.alpha = 255;
-	this.r = 20;
+	this.r = 25;
 
 	this.draw = function()
 	{
 		noStroke();
 		fill(170, 100);
-		ellipse(this.v.x, this.v.y, this.r + 5);
+		ellipse(this.v.x, this.v.y, this.r);
 	}
 
+	// Logic to draw flame if jet backpack is equipped
 	this.drawOnCharacter = function () 
 	{
 		if (isRight && isFalling) 
@@ -1155,9 +1024,21 @@ function Flame(x, y) {
 	{
 		return this.alpha < 0;
 	}
+
+	// Check if player has contact with hot steam
+	this.checkSteamContact = function(gc_x, gc_y)
+	{
+		let d = abs(gc_x - this.v.x);
+		if(d < 3 && gc_y > this.v.y){
+			if(lives > 0){
+				startGame();
+			}
+			lives--;
+		}
+
+	}
 }
 
-// TODO change check contact distance 
 function Enemy(x, y, range) 
 {
 	this.x = x;
@@ -1206,9 +1087,9 @@ function Enemy(x, y, range)
 
 	this.checkContact = function (gc_x, gc_y) 
 	{
-		let d = dist(gc_x, gc_y, this.currentX, this.y);
+		let d = dist(gc_x, gc_y, this.currentX + 20, this.y + 20);
 
-		if (d < 15) 
+		if (d < 25) 
 		{
 			return true;
 		}
