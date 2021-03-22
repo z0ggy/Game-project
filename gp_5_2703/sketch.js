@@ -152,19 +152,21 @@ function startGame() {
 
 	// Initialize jet backpack object
 	backpack = {
+		x: 900,
+		y: floorPos_y - 50,
 		isEqipeed: false,
 		isFlame: false,
 		checkBackpack: function () {
-			let d = abs(dist(platforms[0].x + 10, platforms[0].y, gameChar_world_x, gameChar_y));
-			if (d < 10) {
+			let d = abs(dist(this.x,this.y + 50, gameChar_world_x, gameChar_y));
+			if (d < 15) {
 				this.isEqipeed = true;
 			}
 		},
 
-		draw: function (x, y) {
+		draw: function () {
 			if (!this.isEqipeed) {
 				fill(222, 200, 0);
-				rect(x, y, 12, 30, 15);
+				rect(this.x, this.y, 12, 30, 15);
 			}
 			if (isLeft && this.isEqipeed) {
 				fill(222, 200, 0);
@@ -285,7 +287,8 @@ function draw() {
 
 	// Draw backpack
 	backpack.checkBackpack();
-	backpack.draw(platforms[0].x + 10, platforms[0].y - 30);
+	// backpack.draw(platforms[0].x + 10, platforms[0].y - 30);
+	backpack.draw(900,floorPos_y - 50);
 	backpack.drawFlame();
 
 	// Draw enemies
