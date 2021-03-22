@@ -183,7 +183,7 @@ function startGame() {
 				fill(255, 150, 0);
 				this.isFlame = true;
 			}
-			
+
 			if (this.isEqipeed && gameChar_y < floorPos_y && isLeft && isFalling) {
 				fill(222, 200, 0);
 				rect(gameChar_world_x + 50, gameChar_y - 48, 12, 30, 15);
@@ -194,8 +194,7 @@ function startGame() {
 				this.isFlame = true;
 			}
 
-			if (this.isEqipeed && isLeft && isFalling && isRight) 
-			{
+			if (this.isEqipeed && isLeft && isFalling && isRight) {
 				fill(222, 200, 0);
 				rect(gameChar_world_x + 50, gameChar_y - 48, 12, 30, 15);
 				fill(255, 0, 0);
@@ -207,15 +206,12 @@ function startGame() {
 
 		},
 
-		drawFlame: function () 
-		{
-			if (this.isFlame) 
-			{
+		drawFlame: function () {
+			if (this.isFlame) {
 				let p = new Flame(gameChar_world_x, gameChar_y);
 				flames.push(p)
 
-				for (let i = flames.length - 1; i >= 0; i--) 
-				{
+				for (let i = flames.length - 1; i >= 0; i--) {
 					flames[i].update(random(-1, 1), random(5, 9), 30, 3);
 					flames[i].drawOnCharacter();
 
@@ -268,8 +264,8 @@ function draw() {
 		canyon.checkCanyon();
 	});
 	let grandeCanyon = createCanyon(1500, 400);
-		grandeCanyon.draw();
-		grandeCanyon.checkCanyon();
+	grandeCanyon.draw();
+	grandeCanyon.checkCanyon();
 
 	// Draw collectable items.
 	collectables.forEach(function (colectable) {
@@ -405,16 +401,20 @@ function keyPressed() {
 		walkSound.play();
 	}
 	if (keyCode == 32 || key == 'w') {
+		if(!flagpole.isReached){
 		if (!isFalling) {
 			gameChar_y -= 100;
+			jumpSound.play();
 		}
 
 		if (!isFalling && backpack.isEqipeed) {
 			gameChar_y -= 180;
 			jetSound.play();
 		}
-		
+	}else{
+		text("Level 2 in development", width / 2, height / 3 + 20);
 	}
+}
 }
 
 function keyReleased() {
@@ -757,7 +757,7 @@ function drawScore() {
 	noStroke();
 	text("SCORE: " + game_score, 30, 20);
 }
-// Function to draw flagpole
+// Function to draw flagpole and play sound 
 function renderFlagpole() {
 
 	var flagY = floorPos_y - 30;
@@ -771,6 +771,7 @@ function renderFlagpole() {
 	} else {
 		rect(flagpole.x_pos, flagY - 200, 40, 30);
 		flagSound.play();
+		jetSound.stop();
 		noLoop();
 	}
 }
@@ -778,7 +779,6 @@ function renderFlagpole() {
 // Function to check coolisions flag pole with gameCharacter
 function checkFlagpole() {
 	var d = abs(gameChar_world_x - flagpole.x_pos);
-
 	if (d < 15) {
 		flagpole.isReached = true;
 	}
@@ -803,6 +803,9 @@ function drawLivesToken() {
 	}
 }
 
+// ------------------------------------------------------------------------------
+// Factory paterns and constructors for background scenery, enemies and platforms
+// ------------------------------------------------------------------------------
 
 function createMountain(x, y, scale) {
 	let mount = {
@@ -933,35 +936,30 @@ function createPlatform(x, y, length) {
 			rect(this.x, this.y, 15, 30, 25, 0, 0, 0);
 		},
 		// Add steam hiss to platform
-		drawFlame: function () 
-		{
-			if (this.isFlame) 
-			{
+		drawFlame: function () {
+			if (this.isFlame) {
 				let p = new Flame(this.x + 7, this.y + 30);
 				steams.push(p)
 				steams.forEach(function (steam) {
 					steam.update(random(-1, 1), random(5, 9), 25, -1);
 					steam.draw();
 					steam.checkSteamContact(gameChar_world_x, gameChar_y);
-					if(steam.remove()){
-						steams.splice(steam,1);
+					if (steam.remove()) {
+						steams.splice(steam, 1);
 					}
 				});
 
 			}
 		},
-		
+
 		// Distance to activate steam hiss
 		checkFlame: function (gc_x, gc_y) {
 			let d = abs(this.x + 30 - gc_x);
-				if (d >= 0 && d < 70) {
-					this.isFlame = true;
-				}
-			
-				else
-				{
-					this.isFlame = false;
-				}
+			if (d >= 0 && d < 70) {
+				this.isFlame = true;
+			} else {
+				this.isFlame = false;
+			}
 		},
 
 		// Check if player is on platform
@@ -980,6 +978,7 @@ function createPlatform(x, y, length) {
 	return platform;
 }
 
+// Particle used for create jet backpack flame and steam
 function Flame(x, y) {
 	this.v = createVector(x, y);
 	this.vx = random(-1, 1);
@@ -987,50 +986,45 @@ function Flame(x, y) {
 	this.alpha = 255;
 	this.r = 25;
 
-	this.draw = function()
-	{
+	this.draw = function () {
 		noStroke();
 		fill(170, 100);
 		ellipse(this.v.x, this.v.y, this.r);
 	}
 
 	// Logic to draw flame if jet backpack is equipped
-	this.drawOnCharacter = function () 
-	{
-		if (isRight && isFalling) 
-		{
+	this.drawOnCharacter = function () {
+		if (isRight && isFalling) {
 			noStroke();
-			fill(random(250,255), random(100,160), random(70,80), this.alpha);
+			fill(random(250, 255), random(100, 160), random(70, 80), this.alpha);
 			ellipse(this.v.x - 10, this.v.y - 10, this.r);
 		}
 		if (isLeft && isFalling) {
 
 			noStroke();
-			fill(random(250,255), random(100,160), random(70,80), this.alpha);
+			fill(random(250, 255), random(100, 160), random(70, 80), this.alpha);
 			ellipse(this.v.x + 60, this.v.y - 10, this.r);
 		}
 	}
 
 	// Length of flame/steam
-	this.update = function (vx, vy, alpha, r) 
-	{
+	this.update = function (vx, vy, alpha, r) {
 		this.v.x += vx;
 		this.v.y += vy;
 		this.alpha -= alpha;
 		this.r -= r;
 	}
 
-	this.remove = function () 
-	{
+	// Return true if particle is not visible
+	this.remove = function () {
 		return this.alpha < 0;
 	}
 
 	// Check if player has contact with hot steam
-	this.checkSteamContact = function(gc_x, gc_y)
-	{
+	this.checkSteamContact = function (gc_x, gc_y) {
 		let d = abs(gc_x - this.v.x);
-		if(d < 3 && gc_y > this.v.y){
-			if(lives > 0){
+		if (d < 3 && gc_y > this.v.y) {
+			if (lives > 0) {
 				startGame();
 			}
 			lives--;
@@ -1039,8 +1033,7 @@ function Flame(x, y) {
 	}
 }
 
-function Enemy(x, y, range) 
-{
+function Enemy(x, y, range) {
 	this.x = x;
 	this.y = y;
 	this.range = range;
@@ -1049,52 +1042,46 @@ function Enemy(x, y, range)
 	this.currentX = x;
 	this.incr = 1;
 
-	this.update = function () 
-	{
+	this.update = function () {
 		this.currentX += this.incr;
 
-		if (this.currentX >= this.x + this.range) 
-		{
+		if (this.currentX >= this.x + this.range) {
 			this.incr = -1;
 		} else if (this.currentX < this.x) {
 			this.incr = 1;
 		}
 	}
 
-	this.draw = function () 
-	{
+	this.draw = function () {
 		fill(0)
 		rect(this.currentX, this.y, 40, 40);
 	}
 
-	this.drawEye = function ()
-	 {
-		push();
-		translate(this.currentX, this.y);
-		var v = createVector(gameChar_world_x -this.currentX, gameChar_y - this.y);
-		v.normalize();
-		v.mult((this.size * 0.1) / 2);
+	this.drawEye = function () {
+			push();
+			translate(this.currentX, this.y);
+			var v = createVector(gameChar_world_x - this.currentX, gameChar_y - this.y);
+			v.normalize();
+			v.mult((this.size * 0.1) / 2);
 
-		fill(255);
-		ellipse(10, 10, this.size * 0.15);
-        ellipse(30, 10, this.size * 0.15);
-            
-            fill(0);
-            ellipse(10 + v.x, 10 + v.y, this.size * 0.05);
-            ellipse(30 + v.x, 10 + v.y, this.size * 0.05);
-		pop();
-	},
+			fill(255);
+			ellipse(10, 10, this.size * 0.15);
+			ellipse(30, 10, this.size * 0.15);
 
-	this.checkContact = function (gc_x, gc_y) 
-	{
-		let d = dist(gc_x, gc_y, this.currentX + 20, this.y + 20);
+			fill(0);
+			ellipse(10 + v.x, 10 + v.y, this.size * 0.05);
+			ellipse(30 + v.x, 10 + v.y, this.size * 0.05);
+			pop();
+		},
 
-		if (d < 25) 
-		{
-			return true;
+		this.checkContact = function (gc_x, gc_y) {
+			let d = dist(gc_x, gc_y, this.currentX + 20, this.y + 20);
+
+			if (d < 25) {
+				return true;
+			}
+
+			return false;
 		}
-
-		return false;
-	}
 
 }
