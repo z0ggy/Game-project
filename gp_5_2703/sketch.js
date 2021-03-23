@@ -146,13 +146,13 @@ function startGame() {
 
 	// Initialize flagpole object
 	flagpole = {
-		x_pos: 2200,
+		x_pos: 2600,
 		isReached: false
 	};
 
 	// Initialize jet backpack object
 	backpack = {
-		x: 900,
+		x: 1300,
 		y: floorPos_y - 50,
 		isEqipeed: false,
 		isFlame: false,
@@ -1025,7 +1025,7 @@ function Flame(x, y) {
 
 	// Check if player has contact with hot steam
 	this.checkSteamContact = function (gc_x, gc_y) {
-		let d = abs(gc_x - this.v.x);
+		let d = abs(gc_x - this.v.x+this.r/2);
 		if (d < 3 && gc_y > this.v.y) {
 			if (lives > 0) {
 				startGame();
