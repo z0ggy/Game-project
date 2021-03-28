@@ -944,8 +944,7 @@ function createPlatform(x, y, length) {
 			let d = abs(this.x + 30 - gc_x);
 			if (d >= 0 && d < 70) {
 				this.isFlame = true;
-			} 
-			else {
+			} else {
 				this.isFlame = false;
 			}
 		},
