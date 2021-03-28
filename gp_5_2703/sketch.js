@@ -1,9 +1,7 @@
 /*
 
-- Copy your game project code into this file
-- for the p5.Sound library look here https://p5js.org/reference/#/libraries/p5.sound
-- for finding cool sounds perhaps look here
-https://freesound.org/
+I have added all four extensions but please review the advanced graphic.There are animated clouds of random sizes.Also, I have added a jet backpack with animated flames.That gives the game character the ability to jump higher which is necessary for finishing the game level.Enemies have animated eyes and can follow the game character 's position. Platforms are pipes with an animated steam hiss, activated when the character is close. The game character can die if it's in contact with that steam.The second extension
+for review is the factory pattern extension for creating platforms.Unlike mountains, tree, clouds, and canyons platforms are added manually to the array to control their position and there is only two of them.I found it difficult to implement a steam hiss leaving the platform and a flame jet from the jet backpack.I also had problems with adding a sound effect to the steam hiss, after I implemented it and activated it the game performance got drastically worse and made it unplayable or even froze the whole system.
 
 */
 let backgroundMusic;
@@ -59,7 +57,7 @@ function preload() {
 	backgroundMusic = loadSound('assets/background.mp3');
 	backgroundMusic.setVolume(0.0);
 	hissSound = loadSound('assets/steam-hiss.wav');
-	hissSound.setVolume(0.5);
+	hissSound.setVolume(0.7);
 	jetSound = loadSound('assets/jetSound.wav');
 	jetSound.setVolume(0.5);
 	flagSound = loadSound('assets/flagSound.wav')
@@ -232,8 +230,6 @@ function startGame() {
 
 }
 
-//TODO 
-//change mountain colors
 
 function draw() {
 	background(100, 155, 255); // fill the sky blue
@@ -287,7 +283,6 @@ function draw() {
 
 	// Draw backpack
 	backpack.checkBackpack();
-	// backpack.draw(platforms[0].x + 10, platforms[0].y - 30);
 	backpack.draw(900,floorPos_y - 50);
 	backpack.drawFlame();
 
@@ -411,6 +406,7 @@ function keyPressed() {
 		}
 
 		if (!isFalling && backpack.isEqipeed) {
+			// How high is jump with backpack
 			gameChar_y -= 180;
 			jetSound.play();
 		}
@@ -735,21 +731,9 @@ function drawGameChar() {
 	}
 }
 
-// ---------------------------
-// Background render functions
-// ---------------------------
-
-
-
 // ---------------------------------
-// Canyon render and check functions
+// Background items render functions
 // ---------------------------------
-
-
-// --------------------------------------------
-// Collectable items render and check functions
-// --------------------------------------------
-
 
 // Function to draw Score:
 function drawScore() {
@@ -960,7 +944,8 @@ function createPlatform(x, y, length) {
 			let d = abs(this.x + 30 - gc_x);
 			if (d >= 0 && d < 70) {
 				this.isFlame = true;
-			} else {
+			} 
+			else {
 				this.isFlame = false;
 			}
 		},
@@ -1036,6 +1021,7 @@ function Flame(x, y) {
 	}
 }
 
+// Enemy constructor
 function Enemy(x, y, range) {
 	this.x = x;
 	this.y = y;
