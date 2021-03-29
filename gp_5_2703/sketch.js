@@ -44,24 +44,7 @@ let enemies;
 
 function preload() {
   soundFormats("mp3", "wav");
-
-  //load sound
-  jumpSound = loadSound("assets/jump.wav");
-  jumpSound.setVolume(0.1);
-  walkSound = loadSound("assets/walk.wav");
-  walkSound.setVolume(0.5);
-  foundSound = loadSound("assets/found.mp3");
-  foundSound.setVolume(0.6);
-  splashSound = loadSound("assets/splash.wav");
-  splashSound.setVolume(0.6);
-  backgroundMusic = loadSound("assets/background.mp3");
-  backgroundMusic.setVolume(0.0);
-  hissSound = loadSound("assets/steam-hiss.wav");
-  hissSound.setVolume(0.7);
-  jetSound = loadSound("assets/jetSound.wav");
-  jetSound.setVolume(0.5);
-  flagSound = loadSound("assets/flagSound.wav");
-  flagSound.setVolume(0.5);
+  loadSounds();
 }
 
 function setup() {
@@ -741,6 +724,7 @@ function renderFlagpole() {
     rect(flagpole.x_pos, flagY - 200, 40, 30);
     flagSound.play();
     jetSound.stop();
+	backgroundMusic.stop();
     noLoop();
   }
 }
@@ -768,6 +752,27 @@ function drawLivesToken() {
     stroke(255);
     strokeWeight(5);
     ellipse(width - 150 + i * 25, height / 22, 20, 20);
+  }
+}
+
+function loadSounds() {
+  if (keyPressed) {
+    jumpSound = loadSound("assets/jump.wav");
+    jumpSound.setVolume(0.1);
+    walkSound = loadSound("assets/walk.wav");
+    walkSound.setVolume(0.5);
+    foundSound = loadSound("assets/found.mp3");
+    foundSound.setVolume(0.6);
+    splashSound = loadSound("assets/splash.wav");
+    splashSound.setVolume(0.6);
+    backgroundMusic = loadSound("assets/background.mp3");
+    backgroundMusic.setVolume(0.2);
+    hissSound = loadSound("assets/steam-hiss.wav");
+    hissSound.setVolume(0.7);
+    jetSound = loadSound("assets/jetSound.wav");
+    jetSound.setVolume(0.2);
+    flagSound = loadSound("assets/flagSound.wav");
+    flagSound.setVolume(0.5);
   }
 }
 
